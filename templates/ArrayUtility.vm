@@ -1,0 +1,67 @@
+package $packageName;
+
+public class $utility.getClassName("ArrayUtility", $type) {
+	public static $type[] create$utility.firstToUpperCase($type)Array(int length) {
+		return new $type[length];
+	}
+	
+	public static $type[] create$utility.firstToUpperCase($type)Array(int length, $type filler) {
+		$type[] result = new $type[length];
+		for (int i = 0; i < length; i++) {
+			result[i] = filler;
+		}
+		return result;
+	}
+
+	public static $type[][] create$utility.firstToUpperCase($type)Matrix(int rows, int columns) {
+		$type[][] result = new $type[rows][];
+		
+		for (int i = 0; i < rows; i++) {
+			result[i] = new $type[columns];
+		}
+		
+		return result;
+	}
+	
+	public static $type[][] create$utility.firstToUpperCase($type)Matrix(int rows, int columns, $type filler) {
+		$type[][] result = new $type[rows][];
+		
+		for (int i = 0; i < rows; i++) {
+			result[i] = new $type[columns];
+			for (int j = 0; j < columns; j++) {
+				result[i][j] = filler;
+			}
+		}
+		
+		return result;
+	}
+	
+	public static String toMatlabString($type[] array) {
+		StringBuilder builder = new StringBuilder();
+		builder.append('[');
+		for (int i = 0; i < array.length; i++) {
+			if (i > 0) {
+				builder.append(", ");
+			}
+			builder.append(array[i]);
+		}
+		builder.append("]");
+		return builder.toString();		
+	}
+	
+	public static String toMatlabString($type[][] array) {
+		StringBuilder builder = new StringBuilder();
+		builder.append('[');
+		for (int i = 0; i < array.length; i++) {
+			for (int j = 0; j < array[i].length; j++) {
+				if (j > 0) {
+					builder.append(", ");
+				}
+				builder.append(array[i][j]);
+			}
+			builder.append(";\n");
+		}
+		builder.append("]\n");
+		return builder.toString();
+	}
+}
