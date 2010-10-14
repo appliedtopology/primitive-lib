@@ -1,0 +1,102 @@
+package $packageName;
+
+import java.util.Iterator;
+
+#set ($superName = $utility.getClassName("AbstractVector", $type))
+#set ($className = $utility.getClassName("SparseVector", $type))
+#set ($iteratorClassName = $utility.getClassName("SparseVectorIterator", $type))
+#set ($pairClassName = $utility.getClassName("Pair", "int", $type))
+#set ($troveContainerName = $utility.getTroveMapName("int", $type))
+#set ($troveIteratorName = $utility.getTroveIteratorName("int", $type))
+
+public class $className implements $superName {
+	protected final $troveContainerName map = new $troveContainerName();
+	protected final int size;
+	
+	public $className(int size) {
+		this.size = size;
+	}
+	
+	public $superName like(int size) {
+		return new $className(size);
+	}
+	
+	public int getNumNonzeroElements() {
+		return this.map.size();
+	}
+	
+	public double getDensity() {
+		return ((double) this.getNumNonzeroElements()) / ((double) (size));
+	}
+	
+	public void set(int index, $type value) {
+		if (value == 0) {
+			this.map.remove(index);
+		}
+		this.map.put(index, value);
+	}
+	
+	public $type get(int index) {
+		return this.map.get(index);
+	}
+	
+	public int getLength() {
+		return this.size;
+	}
+	
+	public $type innerProduct($className other) {
+		$type sum = 0;
+		$className smaller = (this.map.size() < other.map.size() ? this : other);
+		$className larger = (this.map.size() < other.map.size() ? other : this);
+		
+		for ($troveIteratorName iterator = smaller.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			sum += iterator.value() * larger.get(iterator.key());
+		}
+		
+		return sum;
+	}
+	
+	public $type innerProduct($type[] other) {
+		$type sum = 0;
+		for ($troveIteratorName iterator = this.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			sum += iterator.value() * other[iterator.key()];
+		}
+		return sum;
+	}
+	
+	public $type innerProduct($superName other) {
+		if (other instanceof $className) {
+			return this.innerProduct(($className) other);
+		}
+		$type sum = 0;
+		for ($troveIteratorName iterator = this.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			sum += iterator.value() * other.get(iterator.key());
+		}
+		return sum;
+	}
+	
+	public Iterator<$pairClassName> iterator() {
+		return new $iteratorClassName(this);
+	}
+	
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		int index = 0;
+		builder.append("[");
+		for ($pairClassName pair: this) {
+			if (index > 0) {
+				builder.append(", ");
+			}
+			builder.append(pair.getFirst());
+			builder.append(": ");
+			builder.append(pair.getSecond());
+			index++;
+		}
+		builder.append("]");
+		
+		return builder.toString();
+	}
+}

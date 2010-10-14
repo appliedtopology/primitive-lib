@@ -1,0 +1,22 @@
+package $packageName;
+
+import java.util.Iterator;
+
+#set ($className = $utility.getClassName("AbstractMatrix", $type))
+#set ($entryClassName = $utility.getClassName("MatrixEntry", $type))
+#set ($vectorClassName = $utility.getClassName("AbstractVector", $type))
+
+public interface $className$utility.generateGenericAnnotation($type) {
+	public abstract $className like(int rows, int columns);
+	
+	public abstract int getNumRows();
+	public abstract int getNumColumns();
+	
+	public abstract double get(int row, int column);
+	public abstract void set(int row, int column, double value);
+	
+	public abstract $vectorClassName multiply($vectorClassName vector);
+	
+	public abstract Iterator<$entryClassName> iterator();
+	public abstract String toString();
+}

@@ -1,0 +1,266 @@
+package $packageName;
+
+import java.util.Collection;
+
+public class $utility.getClassName("ArrayManipulation", $type) {
+	public static $type[] extractRow($type[][] matrix, int row) {
+		$type[] result = matrix[row];
+		return result;
+	}
+	
+	public static $type[] extractColumn($type[][] matrix, int column) {
+		int m = matrix[0].length;
+		$type[] result = new $type[m];
+		for (int i = 0; i < m; i++) {
+			result[i] = matrix[i][column];
+		}
+		return result;
+	}
+	
+	public static $type[][] stackRows($type[] vector1, $type[] vector2) {
+		int n = vector1.length;
+		int m = 2;
+		$type[][] result = new $type[m][n];
+		for (int j = 0; j < n; j++) {
+			result[0][j] = vector1[j];
+			result[1][j] = vector2[j];
+		}
+		return result;
+	}
+	
+	public static $type[][] stackColumns($type[] vector1, $type[] vector2) {
+		int n = 2;
+		int m = vector1.length;
+		$type[][] result = new $type[m][n];
+		for (int i = 0; i < m; i++) {
+			result[i][0] = vector1[i];
+			result[i][1] = vector2[i];
+		}
+		return result;
+	}
+	
+	public static $type[][] stackRows(Collection<$type[]> vectors) {
+		int m = vectors.size();
+		int n = vectors.iterator().next().length;
+		$type[][] result = new $type[m][n];
+		int i = 0;
+		for ($type[] row: vectors) {
+			for (int j = 0; j < n; j++) {
+				result[i][j] = row[j];
+			}
+			i++;
+		}
+		return result;
+	}
+	
+	public static $type[][] stackColumns(Collection<$type[]> vectors) {
+		int m = vectors.size();
+		int n = vectors.iterator().next().length;
+		$type[][] result = new $type[n][m];
+		int i = 0;
+		for ($type[] row: vectors) {
+			for (int j = 0; j < n; j++) {
+				result[j][i] = row[j];
+			}
+			i++;
+		}
+		return result;
+	}
+	
+	public static $type[] concatenate($type[] vector1, $type[] vector2) {
+		int n1 = vector1.length;
+		int n2 = vector2.length;
+		$type[] result = new $type[n1 + n2];
+		for (int i = 0; i < n1; i++) {
+			result[i] = vector1[i];
+		}
+		for (int i = 0; i < n2; i++) {
+			result[i + n1] = vector2[i];
+		}
+		return result;
+	}
+	
+	public static $type[] concatenate(Iterable<$type[]> vectors) {
+		int totalSize = 0;
+		for ($type[] vector: vectors) {
+			totalSize += vector.length;
+		}
+		$type[] result = new $type[totalSize];
+		int writeIndex = 0;
+		for ($type[] vector: vectors) {
+			for (int i = 0; i < vector.length; i++) {
+				result[writeIndex] = vector[i];
+				writeIndex++;
+			}
+		}
+		return result;
+	}
+	
+	public static $type[][] embedAsRowMatrix($type[] vector) {
+		int m = 1;
+		int n = vector.length;
+		$type[][] result = new $type[m][n];
+		for (int j = 0; j < n; j++) {
+			result[0][j] = vector[j];
+		}
+		return result;
+	}
+	
+	public static $type[][] embedAsColumnMatrix($type[] vector) {
+		int m = vector.length;
+		int n = 1;
+		$type[][] result = new $type[m][n];
+		for (int i = 0; i < m; i++) {
+			result[i][0] = vector[i];
+		}
+		return result;
+	}
+	
+	public static $type[][] insertRow($type[][] matrix, $type[] vector, int index) {
+		if (matrix.length == 0) {
+			return embedAsRowMatrix(vector);
+		}
+		int m = matrix.length;
+		int n = matrix[0].length;
+
+		$type[][] result = new $type[m + 1][n];
+		for (int i = 0; i < index; i++) {
+			for (int j = 0; j < index; j++) {
+				result[i][j] = matrix[i][j];
+			}
+		}
+		for (int j = 0; j < n; j++) {
+			result[index][j] = vector[j];
+		}
+		for (int i = index; i < m; i++) {
+			for (int j = 0; j < index; j++) {
+				result[i + 1][j] = matrix[i][j];
+			}
+		}
+		return result;
+	}
+	
+	public static $type[][] insertColumn($type[][] matrix, $type[] vector, int index) {
+		if (matrix.length == 0) {
+			return matrix;
+		}
+		int m = matrix.length;
+		int n = matrix[0].length;
+
+		$type[][] result = new $type[m][n + 1];
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < index; j++) {
+				result[i][j] = matrix[i][j];
+			}
+			
+			result[i][index] = vector[i];
+			
+			for (int j = index; j < n; j++) {
+				result[i][j + 1] = matrix[i][j];
+			}
+		}
+		return result;
+	}
+	
+	public static $type[][] appendRow($type[][] matrix, $type[] vector) {
+		return insertRow(matrix, vector, matrix.length);
+	}
+		
+	public static $type[][] appendColumn($type[][] matrix, $type[] vector) {
+		if (matrix.length == 0) {
+			return embedAsColumnMatrix(vector);
+		}
+		return insertColumn(matrix, vector, matrix[0].length);
+	}
+	
+	public static $type[][] prependRow($type[] vector, $type[][] matrix) {
+		return insertRow(matrix, vector, 0);
+	}
+	
+	public static $type[][] prependColumn($type[] vector, $type[][] matrix) {
+		return insertColumn(matrix, vector, 0);
+	}
+	
+	public static $type[][] removeRow($type[][] matrix, int index) {
+		int m = matrix.length;
+		int n = matrix[0].length;
+		$type[][] result = new $type[m - 1][n];
+		for (int i = 0; i < index; i++) {
+			for (int j = 0; j < n; j++) {
+				result[i][j] = matrix[i][j];
+			}
+		}
+		for (int i = index + 1; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				result[i - 1][j] = matrix[i][j];
+			}
+		}
+		
+		return result;
+	}
+	
+	public static $type[][] removeColumn($type[][] matrix, int index) {
+		int m = matrix.length;
+		int n = matrix[0].length;
+		$type[][] result = new $type[m][n - 1];
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < index; j++) {
+				result[i][j] = matrix[i][j];
+			}
+			for (int j = index + 1; j < n; j++) {
+				result[i][j - 1] = matrix[i][j];
+			}
+		}
+		return result;
+	}
+	
+	public static $type[] sortDescending($type[] array) {
+		$type[] result = new $type[array.length];
+		for (int i = 0; i < array.length; i++) {
+			result[i] = array[i];
+		}
+		java.util.Arrays.sort(result);
+		reverse(result);
+		return result;
+	}
+
+	public static $type[] sortAscending($type[] array) {
+		$type[] result = new $type[array.length];
+		for (int i = 0; i < array.length; i++) {
+			result[i] = array[i];
+		}
+		java.util.Arrays.sort(result);
+		return result;
+	}
+	
+	public static void reverse($type[] array) {
+		for (int left = 0, right = array.length - 1; left < right; left++, right--) {
+			$type temp = array[left];
+			array[left] = array[right];
+			array[right] = temp;
+		}
+	}
+	
+	public static $type[] flatten($type[][] matrix) {
+		int m = matrix.length;
+		int n = matrix[0].length;
+		$type[] array = new $type[m * n];
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				array[i * n + j] = matrix[i][j];
+			}
+		}
+		
+		return array;
+	}
+	
+	public static $type[][] unflatten($type[] array, int rows, int columns) {
+		$type[][] matrix = new $type[rows][columns];
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < columns; j++) {
+				matrix[i][j] = array[i * columns + j];
+			}
+		}
+		return matrix;
+	}
+}
