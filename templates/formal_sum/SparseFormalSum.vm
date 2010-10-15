@@ -1,0 +1,142 @@
+package $packageName;
+
+import java.util.Iterator;
+
+#set ($coefficientType = $type1)
+#set ($objectType = $type2)
+#set ($className = $utility.getFullClassName("SparseFormalSum", $type1, $type2))
+#set ($basicClassName = $utility.getClassName("SparseFormalSum", $type1, $type2))
+#set ($superName = $utility.getFullClassName("AbstractFormalSum", $type1, $type2))
+#set ($troveContainerName = $utility.getTroveMapName($type2, $type1) + $utility.generateGenericAnnotation($type2, $type1))
+#set ($troveIteratorName = $utility.getTroveIteratorName($type2, $type1) + $utility.generateGenericAnnotation($type2, $type1))
+
+/**
+ * This class is a data structure for holding a formal sum.
+ * Such an element can be thought of as being in the form
+ * r_1 m_1 + ... + r_k m_k. 
+ *
+ * Note that the class GenericFormalSum is "unaware" of the 
+ * arithmetic of the coefficient type. The arithmetic operations
+ * of the free R-module whose elements are formal sums is 
+ * implemented in GenericFreeModule<R, M>.
+ * 
+ * @author Andrew Tausz
+ *
+ * @param <$coefficientType> the coefficient type
+ * @param <$objectType> the object type 
+ */
+public class $className implements $superName {
+	/**
+	 * The coefficient-object pairs are held in a hash map, where the
+	 * key is the object), and the value is the coefficient.
+	 * 
+	 */
+	protected final $troveContainerName map = new $troveContainerName();
+	
+	/**
+	 * Default constructor which initializes the sum to be empty.
+	 */
+	protected $basicClassName() {}
+	
+	/**
+	 * This constructor initializes the sum to contain one object.
+	 * 
+	 * @param coefficient the coefficient of the initializing object
+	 * @param object the object to initialize to
+	 */
+	protected $basicClassName($coefficientType coefficient, $objectType object) {
+		this.put(coefficient, object);
+	}
+	
+	/**
+	 * This constructor constructs the sum from another hash map.
+	 * 
+	 * @param map the hash map to import from
+	 */
+	protected $basicClassName($troveContainerName map) {
+		#if ($utility.isPrimitive($type1) || $utility.isPrimitive($type2))
+		this.map.putAll(map);
+		#else
+		for (Map.Entry<M, R> entry: map.entrySet()) {
+			this.map.put(entry.getKey(), entry.getValue());
+		}
+		#end
+	}
+	
+	/**
+	 * This constructor initializes the sum from another DoubleFormalSum.
+	 * 
+	 * @param formalSum the DoubleFormalSum to import from
+	 */
+	protected $basicClassName($className formalSum) {
+		this(formalSum.map);
+	}
+	
+	public boolean containsObject($objectType object) {
+		return this.map.containsKey(object);
+	}
+
+	public $coefficientType getCoefficient($objectType object) {
+		return this.map.get(object);
+	}
+
+	public boolean isEmpty() {
+		return this.map.isEmpty();
+	}
+
+	public void put($coefficientType coefficient, $objectType object) {
+		this.map.put(object, coefficient);
+	}
+	
+	public void remove($objectType object) {
+		this.map.remove(object);
+	}
+
+	public int size() {
+		return this.map.size();
+	}
+	
+	#if ($utility.isPrimitive($coefficientType))
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		int index = 0;
+		for ($troveIteratorName iterator = this.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			if (index > 0) {
+				builder.append(" + ");
+			}
+			if (iterator.value() == -1) {
+				builder.append('-');
+			} else if (iterator.value() != 1) {
+				builder.append(iterator.value());
+			}
+			builder.append(iterator.key().toString());
+			index++;
+		}
+		return builder.toString();
+	}
+	
+	#else
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		int index = 0;
+		$coefficientType coefficient = null;
+		for (Map.Entry<$objectType, $coefficientType> entry : this.map.entrySet()) {
+			if (index > 0) {
+				builder.append(" + ");
+			}
+			coefficient = entry.getValue();
+			builder.append(coefficient);
+			builder.append(" ");
+			builder.append(entry.getKey());
+			index++;
+		}
+		return builder.toString();
+	}
+	
+	#end
+}

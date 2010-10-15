@@ -1,0 +1,51 @@
+package $packageName;
+
+import java.util.Iterator;
+
+#set ($superName = $utility.getFullClassName("AbstractMatrix", $type))
+#set ($className = $utility.getFullClassName("SparseMatrix", $type))
+#set ($vectorClassName = $utility.getFullClassName("SparseVector", $type))
+#set ($superVectorClassName = $utility.getFullClassName("AbstractVector", $type))
+#set ($iteratorClassName = $utility.getFullClassName("SparseMatrixIterator", $type))
+#set ($basicIteratorClassName = $utility.getClassName("SparseMatrixIterator", $type))
+#set ($entryClassName = $utility.getFullClassName("MatrixEntry", $type))
+#set ($vectorEntryClassName = $utility.getFullClassName("UnorderedPair", "int", $type))
+#set ($troveContainerName = $utility.getTroveMapName("int", "Object"))
+#set ($troveIteratorName = $utility.getTroveIteratorName("int", "Object"))
+
+public class $iteratorClassName implements Iterator<$entryClassName> {
+	private final $troveIteratorName<$vectorClassName> rowIterator;
+	private Iterator<$vectorEntryClassName> columnIterator;
+	
+	$basicIteratorClassName($className matrix) {
+		this.rowIterator = matrix.map.iterator();
+		this.rowIterator.advance();
+		this.columnIterator = this.rowIterator.value().iterator();
+	}
+	
+	public boolean hasNext() {
+		if (this.rowIterator.hasNext()) {
+			return true;
+		} else {
+			return this.columnIterator.hasNext();
+		}
+	}
+
+	public $entryClassName next() {
+		if (!columnIterator.hasNext()) {
+			// advance to the next row
+			this.rowIterator.advance();
+			this.columnIterator = this.rowIterator.value().iterator();
+			
+		}
+		int row = rowIterator.key();
+		$vectorEntryClassName columnValuePair = columnIterator.next();
+		int column = columnValuePair.getFirst();
+		$type value = columnValuePair.getSecond();
+		return new $entryClassName(row, column, value);
+	}
+
+	public void remove() {
+		this.columnIterator.remove();
+	}
+}

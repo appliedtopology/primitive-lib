@@ -1,0 +1,31 @@
+package $packageName;
+
+import java.util.Iterator;
+
+#set ($superName = $utility.getFullClassName("AbstractVector", $type))
+#set ($className = $utility.getFullClassName("SparseVector", $type))
+#set ($iteratorClassName = $utility.getFullClassName("SparseVectorIterator", $type))
+#set ($basicIteratorClassName = $utility.getClassName("SparseVectorIterator", $type))
+#set ($pairClassName = $utility.getFullClassName("UnorderedPair", "int", $type))
+#set ($troveContainerName = $utility.getTroveMapName("int", $type) + $utility.generateGenericAnnotation($type))
+#set ($troveIteratorName = $utility.getTroveIteratorName("int", $type) + $utility.generateGenericAnnotation($type))
+
+public class $iteratorClassName implements Iterator<$pairClassName> {
+	private final $troveIteratorName iterator;
+	
+	public $basicIteratorClassName($className vector) {
+		this.iterator = vector.map.iterator();
+	}
+	
+	public boolean hasNext() {
+		return this.iterator.hasNext();
+	}
+
+	public $pairClassName next() {
+		return new $pairClassName(this.iterator.key(), this.iterator.value());
+	}
+
+	public void remove() {
+		this.iterator.remove();
+	}
+}

@@ -1,0 +1,43 @@
+package $packageName;
+
+
+#set ($coefficientType = $type1)
+#set ($objectType = $type2)
+#set ($className = $utility.getFullClassName("AbstractModule", $type1, $type2))
+
+/**
+ * This interface defines a (left) R-module structure on
+ * a generic data type.
+ * 
+ * @author Andrew Tausz
+ *
+ * @param <$coefficientType> ring of scalars
+ * @param <$objectType> the underlying data type
+ */
+public abstract class $className {
+	public abstract $objectType add($objectType a, $objectType b);
+	public abstract $objectType subtract($objectType a, $objectType b);
+	public abstract $objectType multiply($coefficientType r, $objectType a);
+	public abstract $objectType negate($objectType a);
+	
+	#if (!($coefficientType == "int"))
+	public abstract $objectType multiply(int r, $objectType a);
+	#end
+	
+	/**
+	 * This function performs the operation a = a + b.
+	 * 
+	 * @param a the value to accumulate in
+	 * @param b the module element to add
+	 */
+	public abstract void accumulate($objectType a, $objectType b);
+	
+	/**
+	 * This function performs the operation a = a + r * b.
+	 * 
+	 * @param a the value to accumulate in
+	 * @param b the module element to add
+	 * @param c the scalar multiplier
+	 */
+	public abstract void accumulate($objectType a, $objectType b, $coefficientType r);
+}

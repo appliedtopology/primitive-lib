@@ -1,0 +1,180 @@
+package $packageName;
+
+import java.util.Iterator;
+
+#set ($coefficientType = $type1)
+#set ($objectType1 = $type2)
+#set ($objectType2 = $type3)
+#set ($className = $utility.getFullClassName("MatrixConverter", $type1, $type2, $type3))
+#set ($basicClassName = $utility.getClassName("MatrixConverter", $type1, $type2, $type3))
+#set ($vectorConverterClassName1 = $utility.getFullClassName("VectorConverter", $type1, $type2))
+#set ($vectorConverterClassName2 = $utility.getFullClassName("VectorConverter", $type1, $type3))
+#set ($entryClassName = $utility.getFullClassName("MatrixEntry", $coefficientType))
+
+#set ($sparseMatrixName = $utility.getFullClassName("SparseMatrix", $coefficientType))
+#set ($mappingBasisClass = $utility.getFullClassName("UnorderedPair", $objectType1, $objectType2))
+#set ($mappingSumClass = $utility.getFullClassName("SparseFormalSum", $coefficientType, $mappingBasisClass))
+#set ($troveIteratorName = $utility.getTroveIteratorName($mappingBasisClass, $type1) + $utility.generateGenericAnnotation($mappingBasisClass, $type1))
+
+/**
+ * This class computes matrix representations of module homomorphisms
+ * T: F(M) -> F(N), where F(M) and F(N) are free modules on sets with 
+ * underlying type M and N.
+ * 
+ * @author Andrew Tausz
+ *
+ * @param <$coefficientType> the type of the underlying commutative ring
+ * @param <$objectType1> the type of the generating set of the domain
+ * @param <$objectType2> the type of the generating set of the codomain
+ */
+public class $className {
+	protected final $vectorConverterClassName1 domainRepresentation;
+	protected final $vectorConverterClassName2 codomainRepresentation;
+	
+	/**
+	 * This constructor initializes the object with a basis for the domain and codomain.
+	 * 
+	 * @param domainBasis a collection consisting of basis elements for the domain
+	 * @param codomainBasis a collection consisting of basis elements for the codomain
+	 */
+	public $basicClassName(Iterable<$objectType1> domainBasis, Iterable<$objectType2> codomainBasis) {
+		this(new $vectorConverterClassName1(domainBasis), new $vectorConverterClassName2(codomainBasis));
+	}
+	
+	public $basicClassName($vectorConverterClassName1 domainRepresentation, $vectorConverterClassName2 codomainRepresentation) {
+		this.domainRepresentation = domainRepresentation;
+		this.codomainRepresentation = codomainRepresentation;
+	}
+	
+	public $vectorConverterClassName1 getDomainRepresentation() {
+		return this.domainRepresentation;
+	}
+	
+	public $vectorConverterClassName2 getCodomainRepresentation() {
+		return this.codomainRepresentation;
+	}
+	
+	#if ($utility.isPrimitive($coefficientType))
+	
+	public $coefficientType[][] toArray($mappingSumClass formalSum) {
+		$coefficientType[][] matrix = new $coefficientType[this.codomainRepresentation.getDimension()][this.domainRepresentation.getDimension()];		
+		
+		for ($troveIteratorName iterator = formalSum.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			$mappingBasisClass basisMappingPair = iterator.key();
+			int row = this.domainRepresentation.getIndex(basisMappingPair.getFirst());
+			int column = this.codomainRepresentation.getIndex(basisMappingPair.getSecond());
+			
+			matrix[row][column] = iterator.value();
+		}
+		
+		return matrix;
+	}
+	
+	public $coefficientType[][] toArray($sparseMatrixName sparseMatrix) {
+		$coefficientType[][] matrix = new $coefficientType[this.codomainRepresentation.getDimension()][this.domainRepresentation.getDimension()];		
+		
+		for (Iterator<$entryClassName> iterator = sparseMatrix.iterator(); iterator.hasNext(); ) {
+			$entryClassName entry = iterator.next();
+			matrix[entry.getRow()][entry.getCol()] = entry.getValue();
+		}
+		
+		return matrix;
+	}
+	
+	#end
+	
+	#if ($utility.isPrimitive($coefficientType))
+	
+	public $sparseMatrixName toSparseMatrix($mappingSumClass formalSum) {
+		$sparseMatrixName sparseMatrix = new $sparseMatrixName(this.codomainRepresentation.getDimension(), this.domainRepresentation.getDimension());
+		
+		for ($troveIteratorName iterator = formalSum.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			$mappingBasisClass basisMappingPair = iterator.key();
+			int row = this.domainRepresentation.getIndex(basisMappingPair.getFirst());
+			int column = this.codomainRepresentation.getIndex(basisMappingPair.getSecond());
+			
+			sparseMatrix.set(row, column, iterator.value());
+		}
+		
+		return sparseMatrix;
+	}
+	
+	#else
+	
+	public $sparseMatrixName toSparseMatrix($mappingSumClass formalSum) {
+		$sparseMatrixName sparseMatrix = new $sparseMatrixName(this.codomainRepresentation.getDimension(), this.domainRepresentation.getDimension());
+		
+		for (Map.Entry<$mappingBasisClass, $coefficientType> entry : formalSum.map.entrySet()) {
+			$mappingBasisClass basisMappingPair = entry.getKey();
+			int row = this.domainRepresentation.getIndex(basisMappingPair.getFirst());
+			int column = this.codomainRepresentation.getIndex(basisMappingPair.getSecond());
+			
+			sparseMatrix.set(row, column, entry.getValue());
+		}
+		
+		return sparseMatrix;
+	}
+	
+	#end
+	
+	public $sparseMatrixName toSparseMatrix($coefficientType[][] matrix) {
+		$sparseMatrixName sparseMatrix = new $sparseMatrixName(this.codomainRepresentation.getDimension(), this.domainRepresentation.getDimension());
+		
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				#if ($utility.isPrimitive($coefficientType))
+				if (matrix[i][j] == 0) {
+					continue;
+				}
+				#else
+				if (matrix[i][j] == null) {
+					continue;
+				}
+				#end
+				sparseMatrix.set(i, j, matrix[i][j]);
+			}
+		}
+		
+		return sparseMatrix;
+	}
+	
+	public $mappingSumClass toFormalSum($sparseMatrixName sparseMatrix) {
+		$mappingSumClass formalSum = new $mappingSumClass();
+		
+		for (Iterator<$entryClassName> iterator = sparseMatrix.iterator(); iterator.hasNext(); ) {
+			$entryClassName entry = iterator.next();
+			$objectType1 domainBasisElement = this.domainRepresentation.getBasisElement(entry.getRow());
+			$objectType2 codomainBasisElement = this.codomainRepresentation.getBasisElement(entry.getCol());
+			$mappingBasisClass basisPair = new $mappingBasisClass(domainBasisElement, codomainBasisElement);
+			formalSum.put(entry.getValue(), basisPair);
+		}
+		
+		return formalSum;
+	}
+	
+	public $mappingSumClass toFormalSum($coefficientType[][] matrix) {
+		$mappingSumClass formalSum = new $mappingSumClass();
+		
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				#if ($utility.isPrimitive($coefficientType))
+				if (matrix[i][j] == 0) {
+					continue;
+				}
+				#else
+				if (matrix[i][j] == null) {
+					continue;
+				}
+				#end
+				$objectType1 domainBasisElement = this.domainRepresentation.getBasisElement(i);
+				$objectType2 codomainBasisElement = this.codomainRepresentation.getBasisElement(j);
+				$mappingBasisClass basisPair = new $mappingBasisClass(domainBasisElement, codomainBasisElement);
+				formalSum.put(matrix[i][j], basisPair);
+			}
+		}
+		
+		return formalSum;
+	}
+}

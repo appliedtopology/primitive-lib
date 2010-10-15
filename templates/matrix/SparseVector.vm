@@ -2,19 +2,36 @@ package $packageName;
 
 import java.util.Iterator;
 
-#set ($superName = $utility.getClassName("AbstractVector", $type))
-#set ($className = $utility.getClassName("SparseVector", $type))
-#set ($iteratorClassName = $utility.getClassName("SparseVectorIterator", $type))
-#set ($pairClassName = $utility.getClassName("Pair", "int", $type))
-#set ($troveContainerName = $utility.getTroveMapName("int", $type))
-#set ($troveIteratorName = $utility.getTroveIteratorName("int", $type))
+#set ($superName = $utility.getFullClassName("AbstractVector", $type))
+#set ($className = $utility.getFullClassName("SparseVector", $type))
+#set ($basicName = $utility.getClassName("SparseVector", $type))
+#set ($iteratorClassName = $utility.getFullClassName("SparseVectorIterator", $type))
+#set ($pairClassName = $utility.getFullClassName("UnorderedPair", "int", $type))
+#set ($troveContainerName = $utility.getTroveMapName("int", $type) + $utility.generateGenericAnnotation($type))
+#set ($troveIteratorName = $utility.getTroveIteratorName("int", $type) + $utility.generateGenericAnnotation($type))
 
 public class $className implements $superName {
 	protected final $troveContainerName map = new $troveContainerName();
 	protected final int size;
 	
-	public $className(int size) {
+	public $basicName(int size) {
 		this.size = size;
+	}
+	
+	public $basicName($type[] array) {
+		this.size = array.length;
+		for (int i = 0; i < size; i++) {
+			#if ($utility.isPrimitive($type))
+			if (array[i] == 0) {
+				continue;
+			}
+			#else
+			if (array[i] == null) {
+				continue;
+			}
+			#end
+			this.map.put(i, array[i]);
+		}
 	}
 	
 	public $superName like(int size) {
@@ -30,7 +47,11 @@ public class $className implements $superName {
 	}
 	
 	public void set(int index, $type value) {
+		#if ($utility.isPrimitive($type))
 		if (value == 0) {
+		#else
+		if (value == null) {
+		#end
 			this.map.remove(index);
 		}
 		this.map.put(index, value);
@@ -44,6 +65,7 @@ public class $className implements $superName {
 		return this.size;
 	}
 	
+	#if ($utility.isPrimitive($type))
 	public $type innerProduct($className other) {
 		$type sum = 0;
 		$className smaller = (this.map.size() < other.map.size() ? this : other);
@@ -77,6 +99,7 @@ public class $className implements $superName {
 		}
 		return sum;
 	}
+	#ends.getDimension()
 	
 	public Iterator<$pairClassName> iterator() {
 		return new $iteratorClassName(this);
@@ -99,4 +122,33 @@ public class $className implements $superName {
 		
 		return builder.toString();
 	}
+	
+	public void write(Writer writer) throws IOException {
+		int index = 0;
+		writer.write("[");
+		for ($pairClassName pair: this) {
+			if (index > 0) {
+				writer.append(", ");
+			}
+			writer.write(pair.getFirst());
+			writer.write(": ");
+			writer.write(pair.getSecond());
+			index++;
+		}
+		writer.write("]");
+	}
+	
+	#if ($utility.isPrimitive($type))
+	
+	public $type[] toArray() {
+		$type[] array = new $coefficientType[this.size];
+		
+		for ($pairClassName pair: this) {
+			array[pair.getFirst()] = pair.getSecond();
+		}
+		
+		return array;
+	}
+	
+	#end
 }

@@ -2,17 +2,19 @@ package $packageName;
 
 import java.util.Iterator;
 
-#set ($className = $utility.getClassName("AbstractVector", $type))
-#set ($pairClassName = $utility.getClassName("Pair", "int", $type))
+#set ($className = $utility.getFullClassName("AbstractVector", $type))
+#set ($pairClassName = $utility.getFullClassName("UnorderedPair", "int", $type))
 
-public interface $className$utility.generateGenericAnnotation($type) extends Iterable<$pairClassName> {
+public interface $className extends Iterable<$pairClassName> {
 	public abstract $className like(int size);
 	
 	public abstract $type get(int index);
 	public abstract void set(int index, $type value);
 	public abstract int getLength();
-	public abstract $type innerProduct($className other);
 	
-	public abstract Iterator<$pairClassName> iterator();
+	#if ($utility.isPrimitive($type))
+	public abstract $type innerProduct($className other);
+	#end
+	
 	public abstract String toString();
 }

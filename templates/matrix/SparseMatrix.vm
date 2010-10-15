@@ -1,0 +1,93 @@
+package $packageName;
+
+import java.util.Iterator;
+
+#set ($superName = $utility.getFullClassName("AbstractMatrix", $type))
+#set ($className = $utility.getFullClassName("SparseMatrix", $type))
+#set ($basicName = $utility.getClassName("SparseMatrix", $type))
+#set ($vectorClassName = $utility.getFullClassName("SparseVector", $type))
+#set ($superVectorClassName = $utility.getFullClassName("AbstractVector", $type))
+#set ($iteratorClassName = $utility.getFullClassName("SparseMatrixIterator", $type))
+#set ($entryClassName = $utility.getFullClassName("MatrixEntry", $type))
+#set ($troveContainerName = $utility.getTroveMapName("int", "Object"))
+#set ($troveIteratorName = $utility.getTroveIteratorName("int", "Object"))
+
+public class $className implements $superName {
+	/**
+	 * We use a row-wise storage scheme. The variable map stores
+	 * the rows of the matrix on an as-needed basis. Each row is a 
+	 * $vectorClassName. This choice was made so that matrix-vector
+	 * products can be computed very quickly.
+	 */
+	protected final $troveContainerName<$vectorClassName> map = new $troveContainerName<$vectorClassName>();
+
+	protected final int rows;
+	protected final int columns;
+	
+	public $basicName(int rows, int columns) {
+		this.rows = rows;
+		this.columns = columns;
+	}
+	
+	public $type get(int row, int column) {
+		if (!this.map.contains(row)) {
+			#if ($utility.isPrimitive($type))
+			return 0;
+			#else
+			return null;
+			#end
+		}
+		return this.map.get(row).get(column);
+	}
+
+	public int getNumColumns() {
+		return this.columns;
+	}
+
+	public int getNumRows() {
+		return this.rows;
+	}
+
+	public Iterator<$entryClassName> iterator() {
+		return new $iteratorClassName(this);
+	}
+
+	public $superName like(int rows, int columns) {
+		return new $className(rows, columns);
+	}
+
+	#if ($utility.isPrimitive($type))
+	public $superVectorClassName multiply($superVectorClassName vector) {
+		$superVectorClassName result = new $vectorClassName(this.rows);
+		$type innerProductValue = 0;
+		for (TIntObjectIterator<$vectorClassName> iterator = this.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			innerProductValue = iterator.value().innerProduct(vector);
+			if (innerProductValue != 0) {
+				result.set(iterator.key(), innerProductValue);
+			}
+		}
+		
+		return result;
+	}
+	#end
+
+	public void set(int row, int column, $type value) {
+		#if ($utility.isPrimitive($type))
+		if (value == 0) {
+		#else
+		if (value == null) {
+		#end
+			if (!this.map.contains(row)) {
+				return;
+			} else {
+				this.map.remove(column);
+			}
+		} else {
+			if (!this.map.contains(row)) {
+				this.map.put(row, new $vectorClassName(this.columns));
+			}
+			this.map.get(row).set(column, value);
+		}
+	}
+}
