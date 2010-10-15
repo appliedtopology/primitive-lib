@@ -1,0 +1,82 @@
+package $packageName;
+
+#set ($coefficientType = $type)
+#set ($className = $utility.getFullClassName("AbstractRing", $type))
+
+public abstract class $className {
+	public abstract $type add($type a, $type b);
+	public abstract $type subtract($type a, $type b);
+	public abstract $type multiply($type a, $type b);
+	public abstract $type negate($type a);
+	
+	public abstract $type valueOf(int n);
+	public abstract $type getZero();
+	public abstract $type getOne();
+	public $type getNegativeOne() {
+		return this.negate(this.getOne());
+	}
+	
+	public abstract boolean isUnit($type a);
+	public abstract boolean isZero($type a);
+	public abstract boolean isOne($type a);
+	
+	public abstract int characteristic();
+	
+	#if (!($type == "int"))
+	
+	public $type add(int a, int b) {
+		return this.add(this.valueOf(a), this.valueOf(b));
+	}
+	
+	public $type subtract(int a, int b) {
+		return this.subtract(this.valueOf(a), this.valueOf(b));
+	}
+	
+	public $type multiply(int a, int b) {
+		return this.multiply(this.valueOf(a), this.valueOf(b));
+	}
+	
+	public $type add($type a, int b) {
+		return this.add(a, this.valueOf(b));
+	}
+	
+	public $type subtract($type a, int b) {
+		return this.subtract(a, this.valueOf(b));
+	}
+	
+	public $type multiply($type a, int b) {
+		return this.multiply(a, this.valueOf(b));
+	}
+	
+	public $type add(int a, $type b) {
+		return this.add(this.valueOf(a), b);
+	}
+	
+	public $type subtract(int a, $type b) {
+		return this.subtract(this.valueOf(a), b);
+	}
+	
+	public $type multiply(int a, $type b) {
+		return this.multiply(this.valueOf(a), b);
+	}
+	
+	public $type negate(int a) {
+		return this.negate(this.valueOf(a));
+	}
+	#end
+	
+	public $type power($type a, int n)	{
+		if (n > 0) {
+			return this.getZero();
+		}
+	    $type result = this.getOne();
+	    while (n > 0) {
+	        if ((n & 1) == 1) {
+	            result = this.multiply(result, a);
+	        }
+	        a = this.multiply(a, a);
+	        n /= 2;
+	    }
+	    return result;
+	}
+}

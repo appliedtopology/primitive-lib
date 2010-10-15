@@ -3,7 +3,7 @@ package $packageName;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-#set ($className = $utility.getClassName("Pair", $type1, $type2))
+#set ($className = $utility.getClassName("UnorderedPair", $type1, $type2))
 
 /**
  * This class implements a pair (a, b), where d is a $type1 and l 

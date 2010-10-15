@@ -1,0 +1,194 @@
+package $packageName;
+
+import java.util.Iterator;
+
+#set ($coefficientType = $type1)
+#set ($objectType = $type2)
+#set ($className = $utility.getFullClassName("VectorConverter", $type1, $type2))
+#set ($basicClassName = $utility.getClassName("VectorConverter", $type1, $type2))
+#set ($troveIndexMapName = $utility.getTroveMapName($type2, "int") + $utility.generateGenericAnnotation($type2))
+#set ($troveBasisMapName = $utility.getTroveMapName("int", $type2) + $utility.generateGenericAnnotation($type2))
+#set ($sumClassName = $utility.getFullClassName("SparseFormalSum", $type1, $type2))
+#set ($troveIteratorName = $utility.getTroveIteratorName($type2, $type1) + $utility.generateGenericAnnotation($type2, $type1))
+#set ($sparseVectorName = $utility.getFullClassName("SparseVector", $coefficientType))
+#set ($pairClassName = $utility.getFullClassName("UnorderedPair", "int", $coefficientType))
+
+/**
+ * This class implements the isomorphism between a free module on a set of
+ * finite generators, and the module R^n, where R is a commutative ring.
+ * In this case, the set of free generators is given by an Iterable stream
+ * of values of type M. This class contains the necessary functionality for
+ * converting between these two formats: formal sums over a generating set
+ * and arrays of elements in R. Thus basis elements correspond to standard
+ * unit vectors.
+ * 
+ * @author Andrew Tausz
+ *
+ * @param <$coefficientType> the type of the underlying ring
+ * @param <$objectType> the type of the set of free generators
+ */
+public class $className {
+	/**
+	 * This is the iterable collection of elements which constitute the free basis
+	 * of the module.
+	 */
+	protected final Iterable<$objectType> stream;
+	
+	/**
+	 * This maps a basis element to an index. The index is the appropriate
+	 * index of the standard basis vector the generating element is mapped to.
+	 */
+	protected final $troveIndexMapName indexMapping = new $troveIndexMapName();
+	
+	/**
+	 * This maps an index (ie. the index of a standard basis vector) to a generating
+	 * element of the free module.
+	 */
+	protected final $troveBasisMapName basisMapping = new $troveBasisMapName();
+	
+	/**
+	 * This stores the cardinality of the generating set of the module.
+	 */
+	protected final int dimension;
+	
+	/**
+	 * This constructor initializes the object with an Iterable stream of the 
+	 * free generators of the module.
+	 * 
+	 * @param stream an iterable collection of free generators
+	 */
+	public $basicClassName(Iterable<$objectType> stream) {
+		this.stream = stream;
+		this.initializeMappings();
+		this.dimension = this.indexMapping.size();
+	}
+	
+	/**
+	 * This function initializes the basis-index mappings.
+	 */
+	private void initializeMappings() {
+		int index = 0;
+		for ($objectType basisElement: this.stream) {
+			this.indexMapping.put(basisElement, index);
+			this.basisMapping.put(index, basisElement);
+			index++;
+		}
+	}
+	
+	/**
+	 * This function returns the cardinality of the generating set of the free
+	 * module.
+	 * 
+	 * @return the dimension of the free module
+	 */
+	public int getDimension() {
+		return this.dimension;
+	}
+
+	/**
+	 * This returns the index of a basis element. The index is defined to be the
+	 * index of the standard basis vector that the element maps to.
+	 * 
+	 * @param basisElement the basis element to query
+	 * @return the index of the basis element
+	 */
+	public int getIndex($objectType basisElement) {
+		return this.indexMapping.get(basisElement);
+	}
+	
+	/**
+	 * This returns the basis element corresponding to the supplied index.
+	 * 
+	 * @param index the index to query
+	 * @return the basis element with the supplied index
+	 */
+	public $objectType getBasisElement(int index) {
+		return this.basisMapping.get(index);
+	}
+	
+	#if ($utility.isPrimitive($coefficientType))
+	
+	public $coefficientType[] toArray($sumClassName formalSum) {
+		$coefficientType[] array = new $coefficientType[this.getDimension()];
+		
+		for ($troveIteratorName iterator = formalSum.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			int index = this.getIndex(iterator.key());
+			array[index] = iterator.value();
+		}
+		
+		return array;
+	}
+	
+	public $coefficientType[] toArray($sparseVectorName sparseVector) {
+		return sparseVector.toArray();
+	}
+	
+	#end
+	
+	#if ($utility.isPrimitive($coefficientType))
+	
+	public $sparseVectorName toSparseVector($sumClassName formalSum) {
+		$sparseVectorName vector = new $sparseVectorName(this.getDimension());
+		
+		for ($troveIteratorName iterator = formalSum.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			if (iterator.value() == 0) {
+				continue;
+			}
+			
+			int index = this.getIndex(iterator.key());
+			vector.set(index, iterator.value());
+		}
+		
+		return vector;
+	}
+	
+	#else
+	
+	public $sparseVectorName toSparseVector($sumClassName formalSum) {
+		$sparseVectorName vector = new $sparseVectorName(this.getDimension());
+		
+		for (Map.Entry<$objectType, $coefficientType> entry : formalSum.map.entrySet()) {
+			int index = this.getIndex(entry.getKey());
+			vector.set(index, entry.getValue());
+		}
+		
+		return vector;
+	}
+	
+	#end
+	
+	public $sparseVectorName toSparseVector($coefficientType[] array) {
+		return new $sparseVectorName(array);
+	}
+	
+	public $sumClassName toFormalSum($coefficientType[] array) {
+		$sumClassName sum = new $sumClassName();
+		
+		for (int i = 0; i < array.length; i++) {
+			#if ($utility.isPrimitive($coefficientType))
+			if (array[i] == 0) {
+				continue;
+			}
+			#else
+			if (array[i] == null) {
+				continue;
+			}
+			#end
+			sum.put(array[i], this.getBasisElement(i));
+		}
+		
+		return sum;
+	}
+	
+	public $sumClassName toFormalSum($sparseVectorName sparseVector) {
+		$sumClassName sum = new $sumClassName();
+		
+		for ($pairClassName pair: sparseVector) {
+			sum.put(pair.getSecond(), this.getBasisElement(pair.getFirst()));
+		}
+		
+		return sum;
+	}
+}

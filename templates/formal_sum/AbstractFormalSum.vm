@@ -1,0 +1,16 @@
+package $packageName;
+
+#set ($coefficientType = $type1)
+#set ($objectType = $type2)
+#set ($className = $utility.getFullClassName("AbstractFormalSum", $type1, $type2))
+
+public interface $className {
+	void put($coefficientType coefficient, $objectType object);
+	void remove($objectType object);
+	
+	boolean containsObject($objectType object);
+	$coefficientType getCoefficient($objectType object);
+	
+	int size();
+	boolean isEmpty();
+}

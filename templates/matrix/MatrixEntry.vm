@@ -3,7 +3,8 @@ package $packageName;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-#set ($className = $utility.getClassName("MatrixEntry", $type))
+#set ($className = $utility.getFullClassName("MatrixEntry", $type))
+#set ($basicName = $utility.getClassName("MatrixEntry", $type))
 
 /**
  * This class implements a pair (a, b, c), where a and b are ints and
@@ -13,7 +14,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * @author Andrew Tausz
  *
  */
-public class $className$utility.generateGenericAnnotation($type) {
+public class $className {
 	private final int row;
 	private final int col;
 	private final $type value;
@@ -24,7 +25,7 @@ public class $className$utility.generateGenericAnnotation($type) {
 	 * @param first the value of the first component
 	 * @param second the value of the second component
 	 */
-	public $className(int row, int col, $type value) {
+	public $basicName(int row, int col, $type value) {
 		this.row = row;
 		this.col = col;
 		this.value = value;
@@ -65,7 +66,7 @@ public class $className$utility.generateGenericAnnotation($type) {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final $className other = ($className$utility.generateGenericWildcards($type)) obj;
+		final $basicName$utility.generateGenericWildcards($type) other = ($basicName$utility.generateGenericWildcards($type)) obj;
 		return new EqualsBuilder().append(row, other.row).append(col, other.col).append(value, other.value).isEquals();
 
 	}
