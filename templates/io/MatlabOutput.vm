@@ -1,0 +1,224 @@
+package $packageName;
+
+import java.util.Iterator;
+
+#set ($className = $utility.getFullClassName("MatlabOutput", $type))
+#set ($vectorClassName = $utility.getFullClassName("SparseVector", $type))
+#set ($matrixClassName = $utility.getFullClassName("SparseMatrix", $type))
+#set ($pairClassName = $utility.getFullClassName("UnorderedPair", "int", $type))
+#set ($entryClassName = $utility.getFullClassName("MatrixEntry", $type))
+
+
+public class $className {
+
+	public static void writeAsMatlabArray(Writer writer, $type[] array, String separator) throws IOException {
+		writer.write('[');
+		for (int i = 0; i < array.length; i++) {
+			if (i > 0) {
+				writer.write(separator);
+			}
+			writer.write($utility.getBoxedName($type) .toString(array[i]));
+		}
+		writer.write("]");
+	}
+	
+	public static void writeAsMatlabRow(Writer writer, $type[] array) throws IOException {
+		writeAsMatlabArray(writer, array, ",");
+	}
+	
+	public static void writeAsMatlabCol(Writer writer, $type[] array) throws IOException {
+		writeAsMatlabArray(writer, array, ";");
+	}
+	
+	public static void writeAsMatlabRow(Writer writer, $type[] array, String name) throws IOException {
+		writer.write(name + " = ");
+		writeAsMatlabArray(writer, array, ",");
+		writer.write(";\n");
+	}
+	
+	public static void writeAsMatlabCol(Writer writer, $type[] array, String name) throws IOException {
+		writer.write(name + " = ");
+		writeAsMatlabArray(writer, array, ":");
+		writer.write(";\n");
+	}
+	
+	public static void writeAsMatlabMatrix(Writer writer, $type[][] matrix) throws IOException {
+		writer.write('[');
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				if (j > 0) {
+					writer.write(", ");
+				}
+				writer.write($utility.getBoxedName($type) .toString(matrix[i][j]));
+			}
+			writer.write(";");
+		}
+		writer.write("]");
+	}
+	
+	public static void writeAsMatlabMatrix(Writer writer, $type[][] matrix, String name) throws IOException {
+		writer.write(name + " = ");
+		writeAsMatlabMatrix(writer, matrix);
+		writer.write(";\n");
+	}
+	
+	public static void writeAsMatlabSparseCol(Writer writer, $type[] matrix, String name) throws IOException {
+		int numSparseEntry = 0;
+		
+		for (int i = 0; i < matrix.length; i++) {
+			if (matrix[i] != 0) {
+				numSparseEntry++;
+			}
+		}
+		
+		int[] _tmp_i = new int[numSparseEntry];
+		int[] _tmp_j = new int[numSparseEntry];
+		$type[] _tmp_s = new $type[numSparseEntry];
+		
+		for (int i = 0; i < matrix.length; i++) {
+			if (matrix[i] != 0) {
+				_tmp_i[i] = i + 1;
+				_tmp_j[i] = 1;
+				_tmp_s[i] = matrix[i];
+			}
+		}
+		
+		writer.write("tmp_m = " + matrix.length + ";\n");
+		writer.write("tmp_n = " + 1 + ";\n");
+		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_i, "tmp_i");
+		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_j, "tmp_j");
+		writeAsMatlabRow(writer, _tmp_s, "tmp_s");
+		writer.write(name + " = sparse(tmp_i, tmp_j, tmp_s, tmp_m, tmp_n);");
+	}
+	
+	public static void writeAsMatlabSparseRow(Writer writer, $type[] matrix, String name) throws IOException {
+		int numSparseEntry = 0;
+		
+		for (int i = 0; i < matrix.length; i++) {
+			if (matrix[i] != 0) {
+				numSparseEntry++;
+			}
+		}
+		
+		int[] _tmp_i = new int[numSparseEntry];
+		int[] _tmp_j = new int[numSparseEntry];
+		$type[] _tmp_s = new $type[numSparseEntry];
+		
+		for (int i = 0; i < matrix.length; i++) {
+			if (matrix[i] != 0) {
+				_tmp_i[i] = 1;
+				_tmp_j[i] = i + 1;
+				_tmp_s[i] = matrix[i];
+			}
+		}
+		
+		writer.write("tmp_m = " + 1 + ";\n");
+		writer.write("tmp_n = " + matrix.length + ";\n");
+		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_i, "tmp_i");
+		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_j, "tmp_j");
+		writeAsMatlabRow(writer, _tmp_s, "tmp_s");
+		writer.write(name + " = sparse(tmp_i, tmp_j, tmp_s, tmp_m, tmp_n);");
+	}
+	
+	public static void writeAsMatlabSparseMatrix(Writer writer, $type[][] matrix, String name) throws IOException {
+		int numSparseEntry = 0;
+		
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				if (matrix[i][j] != 0) {
+					numSparseEntry++;
+				}
+			}
+		}
+		
+		int[] _tmp_i = new int[numSparseEntry];
+		int[] _tmp_j = new int[numSparseEntry];
+		$type[] _tmp_s = new $type[numSparseEntry];
+		
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				if (matrix[i][j] != 0) {
+					_tmp_i[i] = i + 1;
+					_tmp_j[i] = j + 1;
+					_tmp_s[i] = matrix[i][j];
+				}
+			}
+		}
+		
+		writer.write("tmp_m = " + matrix.length + ";\n");
+		writer.write("tmp_n = " + matrix[0].length + ";\n");
+		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_i, "tmp_i");
+		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_j, "tmp_j");
+		writeAsMatlabRow(writer, _tmp_s, "tmp_s");
+		writer.write(name + " = sparse(tmp_i, tmp_j, tmp_s, tmp_m, tmp_n);");
+	}
+
+	public static void writeAsMatlabSparseCol(Writer writer, $vectorClassName vector, String name) throws IOException {
+		int numSparseEntry = vector.getNumNonzeroElements();
+		
+		int[] _tmp_i = new int[numSparseEntry];
+		int[] _tmp_j = new int[numSparseEntry];
+		$type[] _tmp_s = new $type[numSparseEntry];
+		
+		int i = 0;
+		for ($pairClassName pair: vector) {
+			_tmp_i[i] = pair.getFirst() + 1;
+			_tmp_j[i] = 1;
+			_tmp_s[i] = pair.getSecond();
+			i++;
+		}
+		
+		writer.write("tmp_m = " + vector.getLength() + ";\n");
+		writer.write("tmp_n = " + 1 + ";\n");
+		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_i, "tmp_i");
+		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_j, "tmp_j");
+		writeAsMatlabRow(writer, _tmp_s, "tmp_s");
+		writer.write(name + " = sparse(tmp_i, tmp_j, tmp_s, tmp_m, tmp_n);");
+	}
+	
+	public static void writeAsMatlabSparseRow(Writer writer, $vectorClassName vector, String name) throws IOException {
+		int numSparseEntry = vector.getNumNonzeroElements();
+		
+		int[] _tmp_i = new int[numSparseEntry];
+		int[] _tmp_j = new int[numSparseEntry];
+		$type[] _tmp_s = new $type[numSparseEntry];
+		
+		int i = 0;
+		for ($pairClassName pair: vector) {
+			_tmp_i[i] = 1;
+			_tmp_j[i] = pair.getFirst() + 1;
+			_tmp_s[i] = pair.getSecond();
+			i++;
+		}
+		
+		writer.write("tmp_m = " + 1 + ";\n");
+		writer.write("tmp_n = " + vector.getLength() + ";\n");
+		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_i, "tmp_i");
+		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_j, "tmp_j");
+		writeAsMatlabRow(writer, _tmp_s, "tmp_s");
+		writer.write(name + " = sparse(tmp_i, tmp_j, tmp_s, tmp_m, tmp_n);");
+	}
+	
+	public static void writeAsMatlabSparseCol(Writer writer, $matrixClassName matrix, String name) throws IOException {
+		int numSparseEntry = matrix.getNumNonzeroElements();
+		
+		int[] _tmp_i = new int[numSparseEntry];
+		int[] _tmp_j = new int[numSparseEntry];
+		$type[] _tmp_s = new $type[numSparseEntry];
+		
+		int i = 0;
+		for ($entryClassName entry: matrix) {
+			_tmp_i[i] = entry.getRow() + 1;
+			_tmp_j[i] = entry.getCol() + 1;
+			_tmp_s[i] = entry.getValue();
+			i++;
+		}
+		
+		writer.write("tmp_m = " + matrix.getNumRows() + ";\n");
+		writer.write("tmp_n = " + matrix.getNumColumns() + ";\n");
+		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_i, "tmp_i");
+		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_j, "tmp_j");
+		writeAsMatlabRow(writer, _tmp_s, "tmp_s");
+		writer.write(name + " = sparse(tmp_i, tmp_j, tmp_s, tmp_m, tmp_n);");
+	}
+}

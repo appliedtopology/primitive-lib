@@ -1,12 +1,17 @@
 package $packageName;
 
-import java.util.Iterator;
+#if ($type == "boolean")
+
+#include("templates/matrix/boolean/BooleanAbstractMatrix.java");
+#stop
+
+#end
 
 #set ($className = $utility.getFullClassName("AbstractMatrix", $type))
 #set ($entryClassName = $utility.getFullClassName("MatrixEntry", $type))
 #set ($vectorClassName = $utility.getFullClassName("AbstractVector", $type))
 
-public interface $className {
+public interface $className extends Iterable<$entryClassName> {
 	public abstract $className like(int rows, int columns);
 	
 	public abstract int getNumRows();
@@ -19,6 +24,5 @@ public interface $className {
 	public abstract $vectorClassName multiply($vectorClassName vector);
 	#end
 	
-	public abstract Iterator<$entryClassName> iterator();
 	public abstract String toString();
 }

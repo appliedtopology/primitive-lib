@@ -16,30 +16,38 @@ public class ClassGenerator {
 	private static String basePackageName = "edu.stanford.math.plexlib.autogen";
 
 	public static void main(String[] args) throws Exception {
-		//generateAllPairs();
-		//generateMatrix();
+		generateAllPairs();
+		generateMatrix();
 		generateFormalSum();
+		generateAlgebraicStructures();
+		generateArray();
+		generateIo();
 	}
 
 	private static void generateAllPairs() throws Exception {
 		List<String> types1 = new ArrayList<String>();
 		types1.add("int");
-		types1.add("float");
+		types1.add("double");
+		types1.add("long");
+		types1.add("boolean");
 		types1.add("T");
 
 		List<String> types2 = new ArrayList<String>();
 		types2.add("int");
-		types2.add("float");
+		types2.add("double");
+		types2.add("long");
+		types2.add("boolean");
 		types2.add("U");
 
-		generateFromTypes("pair", "OrderedPair", types1, types2);
+		//generateFromTypes("pair", "OrderedPair", types1, types2);
 		generateFromTypes("pair", "UnorderedPair", types1, types2);
 	}
 
 	private static void generateMatrix() throws Exception {
 		List<String> types = new ArrayList<String>();
 		types.add("int");
-		types.add("float");
+		types.add("double");
+		types.add("boolean");
 		types.add("T");
 
 		generateFromTypes("matrix", "AbstractVector", types);
@@ -54,7 +62,8 @@ public class ClassGenerator {
 	private static void generateFormalSum() throws Exception {
 		List<String> coefficientTypes = new ArrayList<String>();
 		coefficientTypes.add("int");
-		coefficientTypes.add("float");
+		coefficientTypes.add("double");
+		coefficientTypes.add("boolean");
 		coefficientTypes.add("R");
 
 		List<String> objectTypes = new ArrayList<String>();
@@ -65,7 +74,8 @@ public class ClassGenerator {
 
 		generateFromTypes("formal_sum", "AbstractFormalSum", coefficientTypes, objectTypes);
 		generateFromTypes("formal_sum", "SparseFormalSum", coefficientTypes, objectTypes);
-		generateFromTypes("formal_sum", "SparseFreeModule", coefficientTypes, objectTypes);
+		generateFromTypes("formal_sum", "PrimitiveFreeModule", coefficientTypes, objectTypes);
+		generateFromTypes("formal_sum", "AlgebraicFreeModule", coefficientTypes, objectTypes);
 		generateFromTypes("formal_sum", "VectorConverter", coefficientTypes, objectTypes);
 		generateFromTypes("formal_sum", "MatrixConverter", coefficientTypes, objectTypes, objectTypes2);
 	}
@@ -73,7 +83,8 @@ public class ClassGenerator {
 	private static void generateAlgebraicStructures() throws Exception {
 		List<String> coefficientTypes = new ArrayList<String>();
 		coefficientTypes.add("int");
-		coefficientTypes.add("float");
+		coefficientTypes.add("double");
+		coefficientTypes.add("boolean");
 		coefficientTypes.add("R");
 
 		List<String> objectTypes = new ArrayList<String>();
@@ -82,6 +93,25 @@ public class ClassGenerator {
 		generateFromTypes("algebraic", "AbstractRing", coefficientTypes);
 		generateFromTypes("algebraic", "AbstractField", coefficientTypes);
 		generateFromTypes("algebraic", "AbstractModule", coefficientTypes, objectTypes);
+	}
+	
+	private static void generateArray() throws Exception {
+		List<String> types = new ArrayList<String>();
+		types.add("int");
+		types.add("double");
+
+		generateFromTypes("array", "ArrayManipulation", types);
+		generateFromTypes("array", "ArrayMath", types);
+		generateFromTypes("array", "ArrayQuery", types);
+		generateFromTypes("array", "ArrayUtility", types);
+	}
+	
+	private static void generateIo() throws Exception {
+		List<String> types = new ArrayList<String>();
+		types.add("int");
+		types.add("double");
+
+		generateFromTypes("io", "MatlabOutput", types);
 	}
 
 	private static void generateFromTypes(String packageIdentifier, String className, List<String> types) throws Exception {

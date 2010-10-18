@@ -1,15 +1,22 @@
 package $packageName;
 
+#if ($type1 == "boolean")
+
+#include("templates/formal_sum/boolean/BooleanGenericVectorConverter.java");
+#stop
+
+#end
+
 import java.util.Iterator;
 
 #set ($coefficientType = $type1)
-#set ($objectType = $type2)
-#set ($className = $utility.getFullClassName("VectorConverter", $type1, $type2))
-#set ($basicClassName = $utility.getClassName("VectorConverter", $type1, $type2))
-#set ($troveIndexMapName = $utility.getTroveMapName($type2, "int") + $utility.generateGenericAnnotation($type2))
-#set ($troveBasisMapName = $utility.getTroveMapName("int", $type2) + $utility.generateGenericAnnotation($type2))
-#set ($sumClassName = $utility.getFullClassName("SparseFormalSum", $type1, $type2))
-#set ($troveIteratorName = $utility.getTroveIteratorName($type2, $type1) + $utility.generateGenericAnnotation($type2, $type1))
+#set ($objectType = "M")
+#set ($className = $utility.getFullClassName("VectorConverter", $coefficientType, $objectType))
+#set ($basicClassName = $utility.getClassName("VectorConverter", $coefficientType, $objectType))
+#set ($troveIndexMapName = $utility.getTroveMapName($objectType, "int") + $utility.generateGenericAnnotation($objectType))
+#set ($troveBasisMapName = $utility.getTroveMapName("int", $objectType) + $utility.generateGenericAnnotation($objectType))
+#set ($sumClassName = $utility.getFullClassName("SparseFormalSum", $coefficientType, $objectType))
+#set ($troveIteratorName = $utility.getTroveIteratorName($objectType, $coefficientType) + $utility.generateGenericAnnotation($objectType, $coefficientType))
 #set ($sparseVectorName = $utility.getFullClassName("SparseVector", $coefficientType))
 #set ($pairClassName = $utility.getFullClassName("UnorderedPair", "int", $coefficientType))
 

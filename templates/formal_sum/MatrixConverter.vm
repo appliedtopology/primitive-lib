@@ -1,20 +1,27 @@
 package $packageName;
 
+#if ($type1 == "boolean")
+
+#include("templates/formal_sum/boolean/BooleanGenericGenericMatrixConverter.java");
+#stop
+
+#end
+
 import java.util.Iterator;
 
 #set ($coefficientType = $type1)
-#set ($objectType1 = $type2)
-#set ($objectType2 = $type3)
-#set ($className = $utility.getFullClassName("MatrixConverter", $type1, $type2, $type3))
-#set ($basicClassName = $utility.getClassName("MatrixConverter", $type1, $type2, $type3))
-#set ($vectorConverterClassName1 = $utility.getFullClassName("VectorConverter", $type1, $type2))
-#set ($vectorConverterClassName2 = $utility.getFullClassName("VectorConverter", $type1, $type3))
+#set ($objectType1 = "M")
+#set ($objectType2 = "N")
+#set ($className = $utility.getFullClassName("MatrixConverter", $coefficientType, $objectType1, $objectType2))
+#set ($basicClassName = $utility.getClassName("MatrixConverter", $coefficientType, $objectType1, $objectType2))
+#set ($vectorConverterClassName1 = $utility.getFullClassName("VectorConverter", $coefficientType, $objectType1))
+#set ($vectorConverterClassName2 = $utility.getFullClassName("VectorConverter", $coefficientType, $objectType2))
 #set ($entryClassName = $utility.getFullClassName("MatrixEntry", $coefficientType))
 
 #set ($sparseMatrixName = $utility.getFullClassName("SparseMatrix", $coefficientType))
 #set ($mappingBasisClass = $utility.getFullClassName("UnorderedPair", $objectType1, $objectType2))
 #set ($mappingSumClass = $utility.getFullClassName("SparseFormalSum", $coefficientType, $mappingBasisClass))
-#set ($troveIteratorName = $utility.getTroveIteratorName($mappingBasisClass, $type1) + $utility.generateGenericAnnotation($mappingBasisClass, $type1))
+#set ($troveIteratorName = $utility.getTroveIteratorName($mappingBasisClass, $coefficientType) + $utility.generateGenericAnnotation($mappingBasisClass, $coefficientType))
 
 /**
  * This class computes matrix representations of module homomorphisms

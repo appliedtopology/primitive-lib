@@ -3,14 +3,14 @@ package $packageName;
 import java.util.Iterator;
 
 #set ($coefficientType = $type1)
-#set ($objectType = $type2)
-#set ($className = $utility.getFullClassName("SparseFreeModule", $type1, $type2))
-#set ($basicClassName = $utility.getClassName("SparseFreeModule", $type1, $type2))
-#set ($sumClassName = $utility.getFullClassName("SparseFormalSum", $type1, $type2))
-#set ($superName = $utility.getFullClassName("AbstractModule", $type1, $sumClassName))
-#set ($ringClassName = $utility.getFullClassName("AbstractRing", $type1))
-#set ($troveContainerName = $utility.getTroveMapName($type2, $type1) + $utility.generateGenericAnnotation($type2, $type1))
-#set ($troveIteratorName = $utility.getTroveIteratorName($type2, $type1) + $utility.generateGenericAnnotation($type2, $type1))
+#set ($objectType = "M")
+#set ($className = $utility.getFullClassName("AlgebraicFreeModule", $coefficientType, $objectType))
+#set ($basicClassName = $utility.getClassName("AlgebraicFreeModule", $coefficientType, $objectType))
+#set ($sumClassName = $utility.getFullClassName("SparseFormalSum", $coefficientType, $objectType))
+#set ($superName = $utility.getFullClassName("AbstractModule", $coefficientType, $sumClassName))
+#set ($ringClassName = $utility.getFullClassName("AbstractRing", $coefficientType))
+#set ($troveContainerName = $utility.getTroveMapName($objectType, $coefficientType) + $utility.generateGenericAnnotation($objectType, $coefficientType))
+#set ($troveIteratorName = $utility.getTroveIteratorName($objectType, $coefficientType) + $utility.generateGenericAnnotation($objectType, $coefficientType))
 
 public abstract class $className extends $superName {
 	private $ringClassName ring;
@@ -22,7 +22,7 @@ public abstract class $className extends $superName {
 	public $sumClassName add($sumClassName a, $sumClassName b) {
 		$sumClassName result = null;
 		
-		#if ($utility.isPrimitive($type1) || $utility.isPrimitive($type2))
+		#if ($utility.isPrimitive($coefficientType) || $utility.isPrimitive($objectType))
 		
 		$troveIteratorName iterator = null;
 			
@@ -64,7 +64,7 @@ public abstract class $className extends $superName {
 	public $sumClassName subtract($sumClassName a, $sumClassName b) {
 		$sumClassName result = null;
 		
-		#if ($utility.isPrimitive($type1) || $utility.isPrimitive($type2))
+		#if ($utility.isPrimitive($coefficientType) || $utility.isPrimitive($objectType))
 		
 		$troveIteratorName iterator = b.map.iterator();
 		
@@ -90,7 +90,7 @@ public abstract class $className extends $superName {
 	public $sumClassName multiply($coefficientType r, $sumClassName a) {
 		$sumClassName result = null;
 		
-		#if ($utility.isPrimitive($type1) || $utility.isPrimitive($type2))
+		#if ($utility.isPrimitive($coefficientType) || $utility.isPrimitive($objectType))
 		
 		$troveIteratorName iterator = a.map.iterator();
 		
@@ -116,7 +116,7 @@ public abstract class $className extends $superName {
 	public $sumClassName negate($sumClassName a) {
 		$sumClassName result = null;
 		
-		#if ($utility.isPrimitive($type1) || $utility.isPrimitive($type2))
+		#if ($utility.isPrimitive($coefficientType) || $utility.isPrimitive($objectType))
 		
 		$troveIteratorName iterator = a.map.iterator();
 		
@@ -143,7 +143,7 @@ public abstract class $className extends $superName {
 	public $sumClassName multiply(int r, $sumClassName a) {
 		$sumClassName result = null;
 		
-		#if ($utility.isPrimitive($type1) || $utility.isPrimitive($type2))
+		#if ($utility.isPrimitive($coefficientType) || $utility.isPrimitive($objectType))
 		
 		$troveIteratorName iterator = a.map.iterator();
 		
@@ -175,7 +175,7 @@ public abstract class $className extends $superName {
 	 */
 	public void accumulate($sumClassName a, $sumClassName b) {
 		
-		#if ($utility.isPrimitive($type1) || $utility.isPrimitive($type2))
+		#if ($utility.isPrimitive($coefficientType) || $utility.isPrimitive($objectType))
 		
 		for ($troveIteratorName iterator = b.map.iterator(); iterator.hasNext(); ) {
 			iterator.advance();
@@ -200,7 +200,7 @@ public abstract class $className extends $superName {
 	 */
 	public void accumulate($sumClassName a, $sumClassName b, $coefficientType r) {
 		
-		#if ($utility.isPrimitive($type1) || $utility.isPrimitive($type2))
+		#if ($utility.isPrimitive($coefficientType) || $utility.isPrimitive($objectType))
 		
 		for ($troveIteratorName iterator = b.map.iterator(); iterator.hasNext(); ) {
 			iterator.advance();

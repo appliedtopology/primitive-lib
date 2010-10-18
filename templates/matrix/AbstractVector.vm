@@ -1,5 +1,12 @@
 package $packageName;
 
+#if ($type == "boolean")
+
+#include("templates/matrix/boolean/BooleanAbstractVector.java");
+#stop
+
+#end
+
 import java.util.Iterator;
 
 #set ($className = $utility.getFullClassName("AbstractVector", $type))

@@ -1,5 +1,12 @@
 package $packageName;
 
+#if ($type == "boolean")
+
+#include("templates/matrix/boolean/BooleanSparseMatrixIterator.java");
+#stop
+
+#end
+
 import java.util.Iterator;
 
 #set ($superName = $utility.getFullClassName("AbstractMatrix", $type))
