@@ -1,8 +1,15 @@
 package $packageName;
 
+#if ($type1 == "boolean")
+
+#include("templates/formal_sum/boolean/BooleanGenericAbstractFormalSum.java");
+#stop
+
+#end
+
 #set ($coefficientType = $type1)
-#set ($objectType = $type2)
-#set ($className = $utility.getFullClassName("AbstractFormalSum", $type1, $type2))
+#set ($objectType = "M")
+#set ($className = $utility.getFullClassName("AbstractFormalSum", $coefficientType, $objectType))
 
 public interface $className {
 	void put($coefficientType coefficient, $objectType object);

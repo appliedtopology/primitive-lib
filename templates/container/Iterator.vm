@@ -1,0 +1,9 @@
+package $packageName;
+
+#set ($className = $utility.getFullClassName("Iterator", $type))
+
+public interface $className {
+	boolean hasNext();
+	int next();
+	void remove();
+}

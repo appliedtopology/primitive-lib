@@ -1,5 +1,12 @@
 package $packageName;
 
+#if ($type == "boolean")
+
+#include("templates/matrix/boolean/BooleanSparseVector.java");
+#stop
+
+#end
+
 import java.util.Iterator;
 
 #set ($superName = $utility.getFullClassName("AbstractVector", $type))
@@ -53,8 +60,9 @@ public class $className implements $superName {
 		if (value == null) {
 		#end
 			this.map.remove(index);
+		} else {
+			this.map.put(index, value);
 		}
-		this.map.put(index, value);
 	}
 	
 	public $type get(int index) {
@@ -99,7 +107,7 @@ public class $className implements $superName {
 		}
 		return sum;
 	}
-	#ends.getDimension()
+	#end
 	
 	public Iterator<$pairClassName> iterator() {
 		return new $iteratorClassName(this);
@@ -132,7 +140,11 @@ public class $className implements $superName {
 			}
 			writer.write(pair.getFirst());
 			writer.write(": ");
-			writer.write(pair.getSecond());
+			#if ($utility.isPrimitive($type))
+			writer.write($utility.getBoxedName($type) .toString(pair.getSecond()));
+			#else
+			writer.write(pair.getSecond().toString());
+			#end
 			index++;
 		}
 		writer.write("]");
@@ -141,7 +153,7 @@ public class $className implements $superName {
 	#if ($utility.isPrimitive($type))
 	
 	public $type[] toArray() {
-		$type[] array = new $coefficientType[this.size];
+		$type[] array = new $type[this.size];
 		
 		for ($pairClassName pair: this) {
 			array[pair.getFirst()] = pair.getSecond();
