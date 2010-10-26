@@ -1,8 +1,8 @@
 package $packageName;
 
-#if ($type1 == "boolean")
+#if ($templateTypes.get(0) == "boolean")
 
-#include("templates/formal_sum/boolean/BooleanGenericSparseFormalSum.java");
+#include("templates/formal_sum/boolean/BooleanSparseFormalSum.java");
 #stop
 
 #end
@@ -15,8 +15,8 @@ import java.util.Iterator;
 #set ($basicClassName = $utility.getClassName("SparseFormalSum", $templateTypes, $genericTypes))
 #set ($superName = $utility.getAnnotatedClassName("AbstractFormalSum", $templateTypes, $genericTypes))
 
-#set ($mapType = $utility.getMapType($objectType, $coefficientType) + $utility.generateGenericAnnotation($objectType, $coefficientType))
-#set ($iteratorType = $utility.getMapIteratorType($objectType, $coefficientType) + $utility.generateGenericAnnotation($objectType, $coefficientType))
+#set ($mapType = $utility.getMapType($objectType, $coefficientType) + $utility.getGenericAnnotation([$objectType, $coefficientType]))
+#set ($iteratorType = $utility.getMapIteratorType($objectType, $coefficientType) + $utility.getGenericAnnotation([$objectType, $coefficientType]))
 
 /**
  * This class is a data structure for holding a formal sum.
@@ -61,7 +61,7 @@ public class $className implements $superName {
 	 * 
 	 * @param map the hash map to import from
 	 */
-	protected $basicClassName($troveContainerName map) {
+	protected $basicClassName($mapType map) {
 		#if ($utility.isPrimitive($coefficientType) || $utility.isPrimitive($objectType))
 		this.map.putAll(map);
 		#else

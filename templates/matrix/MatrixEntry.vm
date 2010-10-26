@@ -1,19 +1,19 @@
 package $packageName;
 
-#if ($type == "boolean")
-
-#include("templates/matrix/boolean/BooleanMatrixEntry.java");
-#stop
-
-#end
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 #set ($type = $templateTypes.get(0))
 #set ($classTag = "MatrixEntry")
 #set ($className = $utility.getAnnotatedClassName($classTag, $templateTypes, $genericTypes))
-#set ($basicName = $utility.getClassName($classTag, $templateTypes, $genericTypes))
+#set ($basicName = $utility.getClassName($classTag, $templateTypes))
+
+#if ($type == "boolean")
+
+#include("templates/matrix/boolean/BooleanMatrixEntry.java");
+#stop
+
+#end
 
 /**
  * This class implements a pair (a, b, c), where a and b are ints and

@@ -28,6 +28,7 @@ import java.util.Vector;
 public class JavaGeneratorUtility {
 	private static JavaGeneratorUtility instance = new JavaGeneratorUtility();
 	private Vector<String> primitiveTypes = new Vector<String>();
+	private Vector<String> numericTypes = new Vector<String>();
 	private Hashtable<String, String> boxedNames = new Hashtable<String, String>();
 	private Hashtable<String, String> defaultValues = new Hashtable<String, String>();
 	private String objectLabel = "Object";
@@ -44,6 +45,11 @@ public class JavaGeneratorUtility {
 		primitiveTypes.add("double");
 		primitiveTypes.add("boolean");
 		primitiveTypes.add("char");
+		
+		numericTypes.add("int");
+		numericTypes.add("long");
+		numericTypes.add("float");
+		numericTypes.add("double");
 		
 		boxedNames.put("byte", "Byte");
 		boxedNames.put("short", "Short");
@@ -102,6 +108,10 @@ public class JavaGeneratorUtility {
 		return getClassName(tag, templateTypes) + getGenericWildcardAnnotation(templateTypes, genericTypes);
 	}
 	
+	public String getClassName(String tag, Collection<String> templateTypes, Collection<String> genericTypes) {
+		return getClassName(tag, templateTypes);
+	}
+	
 	public String getClassName(String tag, Collection<String> templateTypes) {
 		StringBuilder builder = new StringBuilder();
 		
@@ -120,6 +130,11 @@ public class JavaGeneratorUtility {
 		types.add(type2);
 		return getGenericAnnotation(types, new Vector<String>());
 	}
+	
+	public String getGenericAnnotation(Collection<String> templateTypes) {
+		return getGenericAnnotation(templateTypes, new Vector<String>(), false);
+	}
+	
 	
 	public String getGenericAnnotation(Collection<String> templateTypes, Collection<String> genericTypes) {
 		return getGenericAnnotation(templateTypes, genericTypes, false);
@@ -153,23 +168,10 @@ public class JavaGeneratorUtility {
 		
 		builder.append("<");
 		
-		// add all generic types
-		for (String type: genericTypes) {
-			if (count > 0) {
-				builder.append(" , ");
-			}
-			if (wildcard) {
-				builder.append("?");
-			} else {
-				builder.append(type);
-			}
-			count++;
-		}
-		
 		for (String type: templateTypes) {
 			if (!isPrimitive(type)) {
 				if (count > 0) {
-					builder.append(" , ");
+					builder.append(", ");
 				}
 				if (wildcard) {
 					builder.append("?");
@@ -178,6 +180,19 @@ public class JavaGeneratorUtility {
 				}
 				count++;
 			}
+		}
+		
+		// add all generic types
+		for (String type: genericTypes) {
+			if (count > 0) {
+				builder.append(", ");
+			}
+			if (wildcard) {
+				builder.append("?");
+			} else {
+				builder.append(type);
+			}
+			count++;
 		}
 		
 		builder.append(">");
@@ -285,12 +300,26 @@ public class JavaGeneratorUtility {
 		}
 	}
 	
-	public boolean isPrimitive(String primitiveName) {
-		return this.primitiveTypes.contains(primitiveName);
+	public boolean isPrimitive(String type) {
+		return this.primitiveTypes.contains(type);
+	}
+	
+	public boolean isNumeric(String type) {
+		return this.numericTypes.contains(type);
 	}
 	
 	public Vector<String> getPrimitiveTypes() {
 		return this.primitiveTypes;
+	}
+	
+	public Vector<String> getNumericTypes() {
+		return this.numericTypes;
+	}
+	
+	public Vector<String> getCommonTypes() {
+		Vector<String> types = new Vector<String>(this.numericTypes);
+		types.add("boolean");
+		return types;
 	}
 	
 	public String getBoxedName(String primitiveName) {

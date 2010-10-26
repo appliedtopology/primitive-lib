@@ -1,8 +1,8 @@
 package $packageName;
 
-#if ($type1 == "boolean")
+#if ($templateTypes.get(0) == "boolean")
 
-#include("templates/formal_sum/boolean/BooleanGenericGenericMatrixConverter.java");
+#include("templates/formal_sum/boolean/BooleanMatrixConverter.java");
 #stop
 
 #end
@@ -16,12 +16,12 @@ import java.util.Iterator;
 #set ($basicClassName = $utility.getClassName("MatrixConverter", $templateTypes, $genericTypes))
 #set ($vectorConverterClassName1 = $utility.getAnnotatedClassName("VectorConverter", $templateTypes, [$objectType1]))
 #set ($vectorConverterClassName2 = $utility.getAnnotatedClassName("VectorConverter", $templateTypes, [$objectType2]))
-#set ($entryClassName = $utility.getAnnotatedClassName("MatrixEntry", $coefficientType))
+#set ($entryClassName = $utility.getAnnotatedClassName("MatrixEntry", [$coefficientType], []))
 
-#set ($sparseMatrixName = $utility.getAnnotatedClassName("SparseMatrix", $templateTypes))
-#set ($mappingBasisClass = $utility.getAnnotatedClassName("Pair", $genericTypes))
-#set ($mappingSumClass = $utility.getAnnotatedClassName("SparseFormalSum", [$coefficientType, $mappingBasisClass]))
-#set ($troveIteratorName = $utility.getMapIteratorName($mappingBasisClass, $coefficientType) + $utility.generateGenericAnnotation($mappingBasisClass, $coefficientType))
+#set ($sparseMatrixName = $utility.getAnnotatedClassName("SparseMatrix", $templateTypes, []))
+#set ($mappingBasisClass = $utility.getAnnotatedClassName("Pair", $genericTypes, []))
+#set ($mappingSumClass = $utility.getAnnotatedClassName("SparseFormalSum", [$coefficientType], [$mappingBasisClass]))
+#set ($iteratorType = $utility.getMapIteratorType($mappingBasisClass, $coefficientType) + $utility.getGenericAnnotation([$mappingBasisClass, $coefficientType]))
 
 /**
  * This class computes matrix representations of module homomorphisms
@@ -66,7 +66,7 @@ public class $className {
 	public $coefficientType[][] toArray($mappingSumClass formalSum) {
 		$coefficientType[][] matrix = new $coefficientType[this.codomainRepresentation.getDimension()][this.domainRepresentation.getDimension()];		
 		
-		for ($troveIteratorName iterator = formalSum.map.iterator(); iterator.hasNext(); ) {
+		for ($iteratorType iterator = formalSum.map.iterator(); iterator.hasNext(); ) {
 			iterator.advance();
 			$mappingBasisClass basisMappingPair = iterator.key();
 			int row = this.domainRepresentation.getIndex(basisMappingPair.getFirst());
@@ -96,7 +96,7 @@ public class $className {
 	public $sparseMatrixName toSparseMatrix($mappingSumClass formalSum) {
 		$sparseMatrixName sparseMatrix = new $sparseMatrixName(this.codomainRepresentation.getDimension(), this.domainRepresentation.getDimension());
 		
-		for ($troveIteratorName iterator = formalSum.map.iterator(); iterator.hasNext(); ) {
+		for ($iteratorType iterator = formalSum.map.iterator(); iterator.hasNext(); ) {
 			iterator.advance();
 			$mappingBasisClass basisMappingPair = iterator.key();
 			int row = this.domainRepresentation.getIndex(basisMappingPair.getFirst());

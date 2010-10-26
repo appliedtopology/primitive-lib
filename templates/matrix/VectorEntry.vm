@@ -1,12 +1,5 @@
 package $packageName;
 
-#if ($type == "boolean")
-
-#include("templates/matrix/boolean/BooleanVectorEntry.java");
-#stop
-
-#end
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -14,6 +7,13 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 #set ($classTag = "VectorEntry")
 #set ($className = $utility.getAnnotatedClassName($classTag, $templateTypes, $genericTypes))
 #set ($basicName = $utility.getClassName($classTag, $templateTypes, $genericTypes))
+
+#if ($type == "boolean")
+
+#include("templates/matrix/boolean/BooleanVectorEntry.java");
+#stop
+
+#end
 
 public class $className {
 	private final int index;

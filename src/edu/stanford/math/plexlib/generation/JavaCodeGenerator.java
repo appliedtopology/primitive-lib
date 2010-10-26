@@ -38,10 +38,10 @@ public class JavaCodeGenerator {
 	}
 	
 	public void generateClass(String packageIdentifier, String classTag, Vector<String> templateTypes, Vector<String> genericTypes) {
-		generateClass(packageIdentifier, classTag, templateTypes, genericTypes, new Hashtable<String, String>());
+		generateClass(packageIdentifier, classTag, templateTypes, genericTypes, new Hashtable<String, Object>());
 	}
 	
-	public void generateClass(String packageIdentifier, String classTag, Vector<String> templateTypes, Vector<String> genericTypes, Hashtable<String, String> additionalContext) {
+	public void generateClass(String packageIdentifier, String classTag, Vector<String> templateTypes, Vector<String> genericTypes, Hashtable<String, Object> additionalContext) {
 		
 		try {
 			VelocityEngine ve = new VelocityEngine();
@@ -63,7 +63,7 @@ public class JavaCodeGenerator {
 			context.put("templateTypes", templateTypes);
 			context.put("genericTypes", genericTypes);
 			
-			for (Map.Entry<String, String> entry: additionalContext.entrySet()) {
+			for (Map.Entry<String, Object> entry: additionalContext.entrySet()) {
 				context.put(entry.getKey(), entry.getValue());
 			}
 			

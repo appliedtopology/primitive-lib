@@ -1,5 +1,6 @@
 
 import edu.stanford.math.plexlib.autogen.matrix.BooleanSparseVector;
+import edu.stanford.math.plexlib.autogen.matrix.BooleanVectorEntry;
 import edu.stanford.math.plexlib.autogen.pair.IntBooleanUnorderedPair;
 import gnu.trove.TIntObjectHashMap;
 import gnu.trove.TObjectIntHashMap;
@@ -21,7 +22,7 @@ import java.util.Iterator;
  * @param <boolean> the type of the underlying ring
  * @param <M> the type of the set of free generators
  */
-public class BooleanGenericVectorConverter<M> {
+public class BooleanVectorConverter<M> {
 	/**
 	 * This is the iterable collection of elements which constitute the free basis
 	 * of the module.
@@ -51,7 +52,7 @@ public class BooleanGenericVectorConverter<M> {
 	 * 
 	 * @param stream an iterable collection of free generators
 	 */
-	public BooleanGenericVectorConverter(Iterable<M> stream) {
+	public BooleanVectorConverter(Iterable<M> stream) {
 		this.stream = stream;
 		this.initializeMappings();
 		this.dimension = this.indexMapping.size();
@@ -101,7 +102,7 @@ public class BooleanGenericVectorConverter<M> {
 	}
 
 
-	public boolean[] toArray(BooleanGenericSparseFormalSum<M> formalSum) {
+	public boolean[] toArray(BooleanSparseFormalSum<M> formalSum) {
 		boolean[] array = new boolean[this.getDimension()];
 
 		for (Iterator<M> iterator = formalSum.map.iterator(); iterator.hasNext(); ) {
@@ -117,7 +118,7 @@ public class BooleanGenericVectorConverter<M> {
 	}
 
 
-	public BooleanSparseVector toSparseVector(BooleanGenericSparseFormalSum<M> formalSum) {
+	public BooleanSparseVector toSparseVector(BooleanSparseFormalSum<M> formalSum) {
 		BooleanSparseVector vector = new BooleanSparseVector(this.getDimension());
 
 		for (Iterator<M> iterator = formalSum.map.iterator(); iterator.hasNext(); ) {
@@ -133,8 +134,8 @@ public class BooleanGenericVectorConverter<M> {
 		return new BooleanSparseVector(array);
 	}
 
-	public BooleanGenericSparseFormalSum<M> toFormalSum(boolean[] array) {
-		BooleanGenericSparseFormalSum<M> sum = new BooleanGenericSparseFormalSum<M>();
+	public BooleanSparseFormalSum<M> toFormalSum(boolean[] array) {
+		BooleanSparseFormalSum<M> sum = new BooleanSparseFormalSum<M>();
 
 		for (int i = 0; i < array.length; i++) {
 			if (array[i]) {
@@ -145,11 +146,11 @@ public class BooleanGenericVectorConverter<M> {
 		return sum;
 	}
 
-	public BooleanGenericSparseFormalSum<M> toFormalSum(BooleanSparseVector sparseVector) {
-		BooleanGenericSparseFormalSum<M> sum = new BooleanGenericSparseFormalSum<M>();
+	public BooleanSparseFormalSum<M> toFormalSum(BooleanSparseVector sparseVector) {
+		BooleanSparseFormalSum<M> sum = new BooleanSparseFormalSum<M>();
 
-		for (IntBooleanUnorderedPair pair: sparseVector) {
-			sum.put(pair.getSecond(), this.getBasisElement(pair.getFirst()));
+		for (BooleanVectorEntry pair: sparseVector) {
+			sum.put(pair.getValue(), this.getBasisElement(pair.getIndex()));
 		}
 
 		return sum;

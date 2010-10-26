@@ -57,7 +57,7 @@ public class ClassSpecifier {
 	/**
 	 * @return the additionalContext
 	 */
-	public Hashtable<String, String> getAdditionalContext() {
+	public Hashtable<String, Object> getAdditionalContext() {
 		return additionalContext;
 	}
 	
@@ -69,7 +69,7 @@ public class ClassSpecifier {
 		this.genericTypes.add(type);
 	}
 	
-	public void addAdditionalContext(String key, String value) {
+	public void addAdditionalContext(String key, Object value) {
 		this.additionalContext.put(key, value);
 	}
 	
@@ -77,5 +77,5 @@ public class ClassSpecifier {
 	private String classTag;
 	private Vector<String> templateTypes = new Vector<String>();
 	private Vector<String> genericTypes = new Vector<String>();
-	private Hashtable<String, String> additionalContext = new Hashtable<String, String>();
+	private Hashtable<String, Object> additionalContext = new Hashtable<String, Object>();
 }

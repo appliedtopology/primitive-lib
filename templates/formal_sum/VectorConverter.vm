@@ -1,8 +1,8 @@
 package $packageName;
 
-#if ($type1 == "boolean")
+#if ($templateTypes.get(0) == "boolean")
 
-#include("templates/formal_sum/boolean/BooleanGenericVectorConverter.java");
+#include("templates/formal_sum/boolean/BooleanVectorConverter.java");
 #stop
 
 #end
@@ -13,12 +13,12 @@ import java.util.Iterator;
 #set ($objectType = $genericTypes.get(0))
 #set ($className = $utility.getAnnotatedClassName("VectorConverter", $templateTypes, $genericTypes))
 #set ($basicClassName = $utility.getClassName("VectorConverter", $templateTypes, $genericTypes))
-#set ($troveIndexMapName = $utility.getMapType($objectType, "int") + $utility.generateGenericAnnotation($objectType))
-#set ($troveBasisMapName = $utility.getMapType("int", $objectType) + $utility.generateGenericAnnotation($objectType))
-#set ($troveIteratorName = $utility.getMapIteratorType($objectType, $coefficientType) + $utility.generateGenericAnnotation($objectType, $coefficientType))
+#set ($troveIndexMapName = $utility.getMapType($objectType, "int") + $utility.getGenericAnnotation([$objectType]))
+#set ($troveBasisMapName = $utility.getMapType("int", $objectType) + $utility.getGenericAnnotation([$objectType]))
+#set ($troveIteratorName = $utility.getMapIteratorType($objectType, $coefficientType) + $utility.getGenericAnnotation([$objectType, $coefficientType]))
 #set ($sumClassName = $utility.getAnnotatedClassName("SparseFormalSum", $templateTypes, $genericTypes))
-#set ($sparseVectorName = $utility.getAnnotatedClassName("SparseVector", $templateTypes))
-#set ($pairClassName = $utility.getAnnotatedClassName("Pair", $templateTypes))
+#set ($sparseVectorName = $utility.getAnnotatedClassName("SparseVector", [$coefficientType], []))
+#set ($pairClassName = $utility.getAnnotatedClassName("VectorEntry", [$coefficientType], []))
 
 /**
  * This class implements the isomorphism between a free module on a set of
@@ -193,7 +193,7 @@ public class $className {
 		$sumClassName sum = new $sumClassName();
 		
 		for ($pairClassName pair: sparseVector) {
-			sum.put(pair.getSecond(), this.getBasisElement(pair.getFirst()));
+			sum.put(pair.getValue(), this.getBasisElement(pair.getIndex()));
 		}
 		
 		return sum;

@@ -24,6 +24,10 @@ public class BooleanVectorEntry {
 		return index;
 	}
 	
+	public boolean getValue() {
+		return true;
+	}
+	
 	@Override
 	public String toString() {
 		return ("(" + index + ", " + 1 + ")");

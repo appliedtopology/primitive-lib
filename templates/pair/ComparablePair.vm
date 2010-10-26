@@ -9,7 +9,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 #set ($className = $utility.getAnnotatedClassName($classTag, $templateTypes, $genericTypes))
 #set ($basicClassName = $utility.getClassName($classTag, $templateTypes, $genericTypes))
 #set ($superName = $utility.getAnnotatedClassName("Pair", $templateTypes, $genericTypes))
-#set ($interfaceName = $utility.getAnnotatedClassName("Comparable", $templateTypes, $genericTypes))
+#set ($interfaceName = "Comparable$utility.getGenericAnnotation([$className], [])")
 
 /**
  * This class implements a pair (a, b), where a is a $type1 and b 
@@ -28,7 +28,7 @@ public class $className extends $superName implements $interfaceName {
 	 * @param second the value of the second component
 	 */
 	public $className($type1 first, $type2 second) {
-		super(first, second)
+		super(first, second);
 	}
 	
 	/**
