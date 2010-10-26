@@ -9,15 +9,14 @@ package $packageName;
 
 import java.util.Iterator;
 
-#set ($superName = $utility.getFullClassName("AbstractMatrix", $type))
-#set ($className = $utility.getFullClassName("SparseMatrix", $type))
-#set ($basicName = $utility.getClassName("SparseMatrix", $type))
-#set ($vectorClassName = $utility.getFullClassName("SparseVector", $type))
-#set ($superVectorClassName = $utility.getFullClassName("AbstractVector", $type))
-#set ($iteratorClassName = $utility.getFullClassName("SparseMatrixIterator", $type))
-#set ($entryClassName = $utility.getFullClassName("MatrixEntry", $type))
-#set ($troveContainerName = $utility.getTroveMapName("int", "Object"))
-#set ($troveIteratorName = $utility.getTroveIteratorName("int", "Object"))
+#set ($type = $templateTypes.get(0))
+#set ($className = $utility.getAnnotatedClassName("SparseMatrix", $templateTypes, $genericTypes))
+#set ($superName = $utility.getAnnotatedClassName("AbstractMatrix", $templateTypes, $genericTypes))
+#set ($entryClassName = $utility.getAnnotatedClassName("MatrixEntry", $templateTypes, $genericTypes))
+#set ($vectorClassName = $utility.getAnnotatedClassName("SparseVector", $templateTypes, $genericTypes))
+
+#set ($mapType = $utility.getMapType("int", "Object"))
+#set ($iteratorType = $utility.getMapIteratorType("int", "Object"))
 
 public class $className implements $superName {
 	/**
@@ -26,7 +25,7 @@ public class $className implements $superName {
 	 * $vectorClassName. This choice was made so that matrix-vector
 	 * products can be computed very quickly.
 	 */
-	protected final $troveContainerName<$vectorClassName> map = new $troveContainerName<$vectorClassName>();
+	protected final $mapType<$vectorClassName> map = new $mapType<$vectorClassName>();
 
 	protected final int rows;
 	protected final int columns;
@@ -38,11 +37,7 @@ public class $className implements $superName {
 	
 	public $type get(int row, int column) {
 		if (!this.map.contains(row)) {
-			#if ($utility.isPrimitive($type))
-			return 0;
-			#else
-			return null;
-			#end
+			return $utility.getDefaultElement($type);
 		}
 		return this.map.get(row).get(column);
 	}
@@ -65,7 +60,7 @@ public class $className implements $superName {
 	
 	public int getNumNonzeroElements() {
 		int num = 0;
-		for (TIntObjectIterator<$vectorClassName> iterator = this.map.iterator(); iterator.hasNext(); ) {
+		for ($iteratorType<$vectorClassName> iterator = this.map.iterator(); iterator.hasNext(); ) {
 			iterator.advance();
 			num += iterator.value().getNumNonzeroElements();
 		}
@@ -76,7 +71,7 @@ public class $className implements $superName {
 	public $superVectorClassName multiply($superVectorClassName vector) {
 		$superVectorClassName result = new $vectorClassName(this.rows);
 		$type innerProductValue = 0;
-		for (TIntObjectIterator<$vectorClassName> iterator = this.map.iterator(); iterator.hasNext(); ) {
+		for ($iteratorType<$vectorClassName> iterator = this.map.iterator(); iterator.hasNext(); ) {
 			iterator.advance();
 			innerProductValue = iterator.value().innerProduct(vector);
 			if (innerProductValue != 0) {
@@ -89,11 +84,7 @@ public class $className implements $superName {
 	#end
 
 	public void set(int row, int column, $type value) {
-		#if ($utility.isPrimitive($type))
-		if (value == 0) {
-		#else
-		if (value == null) {
-		#end
+		if (value == $utility.getDefaultElement($type)) {
 			if (!this.map.contains(row)) {
 				return;
 			} else {

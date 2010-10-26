@@ -88,7 +88,7 @@ public class BooleanSparseVector implements BooleanAbstractVector {
 		return sum;
 	}
 
-	public Iterator<IntBooleanUnorderedPair> iterator() {
+	public Iterator<BooleanVectorEntry> iterator() {
 		return new BooleanSparseVectorIterator(this);
 	}
 

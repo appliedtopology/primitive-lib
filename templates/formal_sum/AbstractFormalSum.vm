@@ -7,9 +7,9 @@ package $packageName;
 
 #end
 
-#set ($coefficientType = $type1)
-#set ($objectType = "M")
-#set ($className = $utility.getFullClassName("AbstractFormalSum", $coefficientType, $objectType))
+#set ($coefficientType = $templateTypes.get(0))
+#set ($objectType = $genericTypes.get(0))
+#set ($className = $utility.getAnnotatedClassName("AbstractFormalSum", $templateTypes, $genericTypes))
 
 public interface $className {
 	void put($coefficientType coefficient, $objectType object);

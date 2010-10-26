@@ -2,11 +2,12 @@ package $packageName;
 
 import java.util.Iterator;
 
-#set ($className = $utility.getFullClassName("MatlabOutput", $type))
-#set ($vectorClassName = $utility.getFullClassName("SparseVector", $type))
-#set ($matrixClassName = $utility.getFullClassName("SparseMatrix", $type))
-#set ($pairClassName = $utility.getFullClassName("UnorderedPair", "int", $type))
-#set ($entryClassName = $utility.getFullClassName("MatrixEntry", $type))
+#set ($type = $templateTypes.get(0))
+#set ($className = $utility.getAnnotatedClassName("MatlabOutput", $templateTypes, $genericTypes))
+#set ($matrixClassName = $utility.getAnnotatedClassName("SparseMatrix", $templateTypes, $genericTypes))
+#set ($vectorClassName = $utility.getAnnotatedClassName("SparseVector", $templateTypes, $genericTypes))
+#set ($entryClassName = $utility.getAnnotatedClassName("MatrixEntry", $templateTypes, $genericTypes))
+#set ($pairClassName = $utility.getAnnotatedClassName("VectorEntry", $templateTypes, $genericTypes))
 
 
 public class $className {

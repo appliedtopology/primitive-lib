@@ -9,16 +9,17 @@ package $packageName;
 
 import java.util.Iterator;
 
-#set ($superName = $utility.getFullClassName("AbstractVector", $type))
-#set ($className = $utility.getFullClassName("SparseVector", $type))
-#set ($basicName = $utility.getClassName("SparseVector", $type))
-#set ($iteratorClassName = $utility.getFullClassName("SparseVectorIterator", $type))
-#set ($pairClassName = $utility.getFullClassName("UnorderedPair", "int", $type))
-#set ($troveContainerName = $utility.getTroveMapName("int", $type) + $utility.generateGenericAnnotation($type))
-#set ($troveIteratorName = $utility.getTroveIteratorName("int", $type) + $utility.generateGenericAnnotation($type))
+#set ($type = $templateTypes.get(0))
+#set ($className = $utility.getAnnotatedClassName("SparseVector", $templateTypes, $genericTypes))
+#set ($superName = $utility.getAnnotatedClassName("AbstractVector", $templateTypes, $genericTypes))
+#set ($basicName = $utility.getClassName("SparseVector", $templateTypes, $genericTypes))
+#set ($pairClassName = $utility.getAnnotatedClassName("VectorEntry", $templateTypes, $genericTypes))
+#set ($iteratorClassName = $utility.getClassName("SparseVectorIterator", $templateTypes, $genericTypes))
+#set ($mapType = $utility.getMapType("int", "Object") + $utility.generateGenericAnnotation($templateTypes, $genericTypes))
+#set ($iteratorType = $utility.getMapIteratorType("int", "Object") + $utility.generateGenericAnnotation($templateTypes, $genericTypes))
 
 public class $className implements $superName {
-	protected final $troveContainerName map = new $troveContainerName();
+	protected final $mapType map = new $mapType();
 	protected final int size;
 	
 	public $basicName(int size) {
@@ -28,15 +29,9 @@ public class $className implements $superName {
 	public $basicName($type[] array) {
 		this.size = array.length;
 		for (int i = 0; i < size; i++) {
-			#if ($utility.isPrimitive($type))
-			if (array[i] == 0) {
+			if (array[i] == $utility.getDefaultElement($type)) {
 				continue;
 			}
-			#else
-			if (array[i] == null) {
-				continue;
-			}
-			#end
 			this.map.put(i, array[i]);
 		}
 	}
@@ -54,11 +49,7 @@ public class $className implements $superName {
 	}
 	
 	public void set(int index, $type value) {
-		#if ($utility.isPrimitive($type))
-		if (value == 0) {
-		#else
-		if (value == null) {
-		#end
+		if (value == $utility.getDefaultElement($type)) {
 			this.map.remove(index);
 		} else {
 			this.map.put(index, value);
@@ -79,7 +70,7 @@ public class $className implements $superName {
 		$className smaller = (this.map.size() < other.map.size() ? this : other);
 		$className larger = (this.map.size() < other.map.size() ? other : this);
 		
-		for ($troveIteratorName iterator = smaller.map.iterator(); iterator.hasNext(); ) {
+		for ($iteratorType iterator = smaller.map.iterator(); iterator.hasNext(); ) {
 			iterator.advance();
 			sum += iterator.value() * larger.get(iterator.key());
 		}
@@ -89,7 +80,7 @@ public class $className implements $superName {
 	
 	public $type innerProduct($type[] other) {
 		$type sum = 0;
-		for ($troveIteratorName iterator = this.map.iterator(); iterator.hasNext(); ) {
+		for ($iteratorType iterator = this.map.iterator(); iterator.hasNext(); ) {
 			iterator.advance();
 			sum += iterator.value() * other[iterator.key()];
 		}
@@ -101,7 +92,7 @@ public class $className implements $superName {
 			return this.innerProduct(($className) other);
 		}
 		$type sum = 0;
-		for ($troveIteratorName iterator = this.map.iterator(); iterator.hasNext(); ) {
+		for ($iteratorType iterator = this.map.iterator(); iterator.hasNext(); ) {
 			iterator.advance();
 			sum += iterator.value() * other.get(iterator.key());
 		}
@@ -121,9 +112,9 @@ public class $className implements $superName {
 			if (index > 0) {
 				builder.append(", ");
 			}
-			builder.append(pair.getFirst());
+			builder.append(pair.getIndex());
 			builder.append(": ");
-			builder.append(pair.getSecond());
+			builder.append(pair.getValue());
 			index++;
 		}
 		builder.append("]");
@@ -138,12 +129,12 @@ public class $className implements $superName {
 			if (index > 0) {
 				writer.append(", ");
 			}
-			writer.write(pair.getFirst());
+			writer.write(pair.getIndex());
 			writer.write(": ");
 			#if ($utility.isPrimitive($type))
-			writer.write($utility.getBoxedName($type) .toString(pair.getSecond()));
+			writer.write($utility.getBoxedName($type) .toString(pair.getValue()));
 			#else
-			writer.write(pair.getSecond().toString());
+			writer.write(pair.getValue().toString());
 			#end
 			index++;
 		}
@@ -156,7 +147,7 @@ public class $className implements $superName {
 		$type[] array = new $type[this.size];
 		
 		for ($pairClassName pair: this) {
-			array[pair.getFirst()] = pair.getSecond();
+			array[pair.getIndex()] = pair.getValue();
 		}
 		
 		return array;

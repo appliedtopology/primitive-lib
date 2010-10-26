@@ -1,44 +1,140 @@
 package edu.stanford.math.plexlib.generation;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Hashtable;
+import java.util.Vector;
 
+/**
+ * This class contains utility functions to assist with the automated generation of 
+ * java code. An instance of this class is passed to the velocity template renderer.
+ * This class is designed to be a stateless singleton. 
+ * 
+ * A java class is specified by a set of "template" types and a set of "generic" types.
+ * The generic types are just regular java generic type templateTypes. The template types
+ * are designed to mimic genericTypes, but are allowed to be primitive.
+ * 
+ * For example, suppose that one is designing a hash-table that maps one type to another.
+ * We do not want to place restrictions on whether the key or value should be of primitive
+ * or object type. To do this, we have to generate the hash-table class for each pair of
+ * primitive an non-primitive types. We would have in this case:
+ * templateTypes = {int, int} (class becomes IntIntHashTable)
+ * templateTypes = {int, double} (class becomes IntDoubleHashTable)
+ * ...
+ * templateTypes = {int, T} (class becomes IntGenericHashTable<T>)
+ * 
+ * @author Andrew Tausz
+ *
+ */
 public class JavaGeneratorUtility {
+	private static JavaGeneratorUtility instance = new JavaGeneratorUtility();
+	private Vector<String> primitiveTypes = new Vector<String>();
+	private Hashtable<String, String> boxedNames = new Hashtable<String, String>();
+	private Hashtable<String, String> defaultValues = new Hashtable<String, String>();
+	private String objectLabel = "Object";
 	
-	public String getFullClassName(String tag, Collection<String> parameters, Collection<String> generics) {
-		return getBasicClassName(tag, parameters) + getGenericAnnotation(parameters, generics);
+	private Vector<String> comparisonOperators = new Vector<String>();
+	private Hashtable<String, String> comparisonNames = new Hashtable<String, String>();
+	
+	private JavaGeneratorUtility() {
+		primitiveTypes.add("byte");
+		primitiveTypes.add("short");
+		primitiveTypes.add("int");
+		primitiveTypes.add("long");
+		primitiveTypes.add("float");
+		primitiveTypes.add("double");
+		primitiveTypes.add("boolean");
+		primitiveTypes.add("char");
+		
+		boxedNames.put("byte", "Byte");
+		boxedNames.put("short", "Short");
+		boxedNames.put("int", "Integer");
+		boxedNames.put("long", "Long");
+		boxedNames.put("float", "Float");
+		boxedNames.put("double", "Double");
+		boxedNames.put("boolean", "Boolean");
+		boxedNames.put("char", "Character");
+		
+		defaultValues.put("byte", "0");
+		defaultValues.put("short", "0");
+		defaultValues.put("int", "0");
+		defaultValues.put("long", "0L");
+		defaultValues.put("float", "0.0f");
+		defaultValues.put("double", "0.0d");
+		defaultValues.put("boolean", "false");
+		defaultValues.put("char", "\\u0000");
+		defaultValues.put(objectLabel, "null");
+		
+		comparisonOperators.add("==");
+		comparisonOperators.add("!=");
+		comparisonOperators.add("<");
+		comparisonOperators.add(">");
+		comparisonOperators.add("<=");
+		comparisonOperators.add(">=");
+		
+		comparisonNames.put("==", "Equal");
+		comparisonNames.put("!=", "NotEqual");
+		comparisonNames.put("<", "LessThan");
+		comparisonNames.put(">", "GreaterThan");
+		comparisonNames.put("<=", "LessThanOrEqual");
+		comparisonNames.put(">=", "GreaterThanOrEqual");
 	}
 	
-	public String getWildcardClassName(String tag, Collection<String> parameters, Collection<String> generics) {
-		return getBasicClassName(tag, parameters) + getGenericWildcardAnnotation(parameters, generics);
+	public static JavaGeneratorUtility getInstance() {
+		return instance;
 	}
 	
-	public String getBasicClassName(String tag, Collection<String> parameters) {
+	/**
+	 * This function returns the full class name of a class defined by its basic name (tag), its template types,
+	 * and its generic types. For example, suppose that the tag is "Foo", the template types are {int, T, double},
+	 * and the generic types are {U, W}, then this function returns IntGenericDoubleFoo<T, U, V>.
+	 * 
+	 * @param tag the basic name of the class
+	 * @param templateTypes the set of template types to parameterize the class (may be primitive or generic)
+	 * @param genericTypes the set of object types to use as generic parameters
+	 * 
+	 * @return the full name of the class with generic annotations
+	 */
+	public String getAnnotatedClassName(String tag, Collection<String> templateTypes, Collection<String> genericTypes) {
+		return getClassName(tag, templateTypes) + getGenericAnnotation(templateTypes, genericTypes);
+	}
+	
+	public String getWildcardClassName(String tag, Collection<String> templateTypes, Collection<String> genericTypes) {
+		return getClassName(tag, templateTypes) + getGenericWildcardAnnotation(templateTypes, genericTypes);
+	}
+	
+	public String getClassName(String tag, Collection<String> templateTypes) {
 		StringBuilder builder = new StringBuilder();
 		
-		for (String type: parameters) {
+		for (String type: templateTypes) {
 			builder.append(getClassNameModifier(type));
 		}
 		
-		builder.append(firstToUpperCase(tag));
+		builder.append(tag);
 		
 		return builder.toString();
 	}
 	
-	public String getGenericAnnotation(Collection<String> parameters, Collection<String> generics) {
-		return getGenericAnnotation(parameters, generics, false);
+	public String getGenericAnnotation(String type1, String type2) {
+		Vector<String> types = new Vector<String>();
+		types.add(type1);
+		types.add(type2);
+		return getGenericAnnotation(types, new Vector<String>());
 	}
 	
-	public String getGenericWildcardAnnotation(Collection<String> parameters, Collection<String> generics) {
-		return getGenericAnnotation(parameters, generics, true);
+	public String getGenericAnnotation(Collection<String> templateTypes, Collection<String> genericTypes) {
+		return getGenericAnnotation(templateTypes, genericTypes, false);
 	}
 	
-	public String getGenericAnnotation(Collection<String> parameters, Collection<String> generics, boolean wildcard) {
+	public String getGenericWildcardAnnotation(Collection<String> templateTypes, Collection<String> genericTypes) {
+		return getGenericAnnotation(templateTypes, genericTypes, true);
+	}
+	
+	public String getGenericAnnotation(Collection<String> templateTypes, Collection<String> genericTypes, boolean wildcard) {
 		boolean containsNonPrimitive = false;
-		if (!generics.isEmpty()) {
+		if (!genericTypes.isEmpty()) {
 			containsNonPrimitive = true;
 		} else {
-			for (String type: parameters) {
+			for (String type: templateTypes) {
 				if (!isPrimitive(type)) {
 					containsNonPrimitive = true;
 					break;
@@ -58,7 +154,7 @@ public class JavaGeneratorUtility {
 		builder.append("<");
 		
 		// add all generic types
-		for (String type: generics) {
+		for (String type: genericTypes) {
 			if (count > 0) {
 				builder.append(" , ");
 			}
@@ -70,7 +166,7 @@ public class JavaGeneratorUtility {
 			count++;
 		}
 		
-		for (String type: parameters) {
+		for (String type: templateTypes) {
 			if (!isPrimitive(type)) {
 				if (count > 0) {
 					builder.append(" , ");
@@ -98,7 +194,7 @@ public class JavaGeneratorUtility {
 		if (isPrimitive(type)) {
 			return this.firstToUpperCase(type);
 		} else {
-			return "Generic";
+			return objectLabel;
 		}
 	}
 	
@@ -181,98 +277,31 @@ public class JavaGeneratorUtility {
 		return beginMapIteration(keyType, valueType, mapName, "__key", "__value");
 	}
 	
-	public String getDistinguishedElement(String type) {
-		if (type.equals("byte")) {
-			return "0";
-		} else if (type.equals("short")) {
-			return "0";
-		} else if (type.equals("int")) {
-			return "0";
-		} else if (type.equals("long")) {
-			return "0";
-		} else if (type.equals("float")) {
-			return "0";
-		} else if (type.equals("double")) {
-			return "0";
-		} else if (type.equals("char")) {
-			return "0";
-		} else if (type.equals("boolean")) {
-			return "false";
+	public String getDefaultElement(String type) {
+		if (isPrimitive(type)) {
+			return this.defaultValues.get(type);
 		} else {
 			return "null";
 		}
 	}
 	
 	public boolean isPrimitive(String primitiveName) {
-		if (primitiveName.equals("byte")) {
-			return true;
-		} else if (primitiveName.equals("short")) {
-			return true;
-		} else if (primitiveName.equals("int")) {
-			return true;
-		} else if (primitiveName.equals("long")) {
-			return true;
-		} else if (primitiveName.equals("float")) {
-			return true;
-		} else if (primitiveName.equals("double")) {
-			return true;
-		} else if (primitiveName.equals("char")) {
-			return true;
-		} else if (primitiveName.equals("boolean")) {
-			return true;
-		} else {
-			return false;
-		}
+		return this.primitiveTypes.contains(primitiveName);
+	}
+	
+	public Vector<String> getPrimitiveTypes() {
+		return this.primitiveTypes;
 	}
 	
 	public String getBoxedName(String primitiveName) {
-		if (primitiveName.equals("byte")) {
-			return "Byte";
-		} else if (primitiveName.equals("short")) {
-			return "Short";
-		} else if (primitiveName.equals("int")) {
-			return "Integer";
-		} else if (primitiveName.equals("long")) {
-			return "Long";
-		} else if (primitiveName.equals("float")) {
-			return "Float";
-		} else if (primitiveName.equals("double")) {
-			return "Double";
-		} else if (primitiveName.equals("char")) {
-			return "Char";
-		} else if (primitiveName.equals("boolean")) {
-			return "Boolean";
-		} else {
-			return "";
-		}
+		return this.boxedNames.get(primitiveName);
 	}
 	
 	public String getComparisonName(String comparison) {
-		if (comparison.equals("==")) {
-			return "Equal";
-		} else if (comparison.equals("!=")) {
-			return "NotEqual";
-		} else if (comparison.equals("<")) {
-			return "LessThan";
-		} else if (comparison.equals(">")) {
-			return "GreaterThan";
-		} else if (comparison.equals("<=")) {
-			return "LessThanOrEqual";
-		} else if (comparison.equals(">=")) {
-			return "GreaterThanOrEqual";
-		} else {
-			return "";
-		}
+		return this.comparisonNames.get(comparison);
 	}
 	
-	public Iterable<String> getAllComparisons() { 
-		ArrayList<String> list = new ArrayList<String>();
-		list.add("==");
-		list.add("!=");
-		list.add("<");
-		list.add(">");
-		list.add("<=");
-		list.add(">=");
-		return list;
+	public Vector<String> getAllComparisons() { 
+		return this.comparisonOperators;
 	}
 }

@@ -1,11 +1,15 @@
 package $packageName;
 
-public class $utility.getClassName("ArrayUtility", $type) {
-	public static $type[] create$utility.firstToUpperCase($type)Array(int length) {
+#set ($type = $templateTypes.get(0))
+#set ($className = $utility.getAnnotatedClassName("ArrayUtility", $templateTypes, $genericTypes))
+
+
+public class $className {
+	public static $type[] createArray(int length) {
 		return new $type[length];
 	}
 	
-	public static $type[] create$utility.firstToUpperCase($type)Array(int length, $type filler) {
+	public static $type[] createArray(int length, $type filler) {
 		$type[] result = new $type[length];
 		for (int i = 0; i < length; i++) {
 			result[i] = filler;
@@ -13,7 +17,7 @@ public class $utility.getClassName("ArrayUtility", $type) {
 		return result;
 	}
 
-	public static $type[][] create$utility.firstToUpperCase($type)Matrix(int rows, int columns) {
+	public static $type[][] createMatrix(int rows, int columns) {
 		$type[][] result = new $type[rows][];
 		
 		for (int i = 0; i < rows; i++) {
@@ -23,7 +27,7 @@ public class $utility.getClassName("ArrayUtility", $type) {
 		return result;
 	}
 	
-	public static $type[][] create$utility.firstToUpperCase($type)Matrix(int rows, int columns, $type filler) {
+	public static $type[][] createMatrix(int rows, int columns, $type filler) {
 		$type[][] result = new $type[rows][];
 		
 		for (int i = 0; i < rows; i++) {

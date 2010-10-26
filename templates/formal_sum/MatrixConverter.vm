@@ -9,19 +9,19 @@ package $packageName;
 
 import java.util.Iterator;
 
-#set ($coefficientType = $type1)
-#set ($objectType1 = "M")
-#set ($objectType2 = "N")
-#set ($className = $utility.getFullClassName("MatrixConverter", $coefficientType, $objectType1, $objectType2))
-#set ($basicClassName = $utility.getClassName("MatrixConverter", $coefficientType, $objectType1, $objectType2))
-#set ($vectorConverterClassName1 = $utility.getFullClassName("VectorConverter", $coefficientType, $objectType1))
-#set ($vectorConverterClassName2 = $utility.getFullClassName("VectorConverter", $coefficientType, $objectType2))
-#set ($entryClassName = $utility.getFullClassName("MatrixEntry", $coefficientType))
+#set ($coefficientType = $templateTypes.get(0))
+#set ($objectType1 = $genericTypes.get(0))
+#set ($objectType2 = $genericTypes.get(1))
+#set ($className = $utility.getAnnotatedClassName("MatrixConverter", $templateTypes, $genericTypes))
+#set ($basicClassName = $utility.getClassName("MatrixConverter", $templateTypes, $genericTypes))
+#set ($vectorConverterClassName1 = $utility.getAnnotatedClassName("VectorConverter", $templateTypes, [$objectType1]))
+#set ($vectorConverterClassName2 = $utility.getAnnotatedClassName("VectorConverter", $templateTypes, [$objectType2]))
+#set ($entryClassName = $utility.getAnnotatedClassName("MatrixEntry", $coefficientType))
 
-#set ($sparseMatrixName = $utility.getFullClassName("SparseMatrix", $coefficientType))
-#set ($mappingBasisClass = $utility.getFullClassName("UnorderedPair", $objectType1, $objectType2))
-#set ($mappingSumClass = $utility.getFullClassName("SparseFormalSum", $coefficientType, $mappingBasisClass))
-#set ($troveIteratorName = $utility.getTroveIteratorName($mappingBasisClass, $coefficientType) + $utility.generateGenericAnnotation($mappingBasisClass, $coefficientType))
+#set ($sparseMatrixName = $utility.getAnnotatedClassName("SparseMatrix", $templateTypes))
+#set ($mappingBasisClass = $utility.getAnnotatedClassName("Pair", $genericTypes))
+#set ($mappingSumClass = $utility.getAnnotatedClassName("SparseFormalSum", [$coefficientType, $mappingBasisClass]))
+#set ($troveIteratorName = $utility.getMapIteratorName($mappingBasisClass, $coefficientType) + $utility.generateGenericAnnotation($mappingBasisClass, $coefficientType))
 
 /**
  * This class computes matrix representations of module homomorphisms
