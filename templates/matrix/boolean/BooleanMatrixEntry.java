@@ -34,6 +34,11 @@ public class BooleanMatrixEntry {
 	public int getCol() {
 		return this.col;
 	}
+	
+	public boolean getValue() {
+		return true;
+	}
+	
 	@Override
 	public String toString() {
 		return ("(" + row + ", " + col + ", " + 1 + ")");

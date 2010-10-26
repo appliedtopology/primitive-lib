@@ -7,6 +7,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 #set ($type2 = $templateTypes.get(1))
 #set ($classTag = "Pair")
 #set ($className = $utility.getAnnotatedClassName($classTag, $templateTypes, $genericTypes))
+#set ($basicName = $utility.getClassName($classTag, $templateTypes, $genericTypes))
 
 /**
  * This class implements a pair (a, b), where a is a $type1 and b 
@@ -20,8 +21,8 @@ public class $className {
 	/*
 	 * Make the fields first and second final to maintain immutability.
 	 */
-	private final $type1 first;
-	private final $type2 second;
+	protected final $type1 first;
+	protected final $type2 second;
 	
 	/**
 	 * Constructor which initializes the pair.
@@ -29,7 +30,7 @@ public class $className {
 	 * @param first the value of the first component
 	 * @param second the value of the second component
 	 */
-	public $className($type1 first, $type2 second) {
+	public $basicName($type1 first, $type2 second) {
 		this.first = first;
 		this.second = second;
 	}
@@ -39,7 +40,7 @@ public class $className {
 	 * 
 	 * @param pair the $className to initialize from
 	 */
-	public $className($className pair) {
+	public $basicName($className pair) {
 		this.first = pair.first;
 		this.second = pair.second;
 	}

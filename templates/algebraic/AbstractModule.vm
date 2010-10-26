@@ -1,8 +1,8 @@
 package $packageName;
 
 
-#set ($coefficientType = $templateTypes[0])
-#set ($objectType = $templateTypes[1])
+#set ($coefficientType = $templateTypes.get(0))
+#set ($objectType = $genericTypes.get(0))
 #set ($className = $utility.getAnnotatedClassName("AbstractModule", $templateTypes, $genericTypes))
 
 /**

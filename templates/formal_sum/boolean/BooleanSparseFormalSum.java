@@ -10,17 +10,17 @@ import gnu.trove.THashSet;
  * Such an element can be thought of as being in the form
  * r_1 m_1 + ... + r_k m_k. 
  *
- * Note that the class GenericFormalSum is "unaware" of the 
+ * Note that the class FormalSum is "unaware" of the 
  * arithmetic of the coefficient type. The arithmetic operations
  * of the free R-module whose elements are formal sums is 
- * implemented in GenericFreeModule<R, M>.
+ * implemented in FreeModule<R, M>.
  * 
  * @author Andrew Tausz
  *
  * @param <boolean> the coefficient type
  * @param <M> the object type 
  */
-public class BooleanGenericSparseFormalSum<M> implements BooleanGenericAbstractFormalSum<M> {
+public class BooleanSparseFormalSum<M> implements BooleanAbstractFormalSum<M> {
 	/**
 	 * The coefficient-object pairs are held in a hash map, where the
 	 * key is the object), and the value is the coefficient.
@@ -31,7 +31,7 @@ public class BooleanGenericSparseFormalSum<M> implements BooleanGenericAbstractF
 	/**
 	 * Default constructor which initializes the sum to be empty.
 	 */
-	protected BooleanGenericSparseFormalSum() {}
+	protected BooleanSparseFormalSum() {}
 
 	/**
 	 * This constructor initializes the sum to contain one object.
@@ -39,7 +39,7 @@ public class BooleanGenericSparseFormalSum<M> implements BooleanGenericAbstractF
 	 * @param coefficient the coefficient of the initializing object
 	 * @param object the object to initialize to
 	 */
-	protected BooleanGenericSparseFormalSum(boolean coefficient, M object) {
+	protected BooleanSparseFormalSum(boolean coefficient, M object) {
 		this.put(coefficient, object);
 	}
 
@@ -48,7 +48,7 @@ public class BooleanGenericSparseFormalSum<M> implements BooleanGenericAbstractF
 	 * 
 	 * @param map the hash map to import from
 	 */
-	protected BooleanGenericSparseFormalSum(THashSet<M> map) {
+	protected BooleanSparseFormalSum(THashSet<M> map) {
 		this.map.addAll(map);
 	}
 
@@ -57,7 +57,7 @@ public class BooleanGenericSparseFormalSum<M> implements BooleanGenericAbstractF
 	 * 
 	 * @param formalSum the DoubleFormalSum to import from
 	 */
-	protected BooleanGenericSparseFormalSum(BooleanGenericSparseFormalSum<M> formalSum) {
+	protected BooleanSparseFormalSum(BooleanSparseFormalSum<M> formalSum) {
 		this(formalSum.map);
 	}
 

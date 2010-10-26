@@ -1,6 +1,6 @@
 
 
-public interface BooleanGenericAbstractFormalSum<M> {
+public interface BooleanAbstractFormalSum<M> {
 	void put(boolean coefficient, M object);
 	void remove(M object);
 	

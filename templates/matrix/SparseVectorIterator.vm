@@ -1,12 +1,5 @@
 package $packageName;
 
-#if ($type == "boolean")
-
-#include("templates/matrix/boolean/BooleanSparseVectorIterator.java");
-#stop
-
-#end
-
 import java.util.Iterator;
 
 #set ($type = $templateTypes.get(0))
@@ -14,9 +7,17 @@ import java.util.Iterator;
 #set ($superName = $utility.getAnnotatedClassName("AbstractVector", $templateTypes, $genericTypes))
 #set ($basicName = $utility.getClassName("SparseVector", $templateTypes, $genericTypes))
 #set ($pairClassName = $utility.getAnnotatedClassName("VectorEntry", $templateTypes, $genericTypes))
-#set ($iteratorClassName = $utility.getClassName("SparseVectorIterator", $templateTypes, $genericTypes))
-#set ($mapType = $utility.getMapType("int", "Object") + $utility.generateGenericAnnotation($templateTypes, $genericTypes))
-#set ($iteratorType = $utility.getMapIteratorType("int", "Object") + $utility.generateGenericAnnotation($templateTypes, $genericTypes))
+#set ($iteratorClassName = $utility.getAnnotatedClassName("SparseVectorIterator", $templateTypes, $genericTypes))
+#set ($basicIteratorClassName = $utility.getClassName("SparseVectorIterator", $templateTypes, $genericTypes))
+#set ($mapType = $utility.getMapType("int", $type) + $utility.getGenericAnnotation(["int", $type], []))
+#set ($iteratorType = $utility.getMapIteratorType("int", $type) + $utility.getGenericAnnotation(["int", $type], []))
+
+#if ($type == "boolean")
+
+#include("templates/matrix/boolean/BooleanSparseVectorIterator.java");
+#stop
+
+#end
 
 public class $iteratorClassName implements Iterator<$pairClassName> {
 	private final $iteratorType iterator;

@@ -1,17 +1,17 @@
 package $packageName;
 
+import java.util.Iterator;
+
+#set ($type = $templateTypes.get(0))
+#set ($className = $utility.getAnnotatedClassName("AbstractVector", $templateTypes, $genericTypes))
+#set ($pairClassName = $utility.getAnnotatedClassName("VectorEntry", $templateTypes, $genericTypes))
+
 #if ($type == "boolean")
 
 #include("templates/matrix/boolean/BooleanAbstractVector.java");
 #stop
 
 #end
-
-import java.util.Iterator;
-
-#set ($type = $templateTypes.get(0))
-#set ($className = $utility.getAnnotatedClassName("AbstractVector", $templateTypes, $genericTypes))
-#set ($pairClassName = $utility.getAnnotatedClassName("VectorEntry", $templateTypes, $genericTypes))
 
 public interface $className extends Iterable<$pairClassName> {
 	public abstract $className like(int size);

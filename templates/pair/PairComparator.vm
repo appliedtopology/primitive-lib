@@ -1,0 +1,89 @@
+package $packageName;
+
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
+#set ($type1 = $templateTypes.get(0))
+#set ($type2 = $templateTypes.get(1))
+#set ($classTag = "PairComparator")
+#set ($className = $utility.getAnnotatedClassName($classTag, $templateTypes, $genericTypes))
+#set ($basicClassName = $utility.getClassName($classTag, $templateTypes, $genericTypes))
+#set ($pairClassName = $utility.getAnnotatedClassName("Pair", $templateTypes, $genericTypes))
+#set ($interfaceName = "Comparator$utility.getGenericAnnotation([$pairClassName], [])")
+#set ($comparator1Name = $utility.getAnnotatedClassName("Comparator", [], [$type1]))
+#set ($comparator2Name = $utility.getAnnotatedClassName("Comparator", [], [$type2]))
+
+public class $className implements $interfaceName {
+	#if (!($utility.isPrimitive($type1)))
+	private final $comparator1Name firstComparator;
+	#end
+	
+	#if (!($utility.isPrimitive($type2)))
+	private final $comparator2Name secondComparator;
+	#end
+	
+	#if ($utility.isPrimitive($type1))
+		#if ($utility.isPrimitive($type2))
+			## both are primitive	
+			public $basicClassName() {}
+	
+		#else
+			## type1 is primitive, type2 is not
+			public $basicClassName($comparator2Name secondComparator) {
+				this.secondComparator = secondComparator;
+			}
+		#end
+	#else
+		#if ($utility.isPrimitive($type2))
+			## type1 is not primitive, type2 is primitive
+			public $basicClassName($comparator1Name firstComparator) {
+				this.firstComparator = firstComparator;
+			}
+		#else
+			## type1 and type2 are both non primitive
+			public $basicClassName($comparator1Name firstComparator, $comparator2Name secondComparator) {
+				this.firstComparator = firstComparator;
+				this.secondComparator = secondComparator;
+			}
+		#end
+	#end
+	
+	public int compare($pairClassName o1, $pairClassName o2) {
+		#if ($utility.isPrimitive($type1))
+		{
+			$type1 difference = o1.getFirst() - o2.getFirst();
+			if (difference > 0) {
+				return 1;
+			} else if (difference < 0) {
+				return -1;
+			}
+		}
+		#else
+		{
+			int difference = firstComparator.compare(o1.getFirst(), o2.getFirst());
+			
+			if (difference != 0) {
+				return difference;
+			}
+		}
+		
+		#end
+		
+		#if ($utility.isPrimitive($type2))
+		{
+			$type2 difference = o1.getSecond() - o2.getSecond();
+			if (difference > 0) {
+				return 1;
+			} else if (difference < 0) {
+				return -1;
+			}
+			return 0;
+		}
+		
+		#else
+		
+		return secondComparator.compare(o1.getSecond(), o2.getSecond());
+		
+		#end
+	}
+}

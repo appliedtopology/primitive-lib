@@ -8,7 +8,7 @@ import gnu.trove.TIntObjectIterator;
 
 public class BooleanSparseMatrixIterator implements Iterator<BooleanMatrixEntry> {
 	private final TIntObjectIterator<BooleanSparseVector> rowIterator;
-	private Iterator<IntBooleanUnorderedPair> columnIterator;
+	private Iterator<BooleanVectorEntry> columnIterator;
 	
 	BooleanSparseMatrixIterator(BooleanSparseMatrix matrix) {
 		this.rowIterator = matrix.map.iterator();
@@ -31,8 +31,8 @@ public class BooleanSparseMatrixIterator implements Iterator<BooleanMatrixEntry>
 			this.columnIterator = this.rowIterator.value().iterator();
 		}
 		int row = rowIterator.key();
-		IntBooleanUnorderedPair columnValuePair = columnIterator.next();
-		int column = columnValuePair.getFirst();
+		BooleanVectorEntry columnValuePair = columnIterator.next();
+		int column = columnValuePair.getIndex();
 		return new BooleanMatrixEntry(row, column);
 	}
 

@@ -1,22 +1,23 @@
 package $packageName;
 
-#if ($type == "boolean")
-
-#include("templates/matrix/boolean/BooleanSparseMatrixIterator.java");
-#stop
-
-#end
-
 import java.util.Iterator;
 
 #set ($type = $templateTypes.get(0))
 #set ($className = $utility.getAnnotatedClassName("SparseMatrix", $templateTypes, $genericTypes))
 #set ($superName = $utility.getAnnotatedClassName("AbstractMatrix", $templateTypes, $genericTypes))
 #set ($entryClassName = $utility.getAnnotatedClassName("MatrixEntry", $templateTypes, $genericTypes))
+#set ($vectorEntryClassName = $utility.getAnnotatedClassName("VectorEntry", $templateTypes, $genericTypes))
 #set ($vectorClassName = $utility.getAnnotatedClassName("SparseVector", $templateTypes, $genericTypes))
 #set ($iteratorClassName = $utility.getAnnotatedClassName("SparseMatrixIterator", $templateTypes, $genericTypes))
 #set ($basicIteratorClassName = $utility.getClassName("SparseMatrixIterator", $templateTypes, $genericTypes))
 #set ($internalIteratorName = $utility.getMapIteratorType("int", "Object"))
+
+#if ($type == "boolean")
+
+#include("templates/matrix/boolean/BooleanSparseMatrixIterator.java");
+#stop
+
+#end
 
 public class $iteratorClassName implements Iterator<$entryClassName> {
 	private final $internalIteratorName<$vectorClassName> rowIterator;
@@ -45,8 +46,8 @@ public class $iteratorClassName implements Iterator<$entryClassName> {
 		}
 		int row = rowIterator.key();
 		$vectorEntryClassName columnValuePair = columnIterator.next();
-		int column = columnValuePair.getFirst();
-		$type value = columnValuePair.getSecond();
+		int column = columnValuePair.getIndex();
+		$type value = columnValuePair.getValue();
 		return new $entryClassName(row, column, value);
 	}
 

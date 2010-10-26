@@ -158,4 +158,53 @@ public class $className {
 		}
 		return subArray;
 	}
+	
+	#foreach($comparison in $comparisons)
+    
+    #set ($comparisonName = $utility.getComparisonName($comparison))
+    
+    public static $type[] filterValues$comparisonName($type[] array, $type value) {
+    	
+    	int numFound = 0;
+    	for (int i = 0; i < array.length; i++) {
+    		if (array[i] $comparison value) {
+    			numFound++;
+    		}
+    	}
+    	
+    	$type[] result = new $type[numFound];
+    	int index = 0;
+    	for (int i = 0; i < array.length; i++) {
+    		if (array[i] $comparison value) {
+    			result[index] = array[i];
+    			index++;
+    		}
+    	}
+    	
+    	return result;
+    }
+    
+    public static int[] filterIndices$comparisonName($type[] array, $type value) {
+    	
+    	int numFound = 0;
+    	for (int i = 0; i < array.length; i++) {
+    		if (array[i] $comparison value) {
+    			numFound++;
+    		}
+    	}
+    	
+    	int[] indices = new int[numFound];
+    	int index = 0;
+    	for (int i = 0; i < array.length; i++) {
+    		if (array[i] $comparison value) {
+    			indices[index] = i;
+    			index++;
+    		}
+    	}
+    	
+    	return indices;
+    }
+    
+	#end
+	
 }

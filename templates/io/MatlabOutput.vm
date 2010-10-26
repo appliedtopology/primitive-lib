@@ -67,7 +67,7 @@ public class $className {
 		int numSparseEntry = 0;
 		
 		for (int i = 0; i < matrix.length; i++) {
-			if (matrix[i] != 0) {
+			if (matrix[i] != $utility.getDefaultElement($type)) {
 				numSparseEntry++;
 			}
 		}
@@ -77,7 +77,7 @@ public class $className {
 		$type[] _tmp_s = new $type[numSparseEntry];
 		
 		for (int i = 0; i < matrix.length; i++) {
-			if (matrix[i] != 0) {
+			if (matrix[i] != $utility.getDefaultElement($type)) {
 				_tmp_i[i] = i + 1;
 				_tmp_j[i] = 1;
 				_tmp_s[i] = matrix[i];
@@ -86,8 +86,8 @@ public class $className {
 		
 		writer.write("tmp_m = " + matrix.length + ";\n");
 		writer.write("tmp_n = " + 1 + ";\n");
-		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_i, "tmp_i");
-		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_j, "tmp_j");
+		$utility.getAnnotatedClassName("MatlabOutput", ["int"], []) .writeAsMatlabRow(writer, _tmp_i, "tmp_i");
+		$utility.getAnnotatedClassName("MatlabOutput", ["int"], []) .writeAsMatlabRow(writer, _tmp_j, "tmp_j");
 		writeAsMatlabRow(writer, _tmp_s, "tmp_s");
 		writer.write(name + " = sparse(tmp_i, tmp_j, tmp_s, tmp_m, tmp_n);");
 	}
@@ -96,7 +96,7 @@ public class $className {
 		int numSparseEntry = 0;
 		
 		for (int i = 0; i < matrix.length; i++) {
-			if (matrix[i] != 0) {
+			if (matrix[i] != $utility.getDefaultElement($type)) {
 				numSparseEntry++;
 			}
 		}
@@ -106,7 +106,7 @@ public class $className {
 		$type[] _tmp_s = new $type[numSparseEntry];
 		
 		for (int i = 0; i < matrix.length; i++) {
-			if (matrix[i] != 0) {
+			if (matrix[i] != $utility.getDefaultElement($type)) {
 				_tmp_i[i] = 1;
 				_tmp_j[i] = i + 1;
 				_tmp_s[i] = matrix[i];
@@ -115,8 +115,8 @@ public class $className {
 		
 		writer.write("tmp_m = " + 1 + ";\n");
 		writer.write("tmp_n = " + matrix.length + ";\n");
-		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_i, "tmp_i");
-		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_j, "tmp_j");
+		$utility.getAnnotatedClassName("MatlabOutput", ["int"], []) .writeAsMatlabRow(writer, _tmp_i, "tmp_i");
+		$utility.getAnnotatedClassName("MatlabOutput", ["int"], []) .writeAsMatlabRow(writer, _tmp_j, "tmp_j");
 		writeAsMatlabRow(writer, _tmp_s, "tmp_s");
 		writer.write(name + " = sparse(tmp_i, tmp_j, tmp_s, tmp_m, tmp_n);");
 	}
@@ -126,7 +126,7 @@ public class $className {
 		
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[i].length; j++) {
-				if (matrix[i][j] != 0) {
+				if (matrix[i][j] != $utility.getDefaultElement($type)) {
 					numSparseEntry++;
 				}
 			}
@@ -138,7 +138,7 @@ public class $className {
 		
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[i].length; j++) {
-				if (matrix[i][j] != 0) {
+				if (matrix[i][j] != $utility.getDefaultElement($type)) {
 					_tmp_i[i] = i + 1;
 					_tmp_j[i] = j + 1;
 					_tmp_s[i] = matrix[i][j];
@@ -148,8 +148,8 @@ public class $className {
 		
 		writer.write("tmp_m = " + matrix.length + ";\n");
 		writer.write("tmp_n = " + matrix[0].length + ";\n");
-		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_i, "tmp_i");
-		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_j, "tmp_j");
+		$utility.getAnnotatedClassName("MatlabOutput", ["int"], []) .writeAsMatlabRow(writer, _tmp_i, "tmp_i");
+		$utility.getAnnotatedClassName("MatlabOutput", ["int"], []) .writeAsMatlabRow(writer, _tmp_j, "tmp_j");
 		writeAsMatlabRow(writer, _tmp_s, "tmp_s");
 		writer.write(name + " = sparse(tmp_i, tmp_j, tmp_s, tmp_m, tmp_n);");
 	}
@@ -163,16 +163,16 @@ public class $className {
 		
 		int i = 0;
 		for ($pairClassName pair: vector) {
-			_tmp_i[i] = pair.getFirst() + 1;
+			_tmp_i[i] = pair.getIndex() + 1;
 			_tmp_j[i] = 1;
-			_tmp_s[i] = pair.getSecond();
+			_tmp_s[i] = pair.getValue();
 			i++;
 		}
 		
 		writer.write("tmp_m = " + vector.getLength() + ";\n");
 		writer.write("tmp_n = " + 1 + ";\n");
-		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_i, "tmp_i");
-		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_j, "tmp_j");
+		$utility.getAnnotatedClassName("MatlabOutput", ["int"], []) .writeAsMatlabRow(writer, _tmp_i, "tmp_i");
+		$utility.getAnnotatedClassName("MatlabOutput", ["int"], []) .writeAsMatlabRow(writer, _tmp_j, "tmp_j");
 		writeAsMatlabRow(writer, _tmp_s, "tmp_s");
 		writer.write(name + " = sparse(tmp_i, tmp_j, tmp_s, tmp_m, tmp_n);");
 	}
@@ -187,15 +187,15 @@ public class $className {
 		int i = 0;
 		for ($pairClassName pair: vector) {
 			_tmp_i[i] = 1;
-			_tmp_j[i] = pair.getFirst() + 1;
-			_tmp_s[i] = pair.getSecond();
+			_tmp_j[i] = pair.getIndex() + 1;
+			_tmp_s[i] = pair.getValue();
 			i++;
 		}
 		
 		writer.write("tmp_m = " + 1 + ";\n");
 		writer.write("tmp_n = " + vector.getLength() + ";\n");
-		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_i, "tmp_i");
-		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_j, "tmp_j");
+		$utility.getAnnotatedClassName("MatlabOutput", ["int"], []) .writeAsMatlabRow(writer, _tmp_i, "tmp_i");
+		$utility.getAnnotatedClassName("MatlabOutput", ["int"], []) .writeAsMatlabRow(writer, _tmp_j, "tmp_j");
 		writeAsMatlabRow(writer, _tmp_s, "tmp_s");
 		writer.write(name + " = sparse(tmp_i, tmp_j, tmp_s, tmp_m, tmp_n);");
 	}
@@ -217,8 +217,8 @@ public class $className {
 		
 		writer.write("tmp_m = " + matrix.getNumRows() + ";\n");
 		writer.write("tmp_n = " + matrix.getNumColumns() + ";\n");
-		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_i, "tmp_i");
-		$utility.getFullClassName("MatlabOutput", "int") .writeAsMatlabRow(writer, _tmp_j, "tmp_j");
+		$utility.getAnnotatedClassName("MatlabOutput", ["int"], []) .writeAsMatlabRow(writer, _tmp_i, "tmp_i");
+		$utility.getAnnotatedClassName("MatlabOutput", ["int"], []) .writeAsMatlabRow(writer, _tmp_j, "tmp_j");
 		writeAsMatlabRow(writer, _tmp_s, "tmp_s");
 		writer.write(name + " = sparse(tmp_i, tmp_j, tmp_s, tmp_m, tmp_n);");
 	}

@@ -1,6 +1,6 @@
 package $packageName;
 
-#set ($type = $templateTypes[0])
+#set ($type = $templateTypes.get(0))
 #set ($className = $utility.getAnnotatedClassName("AbstractRing", $templateTypes, $genericTypes))
 
 public abstract class $className {

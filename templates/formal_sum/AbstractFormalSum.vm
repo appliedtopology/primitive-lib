@@ -1,8 +1,8 @@
 package $packageName;
 
-#if ($type1 == "boolean")
+#if ($templateTypes.get(0) == "boolean")
 
-#include("templates/formal_sum/boolean/BooleanGenericAbstractFormalSum.java");
+#include("templates/formal_sum/boolean/BooleanAbstractFormalSum.java");
 #stop
 
 #end

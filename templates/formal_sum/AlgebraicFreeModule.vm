@@ -8,10 +8,10 @@ import java.util.Iterator;
 #set ($basicClassName = $utility.getClassName("AlgebraicFreeModule", $templateTypes, $genericTypes))
 #set ($superName = $utility.getAnnotatedClassName("AbstractModule", $templateTypes, $genericTypes))
 #set ($sumClassName = $utility.getAnnotatedClassName("SparseFormalSum", $templateTypes, $genericTypes))
-#set ($ringClassName = $utility.getAnnotatedClassName("AbstractRing", $templateTypes, $genericTypes))
+#set ($ringClassName = $utility.getAnnotatedClassName("AbstractRing", [$coefficientType], []))
 
-#set ($mapType = $utility.getMapType($objectType, $coefficientType) + $utility.generateGenericAnnotation($objectType, $coefficientType))
-#set ($iteratorType = $utility.getMapIteratorType($objectType, $coefficientType) + $utility.generateGenericAnnotation($objectType, $coefficientType))
+#set ($mapType = $utility.getMapType($objectType, $coefficientType) + $utility.getGenericAnnotation([$objectType, $coefficientType]))
+#set ($iteratorType = $utility.getMapIteratorType($objectType, $coefficientType) + $utility.getGenericAnnotation([$objectType, $coefficientType]))
 
 public abstract class $className extends $superName {
 	private $ringClassName ring;
@@ -146,7 +146,7 @@ public abstract class $className extends $superName {
 		
 		#if ($utility.isPrimitive($coefficientType) || $utility.isPrimitive($objectType))
 		
-		$troveIteratorName iterator = a.map.iterator();
+		$iteratorType iterator = a.map.iterator();
 		
 		while(iterator.hasNext()) {
 			iterator.advance();
