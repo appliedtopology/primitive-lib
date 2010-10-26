@@ -1,8 +1,8 @@
 package $packageName;
 
-#set ($coefficientType = $type)
-#set ($className = $utility.getFullClassName("AbstractField", $type))
-#set ($superName = $utility.getFullClassName("AbstractRing", $type))
+#set ($type = $templateTypes[0])
+#set ($className = $utility.getAnnotatedClassName("AbstractField", $templateTypes, $genericTypes))
+#set ($superName = $utility.getAnnotatedClassName("AbstractRing", $templateTypes, $genericTypes))
 
 public abstract class $className extends $superName {
 	public abstract $type divide($type a, $type b);

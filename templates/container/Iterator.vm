@@ -1,9 +1,10 @@
 package $packageName;
 
-#set ($className = $utility.getFullClassName("Iterator", $type))
+#set ($type = $templateTypes.get(0))
+#set ($className = $utility.getAnnotatedClassName("Iterator", $templateTypes, $genericTypes))
 
 public interface $className {
 	boolean hasNext();
-	int next();
+	$type next();
 	void remove();
 }

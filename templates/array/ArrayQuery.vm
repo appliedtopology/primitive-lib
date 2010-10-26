@@ -2,7 +2,10 @@ package $packageName;
 
 import java.util.Arrays;
 
-public class $utility.getClassName("ArrayQuery", $type) {
+#set ($type = $templateTypes.get(0))
+#set ($className = $utility.getAnnotatedClassName("ArrayQuery", $templateTypes, $genericTypes))
+
+public class $className {
 	/**
 	 * This function returns the indices of the values in the
 	 * array that are equal to the value to search for.

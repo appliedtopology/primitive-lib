@@ -6,7 +6,7 @@ import edu.stanford.math.plexlib.autogen.pair.IntBooleanUnorderedPair;
 import gnu.trove.TIntIterator;
 
 
-public class BooleanSparseVectorIterator implements Iterator<IntBooleanUnorderedPair> {
+public class BooleanSparseVectorIterator implements Iterator<BooleanVectorEntry> {
 	private final TIntIterator iterator;
 	
 	public BooleanSparseVectorIterator(BooleanSparseVector vector) {
@@ -17,8 +17,8 @@ public class BooleanSparseVectorIterator implements Iterator<IntBooleanUnordered
 		return this.iterator.hasNext();
 	}
 
-	public IntBooleanUnorderedPair next() {
-		return new IntBooleanUnorderedPair(this.iterator.next(), true);
+	public BooleanVectorEntry next() {
+		return new BooleanVectorEntry(this.iterator.next());
 	}
 
 	public void remove() {

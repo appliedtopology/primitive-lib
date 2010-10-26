@@ -1,6 +1,9 @@
 package $packageName;
 
-public class $utility.getClassName("ArrayMath", $type) {
+#set ($type = $templateTypes.get(0))
+#set ($className = $utility.getAnnotatedClassName("ArrayMath", $templateTypes, $genericTypes))
+
+public class $className {
 	/*
 	 * Vector operations
 	 */

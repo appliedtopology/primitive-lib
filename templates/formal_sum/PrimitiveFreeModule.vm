@@ -9,14 +9,15 @@ package $packageName;
 
 import java.util.Iterator;
 
-#set ($coefficientType = $type1)
-#set ($objectType = "M")
-#set ($className = $utility.getFullClassName("PrimitiveFreeModule", $coefficientType, $objectType))
-#set ($basicClassName = $utility.getClassName("PrimitiveFreeModule", $coefficientType, $objectType))
-#set ($sumClassName = $utility.getFullClassName("SparseFormalSum", $coefficientType, $objectType))
-#set ($superName = $utility.getFullClassName("AbstractModule", $coefficientType, $sumClassName))
-#set ($troveContainerName = $utility.getTroveMapName($objectType, $coefficientType) + $utility.generateGenericAnnotation($objectType, $coefficientType))
-#set ($troveIteratorName = $utility.getTroveIteratorName($objectType, $coefficientType) + $utility.generateGenericAnnotation($objectType, $coefficientType))
+#set ($coefficientType = $templateTypes.get(0))
+#set ($objectType = $genericTypes.get(0))
+#set ($className = $utility.getAnnotatedClassName("PrimitiveFreeModule", $templateTypes, $genericTypes))
+#set ($basicClassName = $utility.getClassName("PrimitiveFreeModule", $templateTypes, $genericTypes))
+#set ($superName = $utility.getAnnotatedClassName("AbstractModule", $templateTypes, $genericTypes))
+#set ($sumClassName = $utility.getAnnotatedClassName("SparseFormalSum", $templateTypes, $genericTypes))
+
+#set ($mapType = $utility.getMapType($objectType, $coefficientType) + $utility.generateGenericAnnotation($objectType, $coefficientType))
+#set ($iteratorType = $utility.getMapIteratorType($objectType, $coefficientType) + $utility.generateGenericAnnotation($objectType, $coefficientType))
 
 public abstract class $className extends $superName {
 	

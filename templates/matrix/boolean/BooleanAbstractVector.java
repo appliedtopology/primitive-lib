@@ -2,7 +2,7 @@
 
 
 
-public interface BooleanAbstractVector extends Iterable<IntBooleanUnorderedPair> {
+public interface BooleanAbstractVector extends Iterable<BooleanVectorEntry> {
 	public abstract BooleanAbstractVector like(int size);
 	
 	public abstract boolean get(int index);

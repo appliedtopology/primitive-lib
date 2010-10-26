@@ -1,0 +1,57 @@
+package $packageName;
+
+#if ($type == "boolean")
+
+#include("templates/matrix/boolean/BooleanVectorEntry.java");
+#stop
+
+#end
+
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
+#set ($type = $templateTypes.get(0))
+#set ($classTag = "VectorEntry")
+#set ($className = $utility.getAnnotatedClassName($classTag, $templateTypes, $genericTypes))
+#set ($basicName = $utility.getClassName($classTag, $templateTypes, $genericTypes))
+
+public class $className {
+	private final int index;
+	private final $type value;
+	
+	public $basicName(int index, $type value) {
+		this.index = index;
+		this.value = value;
+	}
+	
+	public int getIndex() {
+		return this.index;
+	}
+
+	public $type getValue() {
+		return this.value;
+	}
+	
+	@Override
+	public String toString() {
+		return ("(" + index + ", " + value + ")");
+	}
+	
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(17, 37).append(index).append(value).toHashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final $utility.getWildcardClassName($classTag, $templateTypes, $genericTypes) other = ($utility.getWildcardClassName($classTag, $templateTypes, $genericTypes)) obj;
+		return new EqualsBuilder().append(index, other.index).append(value, other.value).isEquals();
+
+	}
+}

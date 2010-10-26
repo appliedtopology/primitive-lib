@@ -9,16 +9,17 @@ package $packageName;
 
 import java.util.Iterator;
 
-#set ($superName = $utility.getFullClassName("AbstractVector", $type))
-#set ($className = $utility.getFullClassName("SparseVector", $type))
-#set ($iteratorClassName = $utility.getFullClassName("SparseVectorIterator", $type))
-#set ($basicIteratorClassName = $utility.getClassName("SparseVectorIterator", $type))
-#set ($pairClassName = $utility.getFullClassName("UnorderedPair", "int", $type))
-#set ($troveContainerName = $utility.getTroveMapName("int", $type) + $utility.generateGenericAnnotation($type))
-#set ($troveIteratorName = $utility.getTroveIteratorName("int", $type) + $utility.generateGenericAnnotation($type))
+#set ($type = $templateTypes.get(0))
+#set ($className = $utility.getAnnotatedClassName("SparseVector", $templateTypes, $genericTypes))
+#set ($superName = $utility.getAnnotatedClassName("AbstractVector", $templateTypes, $genericTypes))
+#set ($basicName = $utility.getClassName("SparseVector", $templateTypes, $genericTypes))
+#set ($pairClassName = $utility.getAnnotatedClassName("VectorEntry", $templateTypes, $genericTypes))
+#set ($iteratorClassName = $utility.getClassName("SparseVectorIterator", $templateTypes, $genericTypes))
+#set ($mapType = $utility.getMapType("int", "Object") + $utility.generateGenericAnnotation($templateTypes, $genericTypes))
+#set ($iteratorType = $utility.getMapIteratorType("int", "Object") + $utility.generateGenericAnnotation($templateTypes, $genericTypes))
 
 public class $iteratorClassName implements Iterator<$pairClassName> {
-	private final $troveIteratorName iterator;
+	private final $iteratorType iterator;
 	
 	public $basicIteratorClassName($className vector) {
 		this.iterator = vector.map.iterator();

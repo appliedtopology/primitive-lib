@@ -9,16 +9,16 @@ package $packageName;
 
 import java.util.Iterator;
 
-#set ($coefficientType = $type1)
-#set ($objectType = "M")
-#set ($className = $utility.getFullClassName("VectorConverter", $coefficientType, $objectType))
-#set ($basicClassName = $utility.getClassName("VectorConverter", $coefficientType, $objectType))
-#set ($troveIndexMapName = $utility.getTroveMapName($objectType, "int") + $utility.generateGenericAnnotation($objectType))
-#set ($troveBasisMapName = $utility.getTroveMapName("int", $objectType) + $utility.generateGenericAnnotation($objectType))
-#set ($sumClassName = $utility.getFullClassName("SparseFormalSum", $coefficientType, $objectType))
-#set ($troveIteratorName = $utility.getTroveIteratorName($objectType, $coefficientType) + $utility.generateGenericAnnotation($objectType, $coefficientType))
-#set ($sparseVectorName = $utility.getFullClassName("SparseVector", $coefficientType))
-#set ($pairClassName = $utility.getFullClassName("UnorderedPair", "int", $coefficientType))
+#set ($coefficientType = $templateTypes.get(0))
+#set ($objectType = $genericTypes.get(0))
+#set ($className = $utility.getAnnotatedClassName("VectorConverter", $templateTypes, $genericTypes))
+#set ($basicClassName = $utility.getClassName("VectorConverter", $templateTypes, $genericTypes))
+#set ($troveIndexMapName = $utility.getMapType($objectType, "int") + $utility.generateGenericAnnotation($objectType))
+#set ($troveBasisMapName = $utility.getMapType("int", $objectType) + $utility.generateGenericAnnotation($objectType))
+#set ($troveIteratorName = $utility.getMapIteratorType($objectType, $coefficientType) + $utility.generateGenericAnnotation($objectType, $coefficientType))
+#set ($sumClassName = $utility.getAnnotatedClassName("SparseFormalSum", $templateTypes, $genericTypes))
+#set ($sparseVectorName = $utility.getAnnotatedClassName("SparseVector", $templateTypes))
+#set ($pairClassName = $utility.getAnnotatedClassName("Pair", $templateTypes))
 
 /**
  * This class implements the isomorphism between a free module on a set of

@@ -1,9 +1,9 @@
 package $packageName;
 
 
-#set ($coefficientType = $type1)
-#set ($objectType = $type2)
-#set ($className = $utility.getFullClassName("AbstractModule", $type1, $type2))
+#set ($coefficientType = $templateTypes[0])
+#set ($objectType = $templateTypes[1])
+#set ($className = $utility.getAnnotatedClassName("AbstractModule", $templateTypes, $genericTypes))
 
 /**
  * This interface defines a (left) R-module structure on

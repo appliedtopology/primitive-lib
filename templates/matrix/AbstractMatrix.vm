@@ -7,9 +7,10 @@ package $packageName;
 
 #end
 
-#set ($className = $utility.getFullClassName("AbstractMatrix", $type))
-#set ($entryClassName = $utility.getFullClassName("MatrixEntry", $type))
-#set ($vectorClassName = $utility.getFullClassName("AbstractVector", $type))
+#set ($type = $templateTypes.get(0))
+#set ($className = $utility.getAnnotatedClassName("AbstractMatrix", $templateTypes, $genericTypes))
+#set ($entryClassName = $utility.getAnnotatedClassName("MatrixEntry", $templateTypes, $genericTypes))
+#set ($vectorClassName = $utility.getAnnotatedClassName("AbstractVector", $templateTypes, $genericTypes))
 
 public interface $className extends Iterable<$entryClassName> {
 	public abstract $className like(int rows, int columns);

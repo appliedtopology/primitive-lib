@@ -3,18 +3,20 @@ package $packageName;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-#set ($className = $utility.getClassName("OrderedPair", $type1, $type2))
+#set ($type1 = $templateTypes.get(0))
+#set ($type2 = $templateTypes.get(1))
+#set ($classTag = "Pair")
+#set ($className = $utility.getAnnotatedClassName($classTag, $templateTypes, $genericTypes))
 
 /**
- * This class implements a pair (a, b), where d is a $type1 and l 
- * is a $type2. It implements the Comparable interface with dictionary
- * ordering. Note that any instance of this class is immutable, and
+ * This class implements a pair (a, b), where a is a $type1 and b 
+ * is a $type2. Note that any instance of this class is immutable, and
  * implements value semantics.
  * 
  * @author Andrew Tausz
  *
  */
-public class $className$utility.generateGenericAnnotationImplements($type1, $type2, "Comparable") implements Comparable<$className$utility.generateGenericAnnotation($type1, $type2)> {
+public class $className {
 	/*
 	 * Make the fields first and second final to maintain immutability.
 	 */
@@ -37,7 +39,7 @@ public class $className$utility.generateGenericAnnotationImplements($type1, $typ
 	 * 
 	 * @param pair the $className to initialize from
 	 */
-	public $className($className$utility.generateGenericAnnotation($type1, $type2) pair) {
+	public $className($className pair) {
 		this.first = pair.first;
 		this.second = pair.second;
 	}
@@ -65,34 +67,6 @@ public class $className$utility.generateGenericAnnotationImplements($type1, $typ
 		return ("(" + first + ", " + second + ")");
 	}
 	
-	public int compareTo($className$utility.generateGenericAnnotation($type1, $type2) o) {
-	#if ($utility.isPrimitive($type1))
-		$type1 difference1 = this.first - o.first;
-		if (difference1 > 0) {
-			return 1;
-		} else if (difference1 < 0) {
-			return -1;
-		}
-	#else
-		int comparison1 = this.first.compareTo(o.first);
-		if (comparison1 != 0) {
-			return comparison1;
-		}
-	#end
-
-	#if ($utility.isPrimitive($type2))
-		$type2 difference2 = this.second - o.second;
-		if (difference2 > 0) {
-			return 1;
-		} else if (difference2 < 0) {
-			return -1;
-		}
-		return 0;
-	#else
-		return this.second.compareTo(o.second);
-	#end
-	}
-	
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).append(first).append(second).toHashCode();
@@ -106,8 +80,7 @@ public class $className$utility.generateGenericAnnotationImplements($type1, $typ
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final $className other = ($className$utility.generateGenericWildcards($type1, $type2)) obj;
+		final $utility.getWildcardClassName($classTag, $templateTypes, $genericTypes) other = ($utility.getWildcardClassName($classTag, $templateTypes, $genericTypes)) obj;
 		return new EqualsBuilder().append(first, other.first).append(second, other.second).isEquals();
-
 	}
 }

@@ -10,8 +10,10 @@ package $packageName;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-#set ($className = $utility.getFullClassName("MatrixEntry", $type))
-#set ($basicName = $utility.getClassName("MatrixEntry", $type))
+#set ($type = $templateTypes.get(0))
+#set ($classTag = "MatrixEntry")
+#set ($className = $utility.getAnnotatedClassName($classTag, $templateTypes, $genericTypes))
+#set ($basicName = $utility.getClassName($classTag, $templateTypes, $genericTypes))
 
 /**
  * This class implements a pair (a, b, c), where a and b are ints and
@@ -73,7 +75,7 @@ public class $className {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final $basicName$utility.generateGenericWildcards($type) other = ($basicName$utility.generateGenericWildcards($type)) obj;
+		final $utility.getWildcardClassName($classTag, $templateTypes, $genericTypes) other = ($utility.getWildcardClassName($classTag, $templateTypes, $genericTypes)) obj;
 		return new EqualsBuilder().append(row, other.row).append(col, other.col).append(value, other.value).isEquals();
 
 	}
