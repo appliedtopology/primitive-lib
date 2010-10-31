@@ -1,96 +1,94 @@
-package $packageName;
+package edu.stanford.math.primitivelib.autogen.array;
 
-#set ($type = $templateTypes.get(0))
-#set ($className = $utility.getAnnotatedClassName("ArrayMath", $templateTypes, $genericTypes))
 
-public class $className {
+public class IntArrayMath {
 	/*
 	 * Vector operations
 	 */
 	
-	public static $type[] negate($type[] vector) {
+	public static int[] negate(int[] vector) {
 		int n = vector.length;
-		$type[] result = new $type[n];
+		int[] result = new int[n];
 		for (int i = 0; i < n; i++) {
 			result[i] = -vector[i];
 		}
 		return result;
 	}
 	
-	public static $type[] add($type[] vector1, $type[] vector2) {
+	public static int[] add(int[] vector1, int[] vector2) {
 		int n = vector1.length;
-		$type[] result = new $type[n];
+		int[] result = new int[n];
 		for (int i = 0; i < n; i++) {
 			result[i] = vector1[i] + vector2[i];
 		}
 		return result;
 	}
 	
-	public static $type[] subtract($type[] vector1, $type[] vector2) {
+	public static int[] subtract(int[] vector1, int[] vector2) {
 		int n = vector1.length;
-		$type[] result = new $type[n];
+		int[] result = new int[n];
 		for (int i = 0; i < n; i++) {
 			result[i] = vector1[i] - vector2[i];
 		}
 		return result;
 	}
 	
-	public static $type[] componentwiseMultiply($type[] vector1, $type[] vector2) {
+	public static int[] componentwiseMultiply(int[] vector1, int[] vector2) {
 		int n = vector1.length;
-		$type[] result = new $type[n];
+		int[] result = new int[n];
 		for (int i = 0; i < n; i++) {
 			result[i] = vector1[i] * vector2[i];
 		}
 		return result;
 	}
 	
-	public static $type[] scalarAdd($type[] vector, $type scalar) {
+	public static int[] scalarAdd(int[] vector, int scalar) {
 		int n = vector.length;
-		$type[] result = new $type[n];
+		int[] result = new int[n];
 		for (int i = 0; i < n; i++) {
 			result[i] = vector[i] + scalar;
 		}
 		return result;
 	}
 	
-	public static $type[] scalarMultiply($type[] vector, $type scalar) {
+	public static int[] scalarMultiply(int[] vector, int scalar) {
 		int n = vector.length;
-		$type[] result = new $type[n];
+		int[] result = new int[n];
 		for (int i = 0; i < n; i++) {
 			result[i] = vector[i] * scalar;
 		}
 		return result;
 	}
 	
-	public static void accumulate($type[] vector1, $type[] vector2) {
+	public static void accumulate(int[] vector1, int[] vector2) {
 		int n = vector1.length;
 		for (int i = 0; i < n; i++) {
 			vector1[i] += vector2[i];
 		}
 	}
 	
-	public static void accumulate($type[] vector1, $type[] vector2, $type coefficient) {
+	public static void accumulate(int[] vector1, int[] vector2, int coefficient) {
 		int n = vector1.length;
 		for (int i = 0; i < n; i++) {
 			vector1[i] += coefficient * vector2[i];
 		}
 	}
 	
-	public static void inPlaceMultiply($type[] vector, $type scalar) {
+	public static void inPlaceMultiply(int[] vector, int scalar) {
 		int n = vector.length;
 		for (int i = 0; i < n; i++) {
 			vector[i] *= scalar;
 		}
 	}
 	
-	public static void inPlaceAdd($type[] vector, $type scalar) {
+	public static void inPlaceAdd(int[] vector, int scalar) {
 		int n = vector.length;
 		for (int i = 0; i < n; i++) {
 			vector[i] += scalar;
 		}
 	}
 	
-	public static void inPlaceNegate($type[] vector) {
+	public static void inPlaceNegate(int[] vector) {
 		int n = vector.length;
 		for (int i = 0; i < n; i++) {
 			vector[i] *= -1;
@@ -101,10 +99,10 @@ public class $className {
 	 * Matrix Operations
 	 */
 	
-	public static $type[][] add($type[][] matrix1, $type[][] matrix2) {
+	public static int[][] add(int[][] matrix1, int[][] matrix2) {
 		int m = matrix1.length;
 		int n = matrix1[0].length;
-		$type[][] result = new $type[m][n];
+		int[][] result = new int[m][n];
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
 				result[i][j] = matrix1[i][j] + matrix2[i][j];
@@ -113,10 +111,10 @@ public class $className {
 		return result;
 	}
 	
-	public static $type[][] subtract($type[][] matrix1, $type[][] matrix2) {
+	public static int[][] subtract(int[][] matrix1, int[][] matrix2) {
 		int m = matrix1.length;
 		int n = matrix1[0].length;
-		$type[][] result = new $type[m][n];
+		int[][] result = new int[m][n];
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
 				result[i][j] = matrix1[i][j] - matrix2[i][j];
@@ -125,10 +123,10 @@ public class $className {
 		return result;
 	}
 	
-	public static $type[][] componentwiseMultiply($type[][] matrix1, $type[][] matrix2) {
+	public static int[][] componentwiseMultiply(int[][] matrix1, int[][] matrix2) {
 		int m = matrix1.length;
 		int n = matrix1[0].length;
-		$type[][] result = new $type[m][n];
+		int[][] result = new int[m][n];
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
 				result[i][j] = matrix1[i][j] * matrix2[i][j];
@@ -137,12 +135,12 @@ public class $className {
 		return result;
 	}
 	
-	public static $type[][] multiply($type[][] matrix1, $type[][] matrix2) {
+	public static int[][] multiply(int[][] matrix1, int[][] matrix2) {
 		int m = matrix1.length;
 		int n = matrix1[0].length;
 		int p = matrix2[0].length;
 		
-		$type[][] result = new $type[m][p];
+		int[][] result = new int[m][p];
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < p; j++) {
 				for (int k = 0; k < n; k++) {
@@ -153,10 +151,10 @@ public class $className {
 		return result;
 	}
 	
-	public static $type[] multiply($type[][] matrix, $type[] vector) {
+	public static int[] multiply(int[][] matrix, int[] vector) {
 		int m = matrix.length;
 		int n = matrix[0].length;
-		$type[] result = new $type[m];
+		int[] result = new int[m];
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
 				result[i] += matrix[i][j] * vector[j];
@@ -165,10 +163,10 @@ public class $className {
 		return result;
 	}
 	
-	public static $type[] multiply($type[] vector, $type[][] matrix) {
+	public static int[] multiply(int[] vector, int[][] matrix) {
 		int m = matrix.length;
 		int n = matrix[0].length;
-		$type[] result = new $type[n];
+		int[] result = new int[n];
 		for (int j = 0; j < n; j++) {
 			for (int i = 0; i < m; i++) {
 				result[j] += vector[i] * matrix[i][j];
@@ -177,10 +175,10 @@ public class $className {
 		return result;
 	}
 	
-	public static $type[][] transpose($type[][] matrix) {
+	public static int[][] transpose(int[][] matrix) {
 		int m = matrix.length;
 		int n = matrix[0].length;
-		$type[][] result = new $type[n][m];
+		int[][] result = new int[n][m];
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
 				result[j][i] = matrix[i][j];
@@ -189,12 +187,12 @@ public class $className {
 		return result; 
 	}
 	
-	public static double frobeniusNorm($type[][] matrix) {
+	public static double frobeniusNorm(int[][] matrix) {
 		if (matrix.length == 0) {
 			return 0;
 		}
-		$type sum = 0;
-		$type entry = 0;
+		int sum = 0;
+		int entry = 0;
 		int m = matrix.length;
 		int n = matrix[0].length;
 		for (int i = 0; i < m; i++) {
@@ -206,12 +204,12 @@ public class $className {
 		return Math.sqrt(sum);
 	}
 	
-	public static $type infinityNorm($type[][] matrix) {
+	public static int infinityNorm(int[][] matrix) {
 		if (matrix.length == 0) {
 			return 0;
 		}
-		$type max = 0;
-		$type sum = 0;
+		int max = 0;
+		int sum = 0;
 		int m = matrix.length;
 		int n = matrix[0].length;
 		for (int i = 0; i < m; i++) {
@@ -226,14 +224,14 @@ public class $className {
 		return max;
 	}
 	
-	public static $type oneNorm($type[][] matrix) {
+	public static int oneNorm(int[][] matrix) {
 		return infinityNorm(transpose(matrix));
 	}
 	
-	public static $type innerProduct($type[][] matrix1, $type[][] matrix2) {
+	public static int innerProduct(int[][] matrix1, int[][] matrix2) {
 		int m = matrix1.length;
 		int n = matrix1[0].length;
-		$type sum = 0;
+		int sum = 0;
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
 				sum += matrix1[i][j] * matrix2[i][j];
@@ -242,11 +240,11 @@ public class $className {
 		return sum;
 	}
 	
-	public static $type trace($type[][] matrix) {
+	public static int trace(int[][] matrix) {
 		if (matrix.length == 0) {
 			return 0;
 		}
-		$type sum = 0;
+		int sum = 0;
 		int m = Math.min(matrix.length, matrix[0].length);
 		for (int i = 0; i < m; i++) {
 			sum += matrix[i][i];
@@ -254,7 +252,7 @@ public class $className {
 		return sum;
 	}
 	
-	public static void normalizeRows($type[][] matrix, $type p) {
+	public static void normalizeRows(int[][] matrix, int p) {
 		int m = matrix.length;
 		if (m == 0) {
 			return;
@@ -271,7 +269,7 @@ public class $className {
 		}
 	}
 	
-	public static void normalizeRows($type[][] matrix) {
+	public static void normalizeRows(int[][] matrix) {
 		int m = matrix.length;
 		if (m == 0) {
 			return;
@@ -292,16 +290,16 @@ public class $className {
 	 * Componentwise functions
 	 */
 	
-	public static $type[] abs($type[] vector) {
+	public static int[] abs(int[] vector) {
 		int n = vector.length;
-		$type[] result = new $type[n];
+		int[] result = new int[n];
 		for (int i = 0; i < n; i++) {
 			result[i] = Math.abs(vector[i]);
 		}
 		return result;
 	}
 	
-	public static double[] sqrt($type[] vector) {
+	public static double[] sqrt(int[] vector) {
 		int n = vector.length;
 		double[] result = new double[n];
 		for (int i = 0; i < n; i++) {
@@ -310,7 +308,7 @@ public class $className {
 		return result;
 	}
 	
-	public static double[] log($type[] vector) {
+	public static double[] log(int[] vector) {
 		int n = vector.length;
 		double[] result = new double[n];
 		for (int i = 0; i < n; i++) {
@@ -319,7 +317,7 @@ public class $className {
 		return result;
 	}
 	
-	public static double[] reciprocal($type[] vector) {
+	public static double[] reciprocal(int[] vector) {
 		int n = vector.length;
 		double[] result = new double[n];
 		for (int i = 0; i < n; i++) {
@@ -334,8 +332,8 @@ public class $className {
 	 * Aggregate functions
 	 */
 	
-	public static $type max($type[] vector) {
-		$type max = vector[0];
+	public static int max(int[] vector) {
+		int max = vector[0];
 		int n = vector.length;
 		for (int i = 0; i < n; i++) {
 			if (vector[i] > max) { 
@@ -345,8 +343,8 @@ public class $className {
 		return max;
 	}
 	
-	public static $type min($type[] vector) {
-		$type min = vector[0];
+	public static int min(int[] vector) {
+		int min = vector[0];
 		int n = vector.length;
 		for (int i = 0; i < n; i++) {
 			if (vector[i] < min) { 
@@ -356,16 +354,16 @@ public class $className {
 		return min;
 	}
 	
-	public static $type sum($type[] vector) {
-		$type sum = 0;
+	public static int sum(int[] vector) {
+		int sum = 0;
 		for (int i = 0; i < vector.length; i++) {
 			sum += vector[i];
 		}
 		return sum;
 	}
 	
-	public static $type product($type[] vector) {
-		$type product = 1;
+	public static int product(int[] vector) {
+		int product = 1;
 		for (int i = 0; i < vector.length; i++) {
 			product *= vector[i];
 		}
@@ -373,14 +371,14 @@ public class $className {
 	}
 	
 	
-	public static double mean($type[] vector) {
+	public static double mean(int[] vector) {
 		if (vector.length == 0) {
 			return 0;
 		}
 		return sum(vector) / (double) vector.length;
 	}
 
-	public static double standardDeviation($type[] array) {
+	public static double standardDeviation(int[] array) {
 		if (array.length <= 1) {
 			return 0;
 		}
@@ -394,8 +392,8 @@ public class $className {
 		return sd;
 	}
 	
-	public static $type[] firstDifferences($type[] vector) {
-		$type[] result = new $type[vector.length - 1];
+	public static int[] firstDifferences(int[] vector) {
+		int[] result = new int[vector.length - 1];
 		for (int i = 1; i < vector.length; i++) {
 			result[i - 1] = vector[i] - vector[i - 1];
 		}
@@ -411,7 +409,7 @@ public class $className {
 	 * @param p
 	 * @return
 	 */
-	public static double distance($type[] x1, $type[] x2, $type p) {
+	public static double distance(int[] x1, int[] x2, int p) {
 		double dist = 0;
 		for (int i = 0; i < x1.length; i++) {
 			dist += Math.pow(Math.abs(x1[i] - x2[i]), p);
@@ -420,13 +418,13 @@ public class $className {
 		return dist;
 	}
 	
-	public static double distance($type[] x1, $type[] x2) {
+	public static double distance(int[] x1, int[] x2) {
 		return Math.sqrt(squaredDistance(x1, x2));
 	}
 	
-	public static $type squaredDistance($type[] point1, $type[] point2) {
-		$type squaredDistance = 0;
-		$type difference = 0;
+	public static int squaredDistance(int[] point1, int[] point2) {
+		int squaredDistance = 0;
+		int difference = 0;
 		for (int i = 0; i < point1.length; i++) {
 			difference = (point1[i] - point2[i]);
 			squaredDistance += difference * difference;
@@ -434,53 +432,53 @@ public class $className {
 		return squaredDistance;
 	}
 
-	public static $type squaredDistance($type point1, $type point2) {
-		$type difference = (point1 - point2);
+	public static int squaredDistance(int point1, int point2) {
+		int difference = (point1 - point2);
 		return difference * difference;
 	}
 	
-	public static double norm($type[] vector, $type p) {
+	public static double norm(int[] vector, int p) {
 		int n = vector.length;
-		$type norm = 0;
+		int norm = 0;
 		for (int i = 0; i < n; i++) {
 			norm += Math.pow(Math.abs(vector[i]), p);
 		}
 		return Math.pow(norm, 1.0 / p);
 	}
 	
-	public static $type squaredNorm($type[] vector) {
+	public static int squaredNorm(int[] vector) {
 		int n = vector.length;
-		$type squaredNorm = 0;
+		int squaredNorm = 0;
 		for (int i = 0; i < n; i++) {
 			squaredNorm += vector[i] * vector[i];
 		}
 		return squaredNorm;
 	}
 	
-	public static double norm($type[] vector) {
+	public static double norm(int[] vector) {
 		return Math.sqrt(squaredNorm(vector));
 	}
 	
-	public static double twoNorm($type[] vector) {
+	public static double twoNorm(int[] vector) {
 		return Math.sqrt(squaredNorm(vector));
 	}
 	
-	public static $type oneNorm($type[] vector) {
+	public static int oneNorm(int[] vector) {
 		int n = vector.length;
-		$type norm = 0;
+		int norm = 0;
 		for (int i = 0; i < n; i++) {
 			norm += Math.abs(vector[i]);
 		}
 		return norm;
 	}
 	
-	public static $type infinityNorm($type[] vector) {
+	public static int infinityNorm(int[] vector) {
 		return max(abs(vector));
 	}
 	
-	public static $type innerProduct($type[] vector1, $type[] vector2) {
+	public static int innerProduct(int[] vector1, int[] vector2) {
 		int n = vector1.length;
-		$type innerProduct = 0;
+		int innerProduct = 0;
 		for (int i = 0; i < n; i++) {
 			innerProduct += vector1[i] * vector2[i];
 		}
