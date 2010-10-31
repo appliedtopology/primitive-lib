@@ -1,0 +1,17 @@
+package $packageName;
+
+#set ($type1 = $templateTypes.get(0))
+#set ($type2 = $templateTypes.get(1))
+#set ($classTag = "Function")
+#set ($className = $utility.getAnnotatedClassName($classTag, $templateTypes, $genericTypes))
+#set ($basicName = $utility.getClassName($classTag, $templateTypes, $genericTypes))
+
+/**
+ * This interface defines a function from type $type1 to type $type2.
+ * 
+ * @author Andrew Tausz
+ *
+ */
+public interface $className {
+	public $type2 evaluate($type1 argument);
+}
