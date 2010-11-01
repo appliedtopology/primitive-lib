@@ -85,4 +85,29 @@ public class LongSparseMatrix implements LongAbstractMatrix {
 			this.map.get(row).set(column, value);
 		}
 	}
+	
+	public LongSparseMatrix transpose() {
+		LongSparseMatrix result = new LongSparseMatrix(columns, rows);
+		
+		for (LongMatrixEntry entry: this) {
+			result.set(entry.getCol(), entry.getRow(), entry.getValue());
+		}
+		
+		return result;
+	}
+	
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
+		int count = 0;
+		for (LongMatrixEntry entry: this) {
+			if (count > 0) {
+				builder.append(", ");
+			}
+			builder.append("(" + entry.getRow() + ", " + entry.getCol() + "): " + entry.getValue());
+			count++;
+		}
+		builder.append("]");
+		return builder.toString();
+	}
 }

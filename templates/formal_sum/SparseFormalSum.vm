@@ -44,7 +44,7 @@ public class $className implements $superName {
 	/**
 	 * Default constructor which initializes the sum to be empty.
 	 */
-	protected $basicClassName() {}
+	public $basicClassName() {}
 	
 	/**
 	 * This constructor initializes the sum to contain one object.
@@ -52,7 +52,7 @@ public class $className implements $superName {
 	 * @param coefficient the coefficient of the initializing object
 	 * @param object the object to initialize to
 	 */
-	protected $basicClassName($coefficientType coefficient, $objectType object) {
+	public $basicClassName($coefficientType coefficient, $objectType object) {
 		this.put(coefficient, object);
 	}
 	
@@ -61,7 +61,7 @@ public class $className implements $superName {
 	 * 
 	 * @param map the hash map to import from
 	 */
-	protected $basicClassName($mapType map) {
+	public $basicClassName($mapType map) {
 		#if ($utility.isPrimitive($coefficientType) || $utility.isPrimitive($objectType))
 		this.map.putAll(map);
 		#else
@@ -76,7 +76,7 @@ public class $className implements $superName {
 	 * 
 	 * @param formalSum the DoubleFormalSum to import from
 	 */
-	protected $basicClassName($className formalSum) {
+	public $basicClassName($className formalSum) {
 		this(formalSum.map);
 	}
 	
@@ -144,6 +144,20 @@ public class $className implements $superName {
 			index++;
 		}
 		return builder.toString();
+	}
+	
+	#end
+	
+	#if ($utility.isPrimitive($coefficientType) || $utility.isPrimitive($objectType))
+	
+	public $iteratorType iterator() {
+		return this.map.iterator();
+	}
+	
+	#else
+	
+	public Iterator<Map.Entry<$objectType, $coefficientType>> iterator() {
+		return this.map.entrySet().iterator();
 	}
 	
 	#end

@@ -6,7 +6,8 @@ import gnu.trove.TObjectDoubleIterator;
 
 
 
-public abstract class DoublePrimitiveFreeModule<M> extends DoubleAbstractModule<M> {
+
+public class DoublePrimitiveFreeModule<M> extends DoubleAbstractModule<DoubleSparseFormalSum<M>> {
 	
 	public DoublePrimitiveFreeModule() {}
 	
@@ -93,6 +94,54 @@ public abstract class DoublePrimitiveFreeModule<M> extends DoubleAbstractModule<
 		return result;
 	}
 		
+	public double innerProduct(DoubleSparseFormalSum<M> a, DoubleSparseFormalSum<M> b) {
+		double sum = 0.0d;
+		
+				
+		TObjectDoubleIterator<M> iterator = null;
+		DoubleSparseFormalSum<M> other = null;
+		
+		if (a.size() > b.size()) {
+			iterator = b.map.iterator();
+			other = a;
+		} else {
+			iterator = a.map.iterator();
+			other = b;
+		}
+		
+		while(iterator.hasNext()) {
+			iterator.advance();
+			sum += iterator.value() * other.getCoefficient(iterator.key());
+		}
+		
+				
+		return sum;
+	}
+	
+	public DoubleSparseFormalSum<M> add(M a, M b) {
+		DoubleSparseFormalSum<M> sum = this.createNewSum(a);
+		this.addObject(sum, 1, b);
+		return sum;
+	}
+	
+	public DoubleSparseFormalSum<M> add(DoubleSparseFormalSum<M> a, M b) {
+		DoubleSparseFormalSum<M> sum = this.createNewSum(a);
+		this.addObject(sum, 1, b);
+		return sum;
+	}
+	
+	public DoubleSparseFormalSum<M> subtract(M a, M b) {
+		DoubleSparseFormalSum<M> sum = this.createNewSum(a);
+		this.addObject(sum, -1, b);
+		return sum;
+	}
+	
+	public DoubleSparseFormalSum<M> subtract(DoubleSparseFormalSum<M> a, M b) {
+		DoubleSparseFormalSum<M> sum = this.createNewSum(a);
+		this.addObject(sum, -1, b);
+		return sum;
+	}
+	
 	/**
 	 * This function performs the operation a = a + b.
 	 * 
@@ -151,8 +200,16 @@ public abstract class DoublePrimitiveFreeModule<M> extends DoubleAbstractModule<
 		}
 	}
 
+	public DoubleSparseFormalSum<M> getAdditiveIdentity() {
+		return new DoubleSparseFormalSum<M>();
+	}
+
 	public DoubleSparseFormalSum<M> createNewSum() {
 		return new DoubleSparseFormalSum<M>();
+	}
+	
+	public DoubleSparseFormalSum<M> createNewSum(M object) {
+		return new DoubleSparseFormalSum<M>(1, object);
 	}
 
 	public DoubleSparseFormalSum<M> createNewSum(double coefficient, M object) {
@@ -162,4 +219,26 @@ public abstract class DoublePrimitiveFreeModule<M> extends DoubleAbstractModule<
 	public DoubleSparseFormalSum<M> createNewSum(DoubleSparseFormalSum<M> contents) {
 		return new DoubleSparseFormalSum<M>(contents);
 	}
-}
+	
+	public DoubleSparseFormalSum<M> createNewSum(double[] coefficients, M[] objects) {
+		DoubleSparseFormalSum<M> sum = new DoubleSparseFormalSum<M>();
+		
+		for (int i = 0; i < coefficients.length; i++) {
+			addObject(sum, coefficients[i], objects[i]);
+		}
+		
+		return sum;
+	}
+	
+		
+	public DoubleSparseFormalSum<M> createNewSum(int[] coefficients, M[] objects) {
+		DoubleSparseFormalSum<M> sum = new DoubleSparseFormalSum<M>();
+		
+		for (int i = 0; i < coefficients.length; i++) {
+			addObject(sum, (double) coefficients[i], objects[i]);
+		}
+		
+		return sum;
+	}
+	
+	}

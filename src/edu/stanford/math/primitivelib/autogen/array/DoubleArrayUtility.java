@@ -1,5 +1,7 @@
 package edu.stanford.math.primitivelib.autogen.array;
 
+import java.util.Collection;
+
 
 
 public class DoubleArrayUtility {
@@ -38,7 +40,7 @@ public class DoubleArrayUtility {
 		return result;
 	}
 	
-	public static String toMatlabString(double[] array) {
+	public static String toString(double[] array) {
 		StringBuilder builder = new StringBuilder();
 		builder.append('[');
 		for (int i = 0; i < array.length; i++) {
@@ -51,7 +53,7 @@ public class DoubleArrayUtility {
 		return builder.toString();		
 	}
 	
-	public static String toMatlabString(double[][] array) {
+	public static String toString(double[][] array) {
 		StringBuilder builder = new StringBuilder();
 		builder.append('[');
 		for (int i = 0; i < array.length; i++) {
@@ -66,4 +68,15 @@ public class DoubleArrayUtility {
 		builder.append("]\n");
 		return builder.toString();
 	}
+	
+	public static double[][] toMatrix(Collection<double[]> collection) {
+        double[][] result = new double[collection.size()][];
+        int index = 0;
+        
+        for (double[] array: collection) {
+                result[index++] = array;
+        }
+        
+        return result;
+    }
 }

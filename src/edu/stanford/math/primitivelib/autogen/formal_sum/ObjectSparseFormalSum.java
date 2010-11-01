@@ -1,6 +1,7 @@
 package edu.stanford.math.primitivelib.autogen.formal_sum;
 
 
+import java.util.Iterator;
 import java.util.Map;
 
 import gnu.trove.THashMap;
@@ -33,7 +34,7 @@ public class ObjectSparseFormalSum<R, M> implements ObjectAbstractFormalSum<R, M
 	/**
 	 * Default constructor which initializes the sum to be empty.
 	 */
-	protected ObjectSparseFormalSum() {}
+	public ObjectSparseFormalSum() {}
 	
 	/**
 	 * This constructor initializes the sum to contain one object.
@@ -41,7 +42,7 @@ public class ObjectSparseFormalSum<R, M> implements ObjectAbstractFormalSum<R, M
 	 * @param coefficient the coefficient of the initializing object
 	 * @param object the object to initialize to
 	 */
-	protected ObjectSparseFormalSum(R coefficient, M object) {
+	public ObjectSparseFormalSum(R coefficient, M object) {
 		this.put(coefficient, object);
 	}
 	
@@ -50,7 +51,7 @@ public class ObjectSparseFormalSum<R, M> implements ObjectAbstractFormalSum<R, M
 	 * 
 	 * @param map the hash map to import from
 	 */
-	protected ObjectSparseFormalSum(THashMap<M, R> map) {
+	public ObjectSparseFormalSum(THashMap<M, R> map) {
 				for (Map.Entry<M, R> entry: map.entrySet()) {
 			this.map.put(entry.getKey(), entry.getValue());
 		}
@@ -61,7 +62,7 @@ public class ObjectSparseFormalSum<R, M> implements ObjectAbstractFormalSum<R, M
 	 * 
 	 * @param formalSum the DoubleFormalSum to import from
 	 */
-	protected ObjectSparseFormalSum(ObjectSparseFormalSum<R, M> formalSum) {
+	public ObjectSparseFormalSum(ObjectSparseFormalSum<R, M> formalSum) {
 		this(formalSum.map);
 	}
 	
@@ -106,6 +107,12 @@ public class ObjectSparseFormalSum<R, M> implements ObjectAbstractFormalSum<R, M
 			index++;
 		}
 		return builder.toString();
+	}
+	
+		
+		
+	public Iterator<Map.Entry<M, R>> iterator() {
+		return this.map.entrySet().iterator();
 	}
 	
 	}

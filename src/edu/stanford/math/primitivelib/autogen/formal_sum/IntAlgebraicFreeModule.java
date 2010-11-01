@@ -6,7 +6,8 @@ import gnu.trove.TObjectIntIterator;
 
 
 
-public abstract class IntAlgebraicFreeModule<M> extends IntAbstractModule<M> {
+
+public class IntAlgebraicFreeModule<M> extends IntAbstractModule<IntSparseFormalSum<M>> {
 	private IntAbstractRing ring;
 	
 	public IntAlgebraicFreeModule(IntAbstractRing ring) {
@@ -82,6 +83,54 @@ public abstract class IntAlgebraicFreeModule<M> extends IntAbstractModule<M> {
 	}
 	
 		
+	public int innerProduct(IntSparseFormalSum<M> a, IntSparseFormalSum<M> b) {
+		int sum = ring.getZero();
+		
+				
+		TObjectIntIterator<M> iterator = null;
+		IntSparseFormalSum<M> other = null;
+		
+		if (a.size() > b.size()) {
+			iterator = b.map.iterator();
+			other = a;
+		} else {
+			iterator = a.map.iterator();
+			other = b;
+		}
+		
+		while(iterator.hasNext()) {
+			iterator.advance();
+			sum = ring.add(sum, ring.multiply(iterator.value(), other.getCoefficient(iterator.key())));
+		}
+		
+				
+		return sum;
+	}
+	
+	public IntSparseFormalSum<M> add(M a, M b) {
+		IntSparseFormalSum<M> sum = this.createNewSum(a);
+		this.addObject(sum, ring.getOne(), b);
+		return sum;
+	}
+	
+	public IntSparseFormalSum<M> add(IntSparseFormalSum<M> a, M b) {
+		IntSparseFormalSum<M> sum = this.createNewSum(a);
+		this.addObject(sum, ring.getOne(), b);
+		return sum;
+	}
+	
+	public IntSparseFormalSum<M> subtract(M a, M b) {
+		IntSparseFormalSum<M> sum = this.createNewSum(a);
+		this.addObject(sum, ring.getNegativeOne(), b);
+		return sum;
+	}
+	
+	public IntSparseFormalSum<M> subtract(IntSparseFormalSum<M> a, M b) {
+		IntSparseFormalSum<M> sum = this.createNewSum(a);
+		this.addObject(sum, ring.getNegativeOne(), b);
+		return sum;
+	}
+	
 	/**
 	 * This function performs the operation a = a + b.
 	 * 
@@ -140,8 +189,16 @@ public abstract class IntAlgebraicFreeModule<M> extends IntAbstractModule<M> {
 		}
 	}
 
+	public IntSparseFormalSum<M> getAdditiveIdentity() {
+		return new IntSparseFormalSum<M>();
+	}
+
 	public IntSparseFormalSum<M> createNewSum() {
 		return new IntSparseFormalSum<M>();
+	}
+
+	public IntSparseFormalSum<M> createNewSum(M object) {
+		return new IntSparseFormalSum<M>(this.ring.getOne(), object);
 	}
 
 	public IntSparseFormalSum<M> createNewSum(int coefficient, M object) {
@@ -151,4 +208,15 @@ public abstract class IntAlgebraicFreeModule<M> extends IntAbstractModule<M> {
 	public IntSparseFormalSum<M> createNewSum(IntSparseFormalSum<M> contents) {
 		return new IntSparseFormalSum<M>(contents);
 	}
-}
+	
+	public IntSparseFormalSum<M> createNewSum(int[] coefficients, M[] objects) {
+		IntSparseFormalSum<M> sum = new IntSparseFormalSum<M>();
+		
+		for (int i = 0; i < coefficients.length; i++) {
+			addObject(sum, coefficients[i], objects[i]);
+		}
+		
+		return sum;
+	}
+	
+	}

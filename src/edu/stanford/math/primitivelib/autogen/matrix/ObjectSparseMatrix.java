@@ -72,4 +72,29 @@ public class ObjectSparseMatrix<R> implements ObjectAbstractMatrix<R> {
 			this.map.get(row).set(column, value);
 		}
 	}
+	
+	public ObjectSparseMatrix<R> transpose() {
+		ObjectSparseMatrix<R> result = new ObjectSparseMatrix<R>(columns, rows);
+		
+		for (ObjectMatrixEntry<R> entry: this) {
+			result.set(entry.getCol(), entry.getRow(), entry.getValue());
+		}
+		
+		return result;
+	}
+	
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
+		int count = 0;
+		for (ObjectMatrixEntry<R> entry: this) {
+			if (count > 0) {
+				builder.append(", ");
+			}
+			builder.append("(" + entry.getRow() + ", " + entry.getCol() + "): " + entry.getValue());
+			count++;
+		}
+		builder.append("]");
+		return builder.toString();
+	}
 }

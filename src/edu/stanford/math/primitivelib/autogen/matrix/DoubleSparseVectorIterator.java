@@ -18,6 +18,7 @@ public class DoubleSparseVectorIterator implements Iterator<DoubleVectorEntry> {
 	}
 
 	public DoubleVectorEntry next() {
+		this.iterator.advance();
 		return new DoubleVectorEntry(this.iterator.key(), this.iterator.value());
 	}
 

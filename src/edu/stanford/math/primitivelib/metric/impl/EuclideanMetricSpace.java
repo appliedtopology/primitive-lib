@@ -4,7 +4,7 @@ import edu.stanford.math.primitivelib.autogen.array.DoubleArrayMath;
 
 public class EuclideanMetricSpace extends ObjectSearchableFiniteMetricSpace<double[]> {
 
-	EuclideanMetricSpace(double[][] array) {
+	public EuclideanMetricSpace(double[][] array) {
 		super(array);
 	}
 

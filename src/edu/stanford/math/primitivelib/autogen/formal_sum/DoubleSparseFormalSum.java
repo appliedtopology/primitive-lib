@@ -32,7 +32,7 @@ public class DoubleSparseFormalSum<M> implements DoubleAbstractFormalSum<M> {
 	/**
 	 * Default constructor which initializes the sum to be empty.
 	 */
-	protected DoubleSparseFormalSum() {}
+	public DoubleSparseFormalSum() {}
 	
 	/**
 	 * This constructor initializes the sum to contain one object.
@@ -40,7 +40,7 @@ public class DoubleSparseFormalSum<M> implements DoubleAbstractFormalSum<M> {
 	 * @param coefficient the coefficient of the initializing object
 	 * @param object the object to initialize to
 	 */
-	protected DoubleSparseFormalSum(double coefficient, M object) {
+	public DoubleSparseFormalSum(double coefficient, M object) {
 		this.put(coefficient, object);
 	}
 	
@@ -49,7 +49,7 @@ public class DoubleSparseFormalSum<M> implements DoubleAbstractFormalSum<M> {
 	 * 
 	 * @param map the hash map to import from
 	 */
-	protected DoubleSparseFormalSum(TObjectDoubleHashMap<M> map) {
+	public DoubleSparseFormalSum(TObjectDoubleHashMap<M> map) {
 				this.map.putAll(map);
 			}
 	
@@ -58,7 +58,7 @@ public class DoubleSparseFormalSum<M> implements DoubleAbstractFormalSum<M> {
 	 * 
 	 * @param formalSum the DoubleFormalSum to import from
 	 */
-	protected DoubleSparseFormalSum(DoubleSparseFormalSum<M> formalSum) {
+	public DoubleSparseFormalSum(DoubleSparseFormalSum<M> formalSum) {
 		this(formalSum.map);
 	}
 	
@@ -105,6 +105,12 @@ public class DoubleSparseFormalSum<M> implements DoubleAbstractFormalSum<M> {
 			index++;
 		}
 		return builder.toString();
+	}
+	
+		
+		
+	public TObjectDoubleIterator<M> iterator() {
+		return this.map.iterator();
 	}
 	
 	}

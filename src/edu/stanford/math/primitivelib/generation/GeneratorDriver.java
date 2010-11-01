@@ -17,6 +17,8 @@ public class GeneratorDriver {
 		addIoClasses();
 		addAlgebraicClasses();
 		addFormalSumClasses();
+		addFunctionalClasses();
+		
 		generateClasses();
 	}
 
@@ -41,7 +43,7 @@ public class GeneratorDriver {
 	
 	private static void addArrayClasses() {
 		Vector<String> types = utility.getNumericTypes();
-		String[] classes = new String[]{"ArrayManipulation", "ArrayMath", "ArrayQuery", "ArrayUtility"};
+		String[] classes = new String[]{"ArrayManipulation", "ArrayMath", "ArrayQuery", "ArrayUtility", "ArrayGeneration"};
 		String packageId = "array";
 
 		for (String type: types) {
@@ -137,6 +139,27 @@ public class GeneratorDriver {
 			for (String classTag: classes) {
 				ClassSpecifier specifier = new ClassSpecifier(packageId, classTag, templateTypes);
 				classSpecifiers.add(specifier);
+			}
+		}
+	}
+	
+	private static void addFunctionalClasses() {
+		Vector<String> types1 = utility.getCommonTypes();
+		Vector<String> types2 = utility.getCommonTypes();
+		types1.add("T");
+		types2.add("U");
+		String[] classes = new String[]{"Function"};
+		String packageId = "functional";
+
+		for (String type1: types1) {
+			for (String type2: types2) {
+				Vector<String> templateTypes = new Vector<String>();
+				templateTypes.add(type1);
+				templateTypes.add(type2);
+				for (String classTag: classes) {
+					ClassSpecifier specifier = new ClassSpecifier(packageId, classTag, templateTypes);
+					classSpecifiers.add(specifier);
+				}
 			}
 		}
 	}

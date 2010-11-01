@@ -18,6 +18,7 @@ public class ObjectSparseVectorIterator<R> implements Iterator<ObjectVectorEntry
 	}
 
 	public ObjectVectorEntry<R> next() {
+		this.iterator.advance();
 		return new ObjectVectorEntry<R>(this.iterator.key(), this.iterator.value());
 	}
 

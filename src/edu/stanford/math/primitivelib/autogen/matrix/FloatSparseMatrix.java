@@ -85,4 +85,29 @@ public class FloatSparseMatrix implements FloatAbstractMatrix {
 			this.map.get(row).set(column, value);
 		}
 	}
+	
+	public FloatSparseMatrix transpose() {
+		FloatSparseMatrix result = new FloatSparseMatrix(columns, rows);
+		
+		for (FloatMatrixEntry entry: this) {
+			result.set(entry.getCol(), entry.getRow(), entry.getValue());
+		}
+		
+		return result;
+	}
+	
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
+		int count = 0;
+		for (FloatMatrixEntry entry: this) {
+			if (count > 0) {
+				builder.append(", ");
+			}
+			builder.append("(" + entry.getRow() + ", " + entry.getCol() + "): " + entry.getValue());
+			count++;
+		}
+		builder.append("]");
+		return builder.toString();
+	}
 }

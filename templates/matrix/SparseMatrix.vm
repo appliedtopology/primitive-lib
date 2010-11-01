@@ -100,4 +100,29 @@ public class $className implements $superName {
 			this.map.get(row).set(column, value);
 		}
 	}
+	
+	public $className transpose() {
+		$className result = new $className(columns, rows);
+		
+		for ($entryClassName entry: this) {
+			result.set(entry.getCol(), entry.getRow(), entry.getValue());
+		}
+		
+		return result;
+	}
+	
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
+		int count = 0;
+		for ($entryClassName entry: this) {
+			if (count > 0) {
+				builder.append(", ");
+			}
+			builder.append("(" + entry.getRow() + ", " + entry.getCol() + "): " + entry.getValue());
+			count++;
+		}
+		builder.append("]");
+		return builder.toString();
+	}
 }

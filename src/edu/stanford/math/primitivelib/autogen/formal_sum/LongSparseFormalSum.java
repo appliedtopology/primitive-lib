@@ -32,7 +32,7 @@ public class LongSparseFormalSum<M> implements LongAbstractFormalSum<M> {
 	/**
 	 * Default constructor which initializes the sum to be empty.
 	 */
-	protected LongSparseFormalSum() {}
+	public LongSparseFormalSum() {}
 	
 	/**
 	 * This constructor initializes the sum to contain one object.
@@ -40,7 +40,7 @@ public class LongSparseFormalSum<M> implements LongAbstractFormalSum<M> {
 	 * @param coefficient the coefficient of the initializing object
 	 * @param object the object to initialize to
 	 */
-	protected LongSparseFormalSum(long coefficient, M object) {
+	public LongSparseFormalSum(long coefficient, M object) {
 		this.put(coefficient, object);
 	}
 	
@@ -49,7 +49,7 @@ public class LongSparseFormalSum<M> implements LongAbstractFormalSum<M> {
 	 * 
 	 * @param map the hash map to import from
 	 */
-	protected LongSparseFormalSum(TObjectLongHashMap<M> map) {
+	public LongSparseFormalSum(TObjectLongHashMap<M> map) {
 				this.map.putAll(map);
 			}
 	
@@ -58,7 +58,7 @@ public class LongSparseFormalSum<M> implements LongAbstractFormalSum<M> {
 	 * 
 	 * @param formalSum the DoubleFormalSum to import from
 	 */
-	protected LongSparseFormalSum(LongSparseFormalSum<M> formalSum) {
+	public LongSparseFormalSum(LongSparseFormalSum<M> formalSum) {
 		this(formalSum.map);
 	}
 	
@@ -105,6 +105,12 @@ public class LongSparseFormalSum<M> implements LongAbstractFormalSum<M> {
 			index++;
 		}
 		return builder.toString();
+	}
+	
+		
+		
+	public TObjectLongIterator<M> iterator() {
+		return this.map.iterator();
 	}
 	
 	}
