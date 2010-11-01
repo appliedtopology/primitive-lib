@@ -9,12 +9,10 @@ public class ExplicitIntMetricSpace implements AbstractIntMetricSpace {
 		this.distanceMatrix = distanceMatrix;
 	}
 	
-	@Override
 	public double distance(int i, int j) {
 		return this.distanceMatrix[i][j];
 	}
 
-	@Override
 	public int size() {
 		return this.distanceMatrix.length;
 	}
