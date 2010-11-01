@@ -10,13 +10,11 @@ public abstract class ObjectSearchableFiniteMetricSpace<T> implements AbstractSe
 		this.elements = array;
 	}
 	
-	@Override
 	public TIntHashSet getKNearestNeighbors(T queryPoint, int k) {
 		// TODO: complete
 		return null;
 	}
 
-	@Override
 	public int getNearestPointIndex(T queryPoint) {
 		double minimumDistance = Double.MAX_VALUE;
 		double currentDistance = 0;
@@ -34,7 +32,6 @@ public abstract class ObjectSearchableFiniteMetricSpace<T> implements AbstractSe
 		return nearestIndex;
 	}
 
-	@Override
 	public TIntHashSet getOpenNeighborhood(T queryPoint, double epsilon) {
 		TIntHashSet neighborhood = new TIntHashSet();
 		if (epsilon == 0) {
@@ -52,7 +49,6 @@ public abstract class ObjectSearchableFiniteMetricSpace<T> implements AbstractSe
 		return neighborhood;
 	}
 
-	@Override
 	public TIntHashSet getClosedNeighborhood(T queryPoint, double epsilon) {
 		TIntHashSet neighborhood = new TIntHashSet();
 		if (epsilon == 0) {
@@ -70,25 +66,20 @@ public abstract class ObjectSearchableFiniteMetricSpace<T> implements AbstractSe
 		return neighborhood;
 	}
 	
-	@Override
 	public abstract double distance(T a, T b);
 
-	@Override
 	public T getPoint(int index) {
 		return this.elements[index];
 	}
 
-	@Override
 	public T[] getPoints() {
 		return this.elements;
 	}
 
-	@Override
 	public double distance(int i, int j) {
 		return this.distance(this.elements[i], this.elements[j]);
 	}
 
-	@Override
 	public int size() {
 		return this.elements.length;
 	}
