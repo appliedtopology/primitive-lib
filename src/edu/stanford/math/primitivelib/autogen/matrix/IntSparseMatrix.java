@@ -85,4 +85,29 @@ public class IntSparseMatrix implements IntAbstractMatrix {
 			this.map.get(row).set(column, value);
 		}
 	}
+	
+	public IntSparseMatrix transpose() {
+		IntSparseMatrix result = new IntSparseMatrix(columns, rows);
+		
+		for (IntMatrixEntry entry: this) {
+			result.set(entry.getCol(), entry.getRow(), entry.getValue());
+		}
+		
+		return result;
+	}
+	
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
+		int count = 0;
+		for (IntMatrixEntry entry: this) {
+			if (count > 0) {
+				builder.append(", ");
+			}
+			builder.append("(" + entry.getRow() + ", " + entry.getCol() + "): " + entry.getValue());
+			count++;
+		}
+		builder.append("]");
+		return builder.toString();
+	}
 }

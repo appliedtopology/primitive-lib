@@ -85,4 +85,29 @@ public class DoubleSparseMatrix implements DoubleAbstractMatrix {
 			this.map.get(row).set(column, value);
 		}
 	}
+	
+	public DoubleSparseMatrix transpose() {
+		DoubleSparseMatrix result = new DoubleSparseMatrix(columns, rows);
+		
+		for (DoubleMatrixEntry entry: this) {
+			result.set(entry.getCol(), entry.getRow(), entry.getValue());
+		}
+		
+		return result;
+	}
+	
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
+		int count = 0;
+		for (DoubleMatrixEntry entry: this) {
+			if (count > 0) {
+				builder.append(", ");
+			}
+			builder.append("(" + entry.getRow() + ", " + entry.getCol() + "): " + entry.getValue());
+			count++;
+		}
+		builder.append("]");
+		return builder.toString();
+	}
 }

@@ -31,6 +31,7 @@ public class $iteratorClassName implements Iterator<$pairClassName> {
 	}
 
 	public $pairClassName next() {
+		this.iterator.advance();
 		return new $pairClassName(this.iterator.key(), this.iterator.value());
 	}
 

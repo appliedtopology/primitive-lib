@@ -18,6 +18,7 @@ public class IntSparseVectorIterator implements Iterator<IntVectorEntry> {
 	}
 
 	public IntVectorEntry next() {
+		this.iterator.advance();
 		return new IntVectorEntry(this.iterator.key(), this.iterator.value());
 	}
 

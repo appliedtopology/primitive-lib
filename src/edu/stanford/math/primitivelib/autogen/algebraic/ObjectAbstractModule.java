@@ -16,6 +16,7 @@ public abstract class ObjectAbstractModule<R, M> {
 	public abstract M subtract(M a, M b);
 	public abstract M multiply(R r, M a);
 	public abstract M negate(M a);
+	public abstract M getAdditiveIdentity();
 	
 		public abstract M multiply(int r, M a);
 		

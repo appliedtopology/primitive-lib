@@ -8,7 +8,8 @@ import edu.stanford.math.primitivelib.autogen.algebraic.ObjectAbstractRing;
 
 
 
-public abstract class ObjectAlgebraicFreeModule<R, M> extends ObjectAbstractModule<R, M> {
+
+public class ObjectAlgebraicFreeModule<R, M> extends ObjectAbstractModule<R, ObjectSparseFormalSum<R, M>> {
 	private ObjectAbstractRing<R> ring;
 	
 	public ObjectAlgebraicFreeModule(ObjectAbstractRing<R> ring) {
@@ -98,6 +99,54 @@ public abstract class ObjectAlgebraicFreeModule<R, M> extends ObjectAbstractModu
 		return result;
 	}
 		
+	public R innerProduct(ObjectSparseFormalSum<R, M> a, ObjectSparseFormalSum<R, M> b) {
+		R sum = ring.getZero();
+		
+				
+		Iterator<Map.Entry<M, R>> iterator = null;
+		ObjectSparseFormalSum<R, M> other = null;
+		
+		if (a.size() > b.size()) {
+			iterator = b.map.entrySet().iterator();
+			other = a;
+		} else {
+			iterator = a.map.entrySet().iterator();
+			other = b;
+		}
+		
+		while (iterator.hasNext()) {
+			Map.Entry<M, R> entry = iterator.next();
+			sum = ring.add(sum, ring.multiply(entry.getValue(), other.getCoefficient(entry.getKey())));
+		}
+		
+				
+		return sum;
+	}
+	
+	public ObjectSparseFormalSum<R, M> add(M a, M b) {
+		ObjectSparseFormalSum<R, M> sum = this.createNewSum(a);
+		this.addObject(sum, ring.getOne(), b);
+		return sum;
+	}
+	
+	public ObjectSparseFormalSum<R, M> add(ObjectSparseFormalSum<R, M> a, M b) {
+		ObjectSparseFormalSum<R, M> sum = this.createNewSum(a);
+		this.addObject(sum, ring.getOne(), b);
+		return sum;
+	}
+	
+	public ObjectSparseFormalSum<R, M> subtract(M a, M b) {
+		ObjectSparseFormalSum<R, M> sum = this.createNewSum(a);
+		this.addObject(sum, ring.getNegativeOne(), b);
+		return sum;
+	}
+	
+	public ObjectSparseFormalSum<R, M> subtract(ObjectSparseFormalSum<R, M> a, M b) {
+		ObjectSparseFormalSum<R, M> sum = this.createNewSum(a);
+		this.addObject(sum, ring.getNegativeOne(), b);
+		return sum;
+	}
+	
 	/**
 	 * This function performs the operation a = a + b.
 	 * 
@@ -154,8 +203,16 @@ public abstract class ObjectAlgebraicFreeModule<R, M> extends ObjectAbstractModu
 		}
 	}
 
+	public ObjectSparseFormalSum<R, M> getAdditiveIdentity() {
+		return new ObjectSparseFormalSum<R, M>();
+	}
+
 	public ObjectSparseFormalSum<R, M> createNewSum() {
 		return new ObjectSparseFormalSum<R, M>();
+	}
+
+	public ObjectSparseFormalSum<R, M> createNewSum(M object) {
+		return new ObjectSparseFormalSum<R, M>(this.ring.getOne(), object);
 	}
 
 	public ObjectSparseFormalSum<R, M> createNewSum(R coefficient, M object) {
@@ -165,4 +222,26 @@ public abstract class ObjectAlgebraicFreeModule<R, M> extends ObjectAbstractModu
 	public ObjectSparseFormalSum<R, M> createNewSum(ObjectSparseFormalSum<R, M> contents) {
 		return new ObjectSparseFormalSum<R, M>(contents);
 	}
-}
+	
+	public ObjectSparseFormalSum<R, M> createNewSum(R[] coefficients, M[] objects) {
+		ObjectSparseFormalSum<R, M> sum = new ObjectSparseFormalSum<R, M>();
+		
+		for (int i = 0; i < coefficients.length; i++) {
+			addObject(sum, coefficients[i], objects[i]);
+		}
+		
+		return sum;
+	}
+	
+		
+	public ObjectSparseFormalSum<R, M> createNewSum(int[] coefficients, M[] objects) {
+		ObjectSparseFormalSum<R, M> sum = new ObjectSparseFormalSum<R, M>();
+		
+		for (int i = 0; i < coefficients.length; i++) {
+			addObject(sum, ring.valueOf(coefficients[i]), objects[i]);
+		}
+		
+		return sum;
+	}
+	
+	}

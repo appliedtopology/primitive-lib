@@ -1,0 +1,62 @@
+package $packageName;
+
+#set ($type = $templateTypes.get(0))
+#set ($className = $utility.getAnnotatedClassName("ArrayGeneration", $templateTypes, $genericTypes))
+
+
+public class $className {
+	/**
+     * Generates an array consisting of the integers {start, ... , end - 1}
+     * @param start The start element
+     * @param end One past the last element
+     * @return
+     */
+    public static $type[] range($type start, $type end) {
+        int length = (int) (end - start);
+        $type[] values = new $type[length];
+        for (int i = 0; i < length; i++) {
+                values[i] = start + i;
+        }
+        return values;
+    }
+    
+    public static $type[] range($type start, $type end, $type step) {
+        int length = (int) ((end - start) / step);
+        $type[] values = new $type[length];
+        for (int i = 0; i < length; i ++) {
+                values[i] = start + i * step;
+        }
+        return values;
+    }
+    
+    public static $type[] replicate($type value, int length) {
+        $type[] result = new $type[length];
+        for (int i = 0; i < length; i++) {
+                result[i] = value;
+        }
+        return result;
+    }
+	
+	#if (($type == "double") || ($type == "float"))
+	
+	/**
+     * This function returns an array of equally spaced ascending points
+     * starting at start and ending at end, of specified size. It is very
+     * similar to the linspace function in Matlab.
+     * 
+     * @param start the start value
+     * @param end the end value
+     * @param size the size of the array to create
+     * @return an array of linearly spaced points from start to end
+     */
+    public static $type[] linspace($type start, $type end, int size) {
+        $type multiplier = (end - start) / (size - 1);
+        $type[] values = new $type[size];
+        for (int i = 0; i < size; i++) {
+                values[i] = start + i * multiplier;
+        }               
+        return values;
+    }
+	
+	#end
+}

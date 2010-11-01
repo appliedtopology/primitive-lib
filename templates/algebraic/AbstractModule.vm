@@ -19,6 +19,7 @@ public abstract class $className {
 	public abstract $objectType subtract($objectType a, $objectType b);
 	public abstract $objectType multiply($coefficientType r, $objectType a);
 	public abstract $objectType negate($objectType a);
+	public abstract $objectType getAdditiveIdentity();
 	
 	#if (!($coefficientType == "int"))
 	public abstract $objectType multiply(int r, $objectType a);

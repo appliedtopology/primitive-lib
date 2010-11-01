@@ -18,6 +18,7 @@ public class FloatSparseVectorIterator implements Iterator<FloatVectorEntry> {
 	}
 
 	public FloatVectorEntry next() {
+		this.iterator.advance();
 		return new FloatVectorEntry(this.iterator.key(), this.iterator.value());
 	}
 

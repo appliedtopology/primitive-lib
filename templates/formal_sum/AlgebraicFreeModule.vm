@@ -4,16 +4,17 @@ import java.util.Iterator;
 
 #set ($coefficientType = $templateTypes.get(0))
 #set ($objectType = $genericTypes.get(0))
-#set ($className = $utility.getAnnotatedClassName("AlgebraicFreeModule", $templateTypes, $genericTypes))
-#set ($basicClassName = $utility.getClassName("AlgebraicFreeModule", $templateTypes, $genericTypes))
-#set ($superName = $utility.getAnnotatedClassName("AbstractModule", $templateTypes, $genericTypes))
+
 #set ($sumClassName = $utility.getAnnotatedClassName("SparseFormalSum", $templateTypes, $genericTypes))
 #set ($ringClassName = $utility.getAnnotatedClassName("AbstractRing", [$coefficientType], []))
+#set ($className = $utility.getAnnotatedClassName("AlgebraicFreeModule", $templateTypes, $genericTypes))
+#set ($basicClassName = $utility.getClassName("AlgebraicFreeModule", $templateTypes, $genericTypes))
+#set ($superName = $utility.getAnnotatedClassName("AbstractModule", $templateTypes, [$sumClassName]))
 
 #set ($mapType = $utility.getMapType($objectType, $coefficientType) + $utility.getGenericAnnotation([$objectType, $coefficientType]))
 #set ($iteratorType = $utility.getMapIteratorType($objectType, $coefficientType) + $utility.getGenericAnnotation([$objectType, $coefficientType]))
 
-public abstract class $className extends $superName {
+public class $className extends $superName {
 	private $ringClassName ring;
 	
 	public $basicClassName($ringClassName ring) {
@@ -168,6 +169,74 @@ public abstract class $className extends $superName {
 	}
 	#end
 	
+	public $coefficientType innerProduct($sumClassName a, $sumClassName b) {
+		$coefficientType sum = ring.getZero();
+		
+		#if ($utility.isPrimitive($coefficientType) || $utility.isPrimitive($objectType))
+		
+		$iteratorType iterator = null;
+		$sumClassName other = null;
+		
+		if (a.size() > b.size()) {
+			iterator = b.map.iterator();
+			other = a;
+		} else {
+			iterator = a.map.iterator();
+			other = b;
+		}
+		
+		while(iterator.hasNext()) {
+			iterator.advance();
+			sum = ring.add(sum, ring.multiply(iterator.value(), other.getCoefficient(iterator.key())));
+		}
+		
+		#else
+		
+		Iterator<Map.Entry<$objectType, $coefficientType>> iterator = null;
+		$sumClassName other = null;
+		
+		if (a.size() > b.size()) {
+			iterator = b.map.entrySet().iterator();
+			other = a;
+		} else {
+			iterator = a.map.entrySet().iterator();
+			other = b;
+		}
+		
+		while (iterator.hasNext()) {
+			Map.Entry<$objectType, $coefficientType> entry = iterator.next();
+			sum = ring.add(sum, ring.multiply(entry.getValue(), other.getCoefficient(entry.getKey())));
+		}
+		
+		#end
+		
+		return sum;
+	}
+	
+	public $sumClassName add($objectType a, $objectType b) {
+		$sumClassName sum = this.createNewSum(a);
+		this.addObject(sum, ring.getOne(), b);
+		return sum;
+	}
+	
+	public $sumClassName add($sumClassName a, $objectType b) {
+		$sumClassName sum = this.createNewSum(a);
+		this.addObject(sum, ring.getOne(), b);
+		return sum;
+	}
+	
+	public $sumClassName subtract($objectType a, $objectType b) {
+		$sumClassName sum = this.createNewSum(a);
+		this.addObject(sum, ring.getNegativeOne(), b);
+		return sum;
+	}
+	
+	public $sumClassName subtract($sumClassName a, $objectType b) {
+		$sumClassName sum = this.createNewSum(a);
+		this.addObject(sum, ring.getNegativeOne(), b);
+		return sum;
+	}
+	
 	/**
 	 * This function performs the operation a = a + b.
 	 * 
@@ -242,8 +311,16 @@ public abstract class $className extends $superName {
 		}
 	}
 
+	public $sumClassName getAdditiveIdentity() {
+		return new $sumClassName();
+	}
+
 	public $sumClassName createNewSum() {
 		return new $sumClassName();
+	}
+
+	public $sumClassName createNewSum($objectType object) {
+		return new $sumClassName(this.ring.getOne(), object);
 	}
 
 	public $sumClassName createNewSum($coefficientType coefficient, $objectType object) {
@@ -253,4 +330,28 @@ public abstract class $className extends $superName {
 	public $sumClassName createNewSum($sumClassName contents) {
 		return new $sumClassName(contents);
 	}
+	
+	public $sumClassName createNewSum($coefficientType[] coefficients, $objectType[] objects) {
+		$sumClassName sum = new $sumClassName();
+		
+		for (int i = 0; i < coefficients.length; i++) {
+			addObject(sum, coefficients[i], objects[i]);
+		}
+		
+		return sum;
+	}
+	
+	#if (!($coefficientType == "int"))
+	
+	public $sumClassName createNewSum(int[] coefficients, $objectType[] objects) {
+		$sumClassName sum = new $sumClassName();
+		
+		for (int i = 0; i < coefficients.length; i++) {
+			addObject(sum, ring.valueOf(coefficients[i]), objects[i]);
+		}
+		
+		return sum;
+	}
+	
+	#end
 }

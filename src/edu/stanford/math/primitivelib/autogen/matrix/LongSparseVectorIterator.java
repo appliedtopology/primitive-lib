@@ -18,6 +18,7 @@ public class LongSparseVectorIterator implements Iterator<LongVectorEntry> {
 	}
 
 	public LongVectorEntry next() {
+		this.iterator.advance();
 		return new LongVectorEntry(this.iterator.key(), this.iterator.value());
 	}
 
