@@ -59,7 +59,7 @@ public class ObjectAlgebraicFreeModule<R, M> implements ObjectAbstractModule<R, 
 	}
 	
 	public ObjectSparseFormalSum<R, M> subtract(ObjectSparseFormalSum<R, M> a, ObjectSparseFormalSum<R, M> b) {
-		ObjectSparseFormalSum<R, M> result = null;
+		ObjectSparseFormalSum<R, M> result = this.createNewSum();
 		
 				
 		Iterator<Map.Entry<M, R>> iterator = b.map.entrySet().iterator();
@@ -74,7 +74,7 @@ public class ObjectAlgebraicFreeModule<R, M> implements ObjectAbstractModule<R, 
 	}
 	
 	public ObjectSparseFormalSum<R, M> multiply(R r, ObjectSparseFormalSum<R, M> a) {
-		ObjectSparseFormalSum<R, M> result = null;
+		ObjectSparseFormalSum<R, M> result = this.createNewSum();
 		
 				
 		Iterator<Map.Entry<M, R>> iterator = a.map.entrySet().iterator();;
@@ -89,7 +89,7 @@ public class ObjectAlgebraicFreeModule<R, M> implements ObjectAbstractModule<R, 
 	}
 	
 	public ObjectSparseFormalSum<R, M> negate(ObjectSparseFormalSum<R, M> a) {
-		ObjectSparseFormalSum<R, M> result = null;
+		ObjectSparseFormalSum<R, M> result = this.createNewSum();
 		
 				
 		Iterator<Map.Entry<M, R>> iterator = a.map.entrySet().iterator();
@@ -104,7 +104,7 @@ public class ObjectAlgebraicFreeModule<R, M> implements ObjectAbstractModule<R, 
 	}
 	
 		public ObjectSparseFormalSum<R, M> multiply(int r, ObjectSparseFormalSum<R, M> a) {
-		ObjectSparseFormalSum<R, M> result = null;
+		ObjectSparseFormalSum<R, M> result = this.createNewSum();
 		
 				
 		Iterator<Map.Entry<M, R>> iterator = a.map.entrySet().iterator();

@@ -2,6 +2,8 @@
 
 import java.util.Iterator;
 
+import edu.stanford.math.primitivelib.autogen.matrix.BooleanSparseMatrix;
+
 import gnu.trove.TIntObjectHashMap;
 import gnu.trove.TIntObjectIterator;
 
@@ -108,5 +110,36 @@ public class BooleanSparseMatrix implements BooleanAbstractMatrix {
 				this.map.remove(column);
 			}
 		}
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + columns;
+		result = prime * result + ((map == null) ? 0 : map.hashCode());
+		result = prime * result + rows;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BooleanSparseMatrix other = (BooleanSparseMatrix) obj;
+		if (columns != other.columns)
+			return false;
+		if (map == null) {
+			if (other.map != null)
+				return false;
+		} else if (!map.equals(other.map))
+			return false;
+		if (rows != other.rows)
+			return false;
+		return true;
 	}
 }

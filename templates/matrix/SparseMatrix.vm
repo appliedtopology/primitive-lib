@@ -3,6 +3,7 @@ package $packageName;
 import java.util.Iterator;
 
 #set ($type = $templateTypes.get(0))
+#set ($classTag = "SparseMatrix")
 #set ($className = $utility.getAnnotatedClassName("SparseMatrix", $templateTypes, $genericTypes))
 #set ($basicName = $utility.getClassName("SparseMatrix", $templateTypes))
 #set ($superName = $utility.getAnnotatedClassName("AbstractMatrix", $templateTypes, $genericTypes))
@@ -156,5 +157,36 @@ public class $className implements $superName {
 		}
 		builder.append("]");
 		return builder.toString();
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + columns;
+		result = prime * result + ((map == null) ? 0 : map.hashCode());
+		result = prime * result + rows;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		$utility.getWildcardClassName($classTag, $templateTypes, $genericTypes) other = ($utility.getWildcardClassName($classTag, $templateTypes, $genericTypes)) obj;
+		if (columns != other.columns)
+			return false;
+		if (map == null) {
+			if (other.map != null)
+				return false;
+		} else if (!map.equals(other.map))
+			return false;
+		if (rows != other.rows)
+			return false;
+		return true;
 	}
 }

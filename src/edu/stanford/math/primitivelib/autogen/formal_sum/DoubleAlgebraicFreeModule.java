@@ -57,7 +57,7 @@ public class DoubleAlgebraicFreeModule<M> implements DoubleAbstractModule<Double
 	}
 	
 	public DoubleSparseFormalSum<M> subtract(DoubleSparseFormalSum<M> a, DoubleSparseFormalSum<M> b) {
-		DoubleSparseFormalSum<M> result = null;
+		DoubleSparseFormalSum<M> result = this.createNewSum();
 		
 				
 		TObjectDoubleIterator<M> iterator = b.map.iterator();
@@ -72,7 +72,7 @@ public class DoubleAlgebraicFreeModule<M> implements DoubleAbstractModule<Double
 	}
 	
 	public DoubleSparseFormalSum<M> multiply(double r, DoubleSparseFormalSum<M> a) {
-		DoubleSparseFormalSum<M> result = null;
+		DoubleSparseFormalSum<M> result = this.createNewSum();
 		
 				
 		TObjectDoubleIterator<M> iterator = a.map.iterator();
@@ -87,7 +87,7 @@ public class DoubleAlgebraicFreeModule<M> implements DoubleAbstractModule<Double
 	}
 	
 	public DoubleSparseFormalSum<M> negate(DoubleSparseFormalSum<M> a) {
-		DoubleSparseFormalSum<M> result = null;
+		DoubleSparseFormalSum<M> result = this.createNewSum();
 		
 				
 		TObjectDoubleIterator<M> iterator = a.map.iterator();
@@ -102,7 +102,7 @@ public class DoubleAlgebraicFreeModule<M> implements DoubleAbstractModule<Double
 	}
 	
 		public DoubleSparseFormalSum<M> multiply(int r, DoubleSparseFormalSum<M> a) {
-		DoubleSparseFormalSum<M> result = null;
+		DoubleSparseFormalSum<M> result = this.createNewSum();
 		
 				
 		TObjectDoubleIterator<M> iterator = a.map.iterator();
