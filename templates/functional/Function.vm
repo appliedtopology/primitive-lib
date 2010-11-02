@@ -9,9 +9,15 @@ package $packageName;
 /**
  * This interface defines a function from type $type1 to type $type2.
  * 
- * @author Andrew Tausz
+ * @author autogen
  *
  */
 public interface $className {
+	/**
+	 * This performs the function evaluation on an argument.
+	 * 
+	 * @param argument the argument of the function
+	 * @return the function evaluated at the supplied argument value
+	 */
 	public $type2 evaluate($type1 argument);
 }

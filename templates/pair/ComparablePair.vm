@@ -12,12 +12,12 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 #set ($interfaceName = "Comparable$utility.getGenericAnnotation([$className], [])")
 
 /**
- * This class implements a pair (a, b), where a is a $type1 and b 
- * is a $type2. It implements the Comparable interface with dictionary
+ * This class implements a pair (a, b), where a is of type $type1 and b 
+ * is of type $type2. It implements the Comparable interface with dictionary
  * ordering. Note that any instance of this class is immutable, and
  * implements value semantics.
  * 
- * @author Andrew Tausz
+ * @author autogen
  *
  */
 public class $className extends $superName implements $interfaceName {

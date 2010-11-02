@@ -5,11 +5,24 @@ import java.util.Iterator;
 import edu.stanford.math.plexlib.autogen.pair.IntBooleanUnorderedPair;
 import gnu.trove.TIntObjectIterator;
 
-
+/**
+ * This class implements the Iterator interface and allows for the traversal of a
+ * sparse matrix. Note that it only traverses the non-false elements of the matrix, and
+ * omits the false entries.
+ * 
+ * @author autogen
+ *
+ * @param <boolean>
+ */
 public class BooleanSparseMatrixIterator implements Iterator<BooleanMatrixEntry> {
 	private final TIntObjectIterator<BooleanSparseVector> rowIterator;
 	private Iterator<BooleanVectorEntry> columnIterator;
 	
+	/**
+	 * This constructor initializes the iterator with the given parent matrix.
+	 * 
+	 * @param matrix the sparse matrix to initialize with
+	 */
 	BooleanSparseMatrixIterator(BooleanSparseMatrix matrix) {
 		this.rowIterator = matrix.map.iterator();
 		this.rowIterator.advance();

@@ -15,19 +15,50 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 #end
 
+/**
+ * This class implements the functionality of an entry in a sparse vector. 
+ * It can be thought of as a pair (index, value).
+ * 
+ * @author autogen
+ *
+ * @param <$type>
+ */
 public class $className {
+	/**
+	 * Stores the index of the entry.
+	 */
 	private final int index;
+	
+	/**
+	 * Stores the value.
+	 */
 	private final $type value;
 	
+	/**
+	 * Constructor which initializes the entry with the specified index and value.
+	 * 
+	 * @param index
+	 * @param value
+	 */
 	public $basicName(int index, $type value) {
 		this.index = index;
 		this.value = value;
 	}
 	
+	/**
+	 * Gets the index of the entry.
+	 * 
+	 * @return the index
+	 */
 	public int getIndex() {
 		return this.index;
 	}
 
+	/**
+	 * Gets the value of the entry.
+	 * 
+	 * @return the value
+	 */
 	public $type getValue() {
 		return this.value;
 	}

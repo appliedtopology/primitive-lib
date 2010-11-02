@@ -11,13 +11,70 @@ package $packageName;
 #set ($objectType = $genericTypes.get(0))
 #set ($className = $utility.getAnnotatedClassName("AbstractFormalSum", $templateTypes, $genericTypes))
 
+/**
+ * This interface defines the functionality of a formal sum with
+ * objects of type $objectType and coefficients of type $coefficientType. 
+ * One can think of such a sum as an element of a free module over the
+ * type $objectType.
+ * 
+ * @author autogen
+ *
+ * @param <$coefficientType> the coefficient type
+ * @param <$objectType> the object type
+ */
 public interface $className {
+
+	/**
+	 * This function puts the specified coefficient-object pair
+	 * into the sum. Note that if the object was already present in
+	 * the sum previously, the old coefficient will be overwritten with
+	 * the new-one.
+	 * 
+	 * @param coefficient the coefficient of the new entry
+	 * @param object the object of the entry
+	 */
 	void put($coefficientType coefficient, $objectType object);
+	
+	/**
+	 * This function removes the entry with the given object from the
+	 * sum.
+	 * 
+	 * @param object the object to remove
+	 */
 	void remove($objectType object);
 	
+	/**
+	 * This function returns true if the sum contains the specified object
+	 * and false otherwise.
+	 * 
+	 * @param object the object to search for
+	 * @return true if the sum contains the given object
+	 */
 	boolean containsObject($objectType object);
+	
+	/**
+	 * This function returns the coefficient of the given object in the sum.
+	 * In the event that the sum does not contain the object, it returns the
+	 * default element for the coefficient type (e.g. 0 for numeric types, null
+	 * for object types).
+	 * 
+	 * @param object the object to get the coefficient for
+	 * @return the coefficient of the given object
+	 */
 	$coefficientType getCoefficient($objectType object);
 	
+	/**
+	 * This function returns the number of elements in the sum.
+	 * 
+	 * @return the number of elements in the sum
+	 */
 	int size();
+	
+	/**
+	 * This function returns true if the sum does not contain any elements, and false
+	 * otherwise.
+	 * 
+	 * @return true if the sum is empty
+	 */
 	boolean isEmpty();
 }

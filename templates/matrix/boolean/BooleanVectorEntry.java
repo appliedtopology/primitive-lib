@@ -1,29 +1,42 @@
 
 /**
- * This class implements a pair (a, b, c), where a and b are ints and
- * is a boolean. Note that any instance of this class is immutable, and
- * implements value semantics.
+ * This class implements the functionality of an entry in a sparse matrix. 
+ * It can be thought of as a pair (index, value). Note that the value is
+ * always true and is therefore not stored.
  * 
- * @author Andrew Tausz
+ * @author autogen
  *
+ * @param <boolean>
  */
 public class BooleanVectorEntry {
+	/**
+	 * Stores the index of the entry.
+	 */
 	private final int index;
 	
 	/**
-	 * Constructor which initializes the pair.
+	 * Constructor which initializes the entry with the specified index.
 	 * 
-	 * @param first the value of the first component
-	 * @param second the value of the second component
+	 * @param index
 	 */
 	public BooleanVectorEntry(int index) {
 		this.index = index;
 	}
 	
+	/**
+	 * Gets the index of the entry.
+	 * 
+	 * @return the index
+	 */
 	public int getIndex() {
 		return index;
 	}
 	
+	/**
+	 * Gets the value of the entry.
+	 * 
+	 * @return the value
+	 */
 	public boolean getValue() {
 		return true;
 	}

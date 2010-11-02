@@ -19,10 +19,24 @@ import java.util.Iterator;
 
 #end
 
+/**
+ * This class implements the Iterator interface and allows for the traversal of a
+ * sparse matrix. Note that it only traverses the non-zero elements of the matrix, and
+ * omits the zero entries.
+ * 
+ * @author autogen
+ *
+ * @param <$type>
+ */
 public class $iteratorClassName implements Iterator<$entryClassName> {
 	private final $internalIteratorName<$vectorClassName> rowIterator;
 	private Iterator<$vectorEntryClassName> columnIterator;
 	
+	/**
+	 * This constructor initializes the iterator with the given parent matrix.
+	 * 
+	 * @param matrix the sparse matrix to initialize with
+	 */
 	$basicIteratorClassName($className matrix) {
 		this.rowIterator = matrix.map.iterator();
 		this.rowIterator.advance();

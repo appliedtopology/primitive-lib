@@ -21,6 +21,14 @@ import java.util.Iterator;
 
 #end
 
+/**
+ * This class provides a sparse-matrix implementation of the $superName
+ * interface. It only stores non-zero elements, and is therefore suited for applications
+ * where most of the entries in the matrix are zero.
+ * 
+ * @author autogen
+ *
+ */
 public class $className implements $superName {
 	/**
 	 * We use a row-wise storage scheme. The variable map stores
@@ -30,9 +38,23 @@ public class $className implements $superName {
 	 */
 	protected final $mapType<$vectorClassName> map = new $mapType<$vectorClassName>();
 
+	/**
+	 * The number of rows in the matrix.
+	 */
 	protected final int rows;
+
+	/**
+	 * The number of columns in the matrix.
+	 */
 	protected final int columns;
-	
+
+	/**
+	 * This constructor initializes the class with the specified number
+	 * of rows and columns.
+	 * 
+	 * @param rows the number of rows in the matrix
+	 * @param columns the number of columns in the matrix
+	 */
 	public $basicName(int rows, int columns) {
 		this.rows = rows;
 		this.columns = columns;
@@ -61,6 +83,11 @@ public class $className implements $superName {
 		return new $className(rows, columns);
 	}
 	
+	/**
+	 * This function returns the number of non-zero elements in the matrix.
+	 * 
+	 * @return the number of non-zero elements
+	 */
 	public int getNumNonzeroElements() {
 		int num = 0;
 		for ($iteratorType<$vectorClassName> iterator = this.map.iterator(); iterator.hasNext(); ) {
@@ -101,6 +128,11 @@ public class $className implements $superName {
 		}
 	}
 	
+	/**
+	 * This function computes the transpose of the matrix.
+	 * 
+	 * @return the transpose of the matrix
+	 */
 	public $className transpose() {
 		$className result = new $className(columns, rows);
 		

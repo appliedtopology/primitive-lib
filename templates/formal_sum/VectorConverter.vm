@@ -25,11 +25,11 @@ import java.util.Iterator;
  * finite generators, and the module R^n, where R is a commutative ring.
  * In this case, the set of free generators is given by an Iterable stream
  * of values of type M. This class contains the necessary functionality for
- * converting between these two formats: formal sums over a generating set
- * and arrays of elements in R. Thus basis elements correspond to standard
- * unit vectors.
+ * converting between three formats: formal sums over a generating set,
+ * arrays of elements in R, and sparse vectors. Thus basis elements correspond 
+ * to standard unit vectors.
  * 
- * @author Andrew Tausz
+ * @author autogen
  *
  * @param <$coefficientType> the type of the underlying ring
  * @param <$objectType> the type of the set of free generators
@@ -115,6 +115,12 @@ public class $className {
 	
 	#if ($utility.isPrimitive($coefficientType))
 	
+	/**
+	 * This function converts a formal sum to a dense array.
+	 * 
+	 * @param formalSum the formal sum to convert
+	 * @return the array equivalent of the sum
+	 */
 	public $coefficientType[] toArray($sumClassName formalSum) {
 		$coefficientType[] array = new $coefficientType[this.getDimension()];
 		
@@ -127,6 +133,12 @@ public class $className {
 		return array;
 	}
 	
+	/**
+	 * This function converts a sparse vector to a dense array.
+	 * 
+	 * @param sparseVector the sparse vector to convert
+	 * @return the array equivalent of the vector
+	 */
 	public $coefficientType[] toArray($sparseVectorName sparseVector) {
 		return sparseVector.toArray();
 	}
@@ -135,6 +147,12 @@ public class $className {
 	
 	#if ($utility.isPrimitive($coefficientType))
 	
+	/**
+	 * This function converts a formal sum to a sparse vector.
+	 * 
+	 * @param formalSum the formal sum to convert
+	 * @return the sparse vector equivalent of the sum
+	 */
 	public $sparseVectorName toSparseVector($sumClassName formalSum) {
 		$sparseVectorName vector = new $sparseVectorName(this.getDimension());
 		
@@ -153,6 +171,12 @@ public class $className {
 	
 	#else
 	
+	/**
+	 * This function converts a formal sum to a sparse vector.
+	 * 
+	 * @param formalSum the formal sum to convert
+	 * @return the sparse vector equivalent of the sum
+	 */
 	public $sparseVectorName toSparseVector($sumClassName formalSum) {
 		$sparseVectorName vector = new $sparseVectorName(this.getDimension());
 		
@@ -166,10 +190,22 @@ public class $className {
 	
 	#end
 	
+	/**
+	 * This function converts a dense array to a sparse vector.
+	 * 
+	 * @param array the array to convert
+	 * @return a sparse vector equivalent of the array
+	 */
 	public $sparseVectorName toSparseVector($coefficientType[] array) {
 		return new $sparseVectorName(array);
 	}
 	
+	/**
+	 * This function converts a dense array to a sparse formal sum.
+	 * 
+	 * @param array the array to convert
+	 * @return a sparse vector equivalent of the array
+	 */
 	public $sumClassName toFormalSum($coefficientType[] array) {
 		$sumClassName sum = new $sumClassName();
 		
@@ -189,6 +225,12 @@ public class $className {
 		return sum;
 	}
 	
+	/**
+	 * This function converts a sparse vector to a formal sum.
+	 * 
+	 * @param sparseVector the sparse vector to convert
+	 * @return a formal sum equivalent of the sparse vector
+	 */
 	public $sumClassName toFormalSum($sparseVectorName sparseVector) {
 		$sumClassName sum = new $sumClassName();
 		

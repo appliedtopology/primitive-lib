@@ -9,9 +9,23 @@ import java.util.Iterator;
 #set ($entryClassName = $utility.getAnnotatedClassName("MatrixEntry", $templateTypes, $genericTypes))
 #set ($pairClassName = $utility.getAnnotatedClassName("VectorEntry", $templateTypes, $genericTypes))
 
-
+/**
+ * This class contains static functions used for writing objects with underlying
+ * type $type in matlab-readable formats.
+ *  
+ * @author autogen
+ *
+ */
 public class $className {
 
+	/**
+	 * This function writes the given array as a matlab array.
+	 * 
+	 * @param writer the Writer object to write to
+	 * @param array the array to write
+	 * @param separator the separator between the entries (should be either "," or ";")
+	 * @throws IOException
+	 */
 	public static void writeAsMatlabArray(Writer writer, $type[] array, String separator) throws IOException {
 		writer.write('[');
 		for (int i = 0; i < array.length; i++) {
@@ -23,26 +37,65 @@ public class $className {
 		writer.write("]");
 	}
 	
+	/**
+	 * This function writes the given array as a matlab row vector.
+	 * 
+	 * @param writer the Writer object to write to
+	 * @param array the array to write
+	 * @throws IOException
+	 */
 	public static void writeAsMatlabRow(Writer writer, $type[] array) throws IOException {
 		writeAsMatlabArray(writer, array, ",");
 	}
 	
+	/**
+	 * This function writes the given array as a matlab column vector.
+	 * 
+	 * @param writer the Writer object to write to
+	 * @param array the array to write
+	 * @throws IOException
+	 */
 	public static void writeAsMatlabCol(Writer writer, $type[] array) throws IOException {
 		writeAsMatlabArray(writer, array, ";");
 	}
 	
+	/**
+	 * This function writes the given array as a matlab row vector along with an assignment
+	 * to to a matlab variable.
+	 * 
+	 * @param writer the Writer object to write to
+	 * @param array the array to write
+	 * @param name the variable name to assign to
+	 * @throws IOException
+	 */
 	public static void writeAsMatlabRow(Writer writer, $type[] array, String name) throws IOException {
 		writer.write(name + " = ");
 		writeAsMatlabArray(writer, array, ",");
 		writer.write(";\n");
 	}
 	
+	/**
+	 * This function writes the given array as a matlab column vector along with an assignment
+	 * to to a matlab variable.
+	 * 
+	 * @param writer the Writer object to write to
+	 * @param array the array to write
+	 * @param name the variable name to assign to
+	 * @throws IOException
+	 */
 	public static void writeAsMatlabCol(Writer writer, $type[] array, String name) throws IOException {
 		writer.write(name + " = ");
 		writeAsMatlabArray(writer, array, ":");
 		writer.write(";\n");
 	}
 	
+	/**
+	 * This function writes the given matrix as a matlab matrix.
+	 * 
+	 * @param writer the Writer object to write to
+	 * @param matrix the matrix to write
+	 * @throws IOException
+	 */
 	public static void writeAsMatlabMatrix(Writer writer, $type[][] matrix) throws IOException {
 		writer.write('[');
 		for (int i = 0; i < matrix.length; i++) {
@@ -57,12 +110,30 @@ public class $className {
 		writer.write("]");
 	}
 	
+	/**
+	 * This function writes the given matrix as a matlab matrix along with an assignment to a matlab
+	 * variable.
+	 * 
+	 * @param writer the Writer object to write to
+	 * @param matrix the matrix to write
+	 * @param name the variable name to assign to
+	 * @throws IOException
+	 */
 	public static void writeAsMatlabMatrix(Writer writer, $type[][] matrix, String name) throws IOException {
 		writer.write(name + " = ");
 		writeAsMatlabMatrix(writer, matrix);
 		writer.write(";\n");
 	}
 	
+	/**
+	 * This function writes the given array as a sparse matlab column along with an assignment to a matlab
+	 * variable.
+	 * 
+	 * @param writer the Writer object to write to
+	 * @param matrix the matrix to write
+	 * @param name the variable name to assign to
+	 * @throws IOException
+	 */
 	public static void writeAsMatlabSparseCol(Writer writer, $type[] matrix, String name) throws IOException {
 		int numSparseEntry = 0;
 		
@@ -92,6 +163,15 @@ public class $className {
 		writer.write(name + " = sparse(tmp_i, tmp_j, tmp_s, tmp_m, tmp_n);");
 	}
 	
+	/**
+	 * This function writes the given array as a sparse matlab row along with an assignment to a matlab
+	 * variable.
+	 * 
+	 * @param writer the Writer object to write to
+	 * @param matrix the matrix to write
+	 * @param name the variable name to assign to
+	 * @throws IOException
+	 */
 	public static void writeAsMatlabSparseRow(Writer writer, $type[] matrix, String name) throws IOException {
 		int numSparseEntry = 0;
 		
@@ -121,6 +201,15 @@ public class $className {
 		writer.write(name + " = sparse(tmp_i, tmp_j, tmp_s, tmp_m, tmp_n);");
 	}
 	
+	/**
+	 * This function writes the given array as a sparse matlab matrix along with an assignment to a matlab
+	 * variable.
+	 * 
+	 * @param writer the Writer object to write to
+	 * @param matrix the matrix to write
+	 * @param name the variable name to assign to
+	 * @throws IOException
+	 */
 	public static void writeAsMatlabSparseMatrix(Writer writer, $type[][] matrix, String name) throws IOException {
 		int numSparseEntry = 0;
 		
@@ -154,6 +243,15 @@ public class $className {
 		writer.write(name + " = sparse(tmp_i, tmp_j, tmp_s, tmp_m, tmp_n);");
 	}
 
+	/**
+	 * This function writes the given sparse vector as a sparse matlab column along with an assignment to a matlab
+	 * variable.
+	 * 
+	 * @param writer the Writer object to write to
+	 * @param vector the vector to write
+	 * @param name the variable name to assign to
+	 * @throws IOException
+	 */
 	public static void writeAsMatlabSparseCol(Writer writer, $vectorClassName vector, String name) throws IOException {
 		int numSparseEntry = vector.getNumNonzeroElements();
 		
@@ -177,6 +275,15 @@ public class $className {
 		writer.write(name + " = sparse(tmp_i, tmp_j, tmp_s, tmp_m, tmp_n);");
 	}
 	
+	/**
+	 * This function writes the given sparse vector as a sparse matlab row along with an assignment to a matlab
+	 * variable.
+	 * 
+	 * @param writer the Writer object to write to
+	 * @param vector the vector to write
+	 * @param name the variable name to assign to
+	 * @throws IOException
+	 */
 	public static void writeAsMatlabSparseRow(Writer writer, $vectorClassName vector, String name) throws IOException {
 		int numSparseEntry = vector.getNumNonzeroElements();
 		
@@ -200,7 +307,16 @@ public class $className {
 		writer.write(name + " = sparse(tmp_i, tmp_j, tmp_s, tmp_m, tmp_n);");
 	}
 	
-	public static void writeAsMatlabSparseCol(Writer writer, $matrixClassName matrix, String name) throws IOException {
+	/**
+	 * This function writes the given sparse matrix as a sparse matlab matrix along with an assignment to a matlab
+	 * variable.
+	 * 
+	 * @param writer the Writer object to write to
+	 * @param vector the vector to write
+	 * @param name the variable name to assign to
+	 * @throws IOException
+	 */
+	public static void writeAsMatlabSparseMatrix(Writer writer, $matrixClassName matrix, String name) throws IOException {
 		int numSparseEntry = matrix.getNumNonzeroElements();
 		
 		int[] _tmp_i = new int[numSparseEntry];
