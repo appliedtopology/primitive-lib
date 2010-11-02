@@ -27,14 +27,15 @@ import java.util.Vector;
  */
 public class JavaGeneratorUtility {
 	private static JavaGeneratorUtility instance = new JavaGeneratorUtility();
-	private Vector<String> primitiveTypes = new Vector<String>();
-	private Vector<String> numericTypes = new Vector<String>();
-	private Hashtable<String, String> boxedNames = new Hashtable<String, String>();
-	private Hashtable<String, String> defaultValues = new Hashtable<String, String>();
-	private String objectLabel = "Object";
+	private static String objectLabel = "Object";
 	
-	private Vector<String> comparisonOperators = new Vector<String>();
-	private Hashtable<String, String> comparisonNames = new Hashtable<String, String>();
+	private final Vector<String> primitiveTypes = new Vector<String>();
+	private final Vector<String> numericTypes = new Vector<String>();
+	private final Hashtable<String, String> boxedNames = new Hashtable<String, String>();
+	private final Hashtable<String, String> defaultValues = new Hashtable<String, String>();
+	
+	private final Vector<String> comparisonOperators = new Vector<String>();
+	private final Hashtable<String, String> comparisonNames = new Hashtable<String, String>();
 	
 	private JavaGeneratorUtility() {
 		primitiveTypes.add("byte");
@@ -92,7 +93,7 @@ public class JavaGeneratorUtility {
 	/**
 	 * This function returns the full class name of a class defined by its basic name (tag), its template types,
 	 * and its generic types. For example, suppose that the tag is "Foo", the template types are {int, T, double},
-	 * and the generic types are {U, W}, then this function returns IntGenericDoubleFoo<T, U, V>.
+	 * and the generic types are {U, W}, then this function returns IntObjectDoubleFoo<T, U, V>.
 	 * 
 	 * @param tag the basic name of the class
 	 * @param templateTypes the set of template types to parameterize the class (may be primitive or generic)
@@ -104,14 +105,45 @@ public class JavaGeneratorUtility {
 		return getClassName(tag, templateTypes) + getGenericAnnotation(templateTypes, genericTypes);
 	}
 	
+	/**
+	 * This function returns the class name of a class along with appropriate wildcard generic parameters. For example,
+	 * suppse that the tag is "Foo", the template types are {int, T, double}, and the generic types are {U, W}, then 
+	 * this function returns IntObjectDoubleFoo<?, ?, ?>.
+	 * 
+	 * @param tag the basic name of the class
+	 * @param templateTypes the set of template types to parameterize the class (may be primitive or generic)
+	 * @param genericTypes the set of object types to use as generic parameters
+	 * 
+	 * @return the name of the class with wildcard generic annotations
+	 */
 	public String getWildcardClassName(String tag, Collection<String> templateTypes, Collection<String> genericTypes) {
 		return getClassName(tag, templateTypes) + getGenericWildcardAnnotation(templateTypes, genericTypes);
 	}
 	
+	/**
+	 * This function returns the class name of a class defined by its basic name (tag), its template types,
+	 * and its generic types. For example, suppose that the tag is "Foo", the template types are {int, T, double},
+	 * and the generic types are {U, W}, then this function returns IntObjectDoubleFoo.
+	 * 
+	 * @param tag the basic name of the class
+	 * @param templateTypes the set of template types to parameterize the class (may be primitive or generic)
+	 * @param genericTypes the set of object types to use as generic parameters
+	 * 
+	 * @return the name of the class without generic annotations
+	 */
 	public String getClassName(String tag, Collection<String> templateTypes, Collection<String> genericTypes) {
 		return getClassName(tag, templateTypes);
 	}
-	
+	/**
+	 * This function returns the class name of a class defined by its basic name (tag), its template types. 
+	 * For example, suppose that the tag is "Foo", the template types are {int, T, double}, then this function 
+	 * returns IntObjectDoubleFoo.
+	 * 
+	 * @param tag the basic name of the class
+	 * @param templateTypes the set of template types to parameterize the class (may be primitive or generic)
+	 * 
+	 * @return the  name of the class without generic annotations
+	 */
 	public String getClassName(String tag, Collection<String> templateTypes) {
 		StringBuilder builder = new StringBuilder();
 		

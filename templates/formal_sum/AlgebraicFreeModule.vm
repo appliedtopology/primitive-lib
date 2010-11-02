@@ -83,7 +83,7 @@ public class $className implements $superName {
 	}
 	
 	public $sumClassName subtract($sumClassName a, $sumClassName b) {
-		$sumClassName result = null;
+		$sumClassName result = this.createNewSum();
 		
 		#if ($utility.isPrimitive($coefficientType) || $utility.isPrimitive($objectType))
 		
@@ -109,7 +109,7 @@ public class $className implements $superName {
 	}
 	
 	public $sumClassName multiply($coefficientType r, $sumClassName a) {
-		$sumClassName result = null;
+		$sumClassName result = this.createNewSum();
 		
 		#if ($utility.isPrimitive($coefficientType) || $utility.isPrimitive($objectType))
 		
@@ -135,7 +135,7 @@ public class $className implements $superName {
 	}
 	
 	public $sumClassName negate($sumClassName a) {
-		$sumClassName result = null;
+		$sumClassName result = this.createNewSum();
 		
 		#if ($utility.isPrimitive($coefficientType) || $utility.isPrimitive($objectType))
 		
@@ -162,7 +162,7 @@ public class $className implements $superName {
 	
 	#if (!($coefficientType == "int"))
 	public $sumClassName multiply(int r, $sumClassName a) {
-		$sumClassName result = null;
+		$sumClassName result = this.createNewSum();
 		
 		#if ($utility.isPrimitive($coefficientType) || $utility.isPrimitive($objectType))
 		

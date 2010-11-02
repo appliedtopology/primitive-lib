@@ -46,7 +46,7 @@ public class IntPrimitiveFreeModule<M> implements IntAbstractModule<IntSparseFor
 	}
 	
 	public IntSparseFormalSum<M> subtract(IntSparseFormalSum<M> a, IntSparseFormalSum<M> b) {
-		IntSparseFormalSum<M> result = null;
+		IntSparseFormalSum<M> result = this.createNewSum();
 		
 				
 		TObjectIntIterator<M> iterator = b.map.iterator();
@@ -61,7 +61,7 @@ public class IntPrimitiveFreeModule<M> implements IntAbstractModule<IntSparseFor
 	}
 	
 	public IntSparseFormalSum<M> multiply(int r, IntSparseFormalSum<M> a) {
-		IntSparseFormalSum<M> result = null;
+		IntSparseFormalSum<M> result = this.createNewSum();
 		
 				
 		TObjectIntIterator<M> iterator = a.map.iterator();
@@ -76,7 +76,7 @@ public class IntPrimitiveFreeModule<M> implements IntAbstractModule<IntSparseFor
 	}
 	
 	public IntSparseFormalSum<M> negate(IntSparseFormalSum<M> a) {
-		IntSparseFormalSum<M> result = null;
+		IntSparseFormalSum<M> result = this.createNewSum();
 		
 				
 		TObjectIntIterator<M> iterator = a.map.iterator();

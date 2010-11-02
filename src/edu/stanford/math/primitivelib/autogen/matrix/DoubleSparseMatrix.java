@@ -1,9 +1,9 @@
 package edu.stanford.math.primitivelib.autogen.matrix;
 
-import java.util.Iterator;
-
 import gnu.trove.TIntObjectHashMap;
 import gnu.trove.TIntObjectIterator;
+
+import java.util.Iterator;
 
 
 
@@ -141,5 +141,36 @@ public class DoubleSparseMatrix implements DoubleAbstractMatrix {
 		}
 		builder.append("]");
 		return builder.toString();
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + columns;
+		result = prime * result + ((map == null) ? 0 : map.hashCode());
+		result = prime * result + rows;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DoubleSparseMatrix other = (DoubleSparseMatrix) obj;
+		if (columns != other.columns)
+			return false;
+		if (map == null) {
+			if (other.map != null)
+				return false;
+		} else if (!map.equals(other.map))
+			return false;
+		if (rows != other.rows)
+			return false;
+		return true;
 	}
 }
