@@ -4,22 +4,57 @@ package $packageName;
 #set ($className = $utility.getAnnotatedClassName("AbstractField", $templateTypes, $genericTypes))
 #set ($superName = $utility.getAnnotatedClassName("AbstractRing", $templateTypes, $genericTypes))
 
+/**
+ * This abstract class defines the behavior of a field over elements
+ * of type $type.
+ * 
+ * @author autogen
+ *
+ * @param <$type> the underlying type
+ */
 public abstract class $className extends $superName {
+	/**
+	 * Compute a * b^-1.
+	 * 
+	 * @param a
+	 * @param b
+	 * @return a * b^-1.
+	 */
 	public abstract $type divide($type a, $type b);
+	
+	/**
+	 * Compute the multiplicative inverse of a.
+	 * 
+	 * @param a
+	 * @return a^-1
+	 */
 	public abstract $type invert($type a);
 	
 	#if (!($type == "int"))
 	
+	/**
+	 * Compute a * b^-1.
+	 * 
+	 * @param a
+	 * @param b
+	 * @return a * b^-1.
+	 */
 	public $type divide(int a, int b) {
 		return this.divide(this.valueOf(a), this.valueOf(b));
 	}
 	
+	/**
+	 * Compute the multiplicative inverse of a.
+	 * 
+	 * @param a
+	 * @return a^-1
+	 */
 	public $type invert(int a) {
 		return this.invert(this.valueOf(a));
 	}
 	
 	#end
-	
+		
 	@Override
 	public $type power($type a, int n)	{
 		if (n < 0) {

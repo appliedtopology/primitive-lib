@@ -17,10 +17,10 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 /**
  * This class implements a pair (a, b, c), where a and b are ints and
- * is a $type. Note that any instance of this class is immutable, and
+ * is of type $type. Note that any instance of this class is immutable, and
  * implements value semantics.
  * 
- * @author Andrew Tausz
+ * @author autogen
  *
  */
 public class $className {
@@ -29,10 +29,11 @@ public class $className {
 	private final $type value;
 	
 	/**
-	 * Constructor which initializes the pair.
+	 * Constructor which initializes the entry.
 	 * 
-	 * @param first the value of the first component
-	 * @param second the value of the second component
+	 * @param row the row of the entry
+	 * @param col the column of the entry
+	 * @param value the value at the entry
 	 */
 	public $basicName(int row, int col, $type value) {
 		this.row = row;
@@ -40,18 +41,28 @@ public class $className {
 		this.value = value;
 	}
 	
+	/**
+	 * Gets the row of the entry.
+	 * 
+	 * @return the row
+	 */
 	public int getRow() {
 		return this.row;
 	}
 	
+	/**
+	 * Gets the column of the entry.
+	 * 
+	 * @return the column
+	 */
 	public int getCol() {
 		return this.col;
 	}
 	
 	/**
-	 * Get the first component.
+	 * Gets the value in the matrix
 	 * 
-	 * @return the first component
+	 * @return the value of the entry
 	 */
 	public $type getValue() {
 		return this.value;

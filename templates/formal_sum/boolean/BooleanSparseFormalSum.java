@@ -6,25 +6,22 @@ import gnu.trove.THashSet;
 
 
 /**
- * This class is a data structure for holding a formal sum.
- * Such an element can be thought of as being in the form
- * r_1 m_1 + ... + r_k m_k. 
- *
- * Note that the class FormalSum is "unaware" of the 
- * arithmetic of the coefficient type. The arithmetic operations
- * of the free R-module whose elements are formal sums is 
- * implemented in FreeModule<R, M>.
+ * This class is a data structure for holding a formal sum. Such an element 
+ * can be thought of as being in the form r_1 m_1 + ... + r_k m_k. Only terms 
+ * with non-zero coefficients are stored. Note that this class is "unaware" of 
+ * the arithmetic of the coefficient type. 
  * 
- * @author Andrew Tausz
+ * @author autogen
  *
  * @param <boolean> the coefficient type
  * @param <M> the object type 
  */
 public class BooleanSparseFormalSum<M> implements BooleanAbstractFormalSum<M> {
 	/**
-	 * The coefficient-object pairs are held in a hash map, where the
-	 * key is the object), and the value is the coefficient.
-	 * 
+	 * Since we only store terms with coefficients equal to 1 (or "true"), 
+	 * we do not need to hold the coefficients. Thus we only store the
+	 * set of objects. The coefficient is determined whether the object is
+	 * present or not present in the set.
 	 */
 	protected final THashSet<M> map = new THashSet<M>();
 
@@ -40,7 +37,9 @@ public class BooleanSparseFormalSum<M> implements BooleanAbstractFormalSum<M> {
 	 * @param object the object to initialize to
 	 */
 	protected BooleanSparseFormalSum(boolean coefficient, M object) {
-		this.put(coefficient, object);
+		if (coefficient) {
+			this.put(coefficient, object);
+		}
 	}
 
 	/**
@@ -76,6 +75,10 @@ public class BooleanSparseFormalSum<M> implements BooleanAbstractFormalSum<M> {
 	public void put(boolean coefficient, M object) {
 		if (coefficient) {
 			this.map.add(object);
+		} else {
+			if (this.map.contains(object)) {
+				this.map.remove(object);
+			}
 		}
 	}
 
@@ -100,5 +103,13 @@ public class BooleanSparseFormalSum<M> implements BooleanAbstractFormalSum<M> {
 		}
 		return builder.toString();
 	}
-
+	
+	/**
+	 * This function returns an iterator for traversing the sum.
+	 * 
+	 * @return an iterator for the sum
+	 */
+	public Iterator<M> iterator() {
+		return this.map.iterator();
+	}
 }

@@ -19,9 +19,23 @@ import java.util.Iterator;
 
 #end
 
+/**
+ * This class implements the Iterator interface and allows for the traversal of a
+ * sparse vector. Note that it only traverses the non-zero elements of the vector, and
+ * omits the zero entries.
+ * 
+ * @author autogen
+ *
+ * @param <$type>
+ */
 public class $iteratorClassName implements Iterator<$pairClassName> {
 	private final $iteratorType iterator;
 	
+	/**
+	 * Constructor which initializes from a sparse vector.
+	 * 
+	 * @param vector the sparse vector to initialize from
+	 */
 	public $basicIteratorClassName($className vector) {
 		this.iterator = vector.map.iterator();
 	}

@@ -13,11 +13,11 @@ import java.util.Iterator;
  * finite generators, and the module R^n, where R is a commutative ring.
  * In this case, the set of free generators is given by an Iterable stream
  * of values of type M. This class contains the necessary functionality for
- * converting between these two formats: formal sums over a generating set
- * and arrays of elements in R. Thus basis elements correspond to standard
- * unit vectors.
+ * converting between three formats: formal sums over a generating set,
+ * arrays of elements in R, and sparse vectors. Thus basis elements correspond 
+ * to standard unit vectors.
  * 
- * @author Andrew Tausz
+ * @author autogen
  *
  * @param <boolean> the type of the underlying ring
  * @param <M> the type of the set of free generators
@@ -101,7 +101,12 @@ public class BooleanVectorConverter<M> {
 		return this.basisMapping.get(index);
 	}
 
-
+	/**
+	 * This function converts a formal sum to a dense array.
+	 * 
+	 * @param formalSum the formal sum to convert
+	 * @return the array equivalent of the sum
+	 */
 	public boolean[] toArray(BooleanSparseFormalSum<M> formalSum) {
 		boolean[] array = new boolean[this.getDimension()];
 
@@ -113,11 +118,22 @@ public class BooleanVectorConverter<M> {
 		return array;
 	}
 
+	/**
+	 * This function converts a sparse vector to a dense array.
+	 * 
+	 * @param sparseVector the sparse vector to convert
+	 * @return the array equivalent of the vector
+	 */
 	public boolean[] toArray(BooleanSparseVector sparseVector) {
 		return sparseVector.toArray();
 	}
 
-
+	/**
+	 * This function converts a formal sum to a sparse vector.
+	 * 
+	 * @param formalSum the formal sum to convert
+	 * @return the sparse vector equivalent of the sum
+	 */
 	public BooleanSparseVector toSparseVector(BooleanSparseFormalSum<M> formalSum) {
 		BooleanSparseVector vector = new BooleanSparseVector(this.getDimension());
 
@@ -129,11 +145,22 @@ public class BooleanVectorConverter<M> {
 		return vector;
 	}
 
-
+	/**
+	 * This function converts a dense array to a sparse vector.
+	 * 
+	 * @param array the array to convert
+	 * @return a sparse vector equivalent of the array
+	 */
 	public BooleanSparseVector toSparseVector(boolean[] array) {
 		return new BooleanSparseVector(array);
 	}
-
+	
+	/**
+	 * This function converts a dense array to a sparse formal sum.
+	 * 
+	 * @param array the array to convert
+	 * @return a sparse vector equivalent of the array
+	 */
 	public BooleanSparseFormalSum<M> toFormalSum(boolean[] array) {
 		BooleanSparseFormalSum<M> sum = new BooleanSparseFormalSum<M>();
 
@@ -146,6 +173,12 @@ public class BooleanVectorConverter<M> {
 		return sum;
 	}
 
+	/**
+	 * This function converts a sparse vector to a formal sum.
+	 * 
+	 * @param sparseVector the sparse vector to convert
+	 * @return a formal sum equivalent of the sparse vector
+	 */
 	public BooleanSparseFormalSum<M> toFormalSum(BooleanSparseVector sparseVector) {
 		BooleanSparseFormalSum<M> sum = new BooleanSparseFormalSum<M>();
 

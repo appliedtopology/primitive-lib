@@ -10,11 +10,11 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 #set ($basicName = $utility.getClassName($classTag, $templateTypes, $genericTypes))
 
 /**
- * This class implements a pair (a, b), where a is a $type1 and b 
- * is a $type2. Note that any instance of this class is immutable, and
+ * This class implements a pair (a, b), where a is of type $type1 and b 
+ * is of type $type2. Note that any instance of this class is immutable, and
  * implements value semantics.
  * 
- * @author Andrew Tausz
+ * @author autogen
  *
  */
 public class $className {

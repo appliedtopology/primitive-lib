@@ -6,22 +6,67 @@ package $packageName;
 #set ($className = $utility.getAnnotatedClassName("AbstractModule", $templateTypes, $genericTypes))
 
 /**
- * This interface defines a (left) R-module structure on
+ * This interface defines a (left) $coefficientType-module structure on
  * a generic data type.
  * 
- * @author Andrew Tausz
+ * @author autogen
  *
  * @param <$coefficientType> ring of scalars
  * @param <$objectType> the underlying data type
  */
-public abstract class $className {
+public interface $className {
+	/**
+	 * Compute the sum of two elements.
+	 * 
+	 * @param a
+	 * @param b
+	 * @return a + b
+	 */
 	public abstract $objectType add($objectType a, $objectType b);
+	
+	/**
+	 * Compute the difference of two elements.
+	 * 
+	 * @param a
+	 * @param b
+	 * @return a - b
+	 */
 	public abstract $objectType subtract($objectType a, $objectType b);
+	
+	/**
+	 * Compute the scalar product (left action) of a ring element with
+	 * a module element.
+	 * 
+	 * @param r
+	 * @param a
+	 * @return r * a
+	 */
 	public abstract $objectType multiply($coefficientType r, $objectType a);
+	
+	/**
+	 * Compute the additive inverse of an element.
+	 * 
+	 * @param a 
+	 * @return -a
+	 */
 	public abstract $objectType negate($objectType a);
+	
+	/**
+	 * Get the additive identity element.
+	 * 
+	 * @return the additive identity, 0
+	 */
 	public abstract $objectType getAdditiveIdentity();
 	
 	#if (!($coefficientType == "int"))
+	/**
+	 * Compute the scalar product (left action) of a ring element with
+	 * a module element.
+	 * 
+	 * @param r
+	 * @param a
+	 * @return r * a
+	 */
 	public abstract $objectType multiply(int r, $objectType a);
 	#end
 	

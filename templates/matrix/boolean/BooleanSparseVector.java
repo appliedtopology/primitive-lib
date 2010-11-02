@@ -8,15 +8,43 @@ import edu.stanford.math.plexlib.autogen.pair.IntBooleanUnorderedPair;
 import gnu.trove.TIntHashSet;
 import gnu.trove.TIntIterator;
 
-
+/**
+ * This class provides a sparse vector implementation of the interface BooleanAbstractVector.
+ * It only stores non-false entries thus is suited for applications where the dimension of the
+ * vector is large, but most of the elements are false.
+ * 
+ * @author autogen
+ *
+ * @param <boolean>
+ */
 public class BooleanSparseVector implements BooleanAbstractVector {
+	/**
+	 * This hash set stores the indices of the entries in the vector which are true.
+	 */
 	protected final TIntHashSet map = new TIntHashSet();
+	
+
+	/**
+	 * This is the size (or dimension) of the vector. Note that this is not the
+	 * actual number of entries, but is merely one past the maximum allowable index.
+	 */
 	protected final int size;
 
+	/**
+	 * This constructor initializes the vector have the specified size.
+	 * 
+	 * @param size the size to initialize to
+	 */
 	public BooleanSparseVector(int size) {
 		this.size = size;
 	}
 
+	/**
+	 * This constructor initializes the vector with the contents of the
+	 * given array.
+	 * 
+	 * @param array the array to initialize with
+	 */
 	public BooleanSparseVector(boolean[] array) {
 		this.size = array.length;
 		for (int i = 0; i < size; i++) {
@@ -31,10 +59,20 @@ public class BooleanSparseVector implements BooleanAbstractVector {
 		return new BooleanSparseVector(size);
 	}
 
+	/**
+	 * This function gets the number of non-zero elements in the vector.
+	 * 
+	 * @return the number of non-zero entries
+	 */
 	public int getNumNonzeroElements() {
 		return this.map.size();
 	}
 
+	/**
+	 * This function returns the density (number of non-zero entries / size) of the vector.
+	 * 
+	 * @return the density of the vector
+	 */
 	public double getDensity() {
 		return ((double) this.getNumNonzeroElements()) / ((double) (size));
 	}
@@ -55,6 +93,15 @@ public class BooleanSparseVector implements BooleanAbstractVector {
 		return this.size;
 	}
 
+	/**
+	 * This function compute the inner product of the current vector with the given
+	 * sparse vector. The reason for the existence of this function is that it can be 
+	 * performed in time on the order of the minimum of the number of non-zero entries
+	 * of the two vectors.
+	 * 
+	 * @param other the sparse vector to compute the inner product with
+	 * @return the inner product of this with the given sparse vector
+	 */
 	public boolean innerProduct(BooleanSparseVector other) {
 		boolean sum = false;
 		BooleanSparseVector smaller = (this.map.size() < other.map.size() ? this : other);
@@ -69,6 +116,12 @@ public class BooleanSparseVector implements BooleanAbstractVector {
 		return sum;
 	}
 
+	/**
+	 * This function computes the inner product of the current vector with the given array.
+	 * 
+	 * @param other the array to compute the inner product with
+	 * @return the inner product of this with the given array
+	 */
 	public boolean innerProduct(boolean[] other) {
 		boolean sum = false;
 		for (TIntIterator iterator = this.map.iterator(); iterator.hasNext(); ) {
@@ -109,6 +162,12 @@ public class BooleanSparseVector implements BooleanAbstractVector {
 		return builder.toString();
 	}
 
+	/**
+	 * This function writes the contents of the vector to a given Writer object.
+	 * 
+	 * @param writer the Writer object to write to
+	 * @throws IOException
+	 */
 	public void write(Writer writer) throws IOException {
 		int index = 0;
 		writer.write("[");
@@ -124,6 +183,11 @@ public class BooleanSparseVector implements BooleanAbstractVector {
 	}
 
 
+	/**
+	 * This function converts the vector to a (dense) array.
+	 * 
+	 * @return an array with the contents of the vector
+	 */
 	public boolean[] toArray() {
 		boolean[] array = new boolean[this.size];
 

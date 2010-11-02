@@ -6,10 +6,12 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 /**
  * This class implements a pair (a, b, c), where a and b are ints and
- * is a boolean. Note that any instance of this class is immutable, and
- * implements value semantics.
+ * is of type boolean. Note that any instance of this class is immutable, and
+ * implements value semantics. Note that the value of the entry is always set 
+ * to true, and thus is only suitable for situations where only the true elements
+ * are stored.
  * 
- * @author Andrew Tausz
+ * @author autogen
  *
  */
 public class BooleanMatrixEntry {
@@ -17,24 +19,40 @@ public class BooleanMatrixEntry {
 	private final int col;
 	
 	/**
-	 * Constructor which initializes the pair.
+	 * Constructor which initializes the entry.
 	 * 
-	 * @param first the value of the first component
-	 * @param second the value of the second component
+	 * @param row the row of the entry
+	 * @param col the column of the entry
+	 * @param value the value at the entry
 	 */
 	public BooleanMatrixEntry(int row, int col) {
 		this.row = row;
 		this.col = col;
 	}
 	
+	/**
+	 * Gets the row of the entry.
+	 * 
+	 * @return the row
+	 */
 	public int getRow() {
 		return this.row;
 	}
 	
+	/**
+	 * Gets the column of the entry.
+	 * 
+	 * @return the column
+	 */
 	public int getCol() {
 		return this.col;
 	}
 	
+	/**
+	 * Gets the value in the matrix
+	 * 
+	 * @return the value of the entry
+	 */
 	public boolean getValue() {
 		return true;
 	}

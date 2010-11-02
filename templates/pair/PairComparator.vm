@@ -13,6 +13,16 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 #set ($comparator1Name = $utility.getAnnotatedClassName("Comparator", [], [$type1]))
 #set ($comparator2Name = $utility.getAnnotatedClassName("Comparator", [], [$type2]))
 
+/**
+ * This class implements the Comparator interface for objects of type $pairClassName.
+ * The comparison of primitive types is based on the standard comparisons <, >, and the
+ * comparison of object types is given by a supplied comparator.
+ * 
+ * @author autogen
+ *
+ * @param <$type1>
+ * @param <$type2>
+ */
 public class $className implements $interfaceName {
 	#if (!($utility.isPrimitive($type1)))
 	private final $comparator1Name firstComparator;
@@ -24,11 +34,18 @@ public class $className implements $interfaceName {
 	
 	#if ($utility.isPrimitive($type1))
 		#if ($utility.isPrimitive($type2))
-			## both are primitive	
+			## both are primitive
+			/**
+			 * Default constructor.
+			 */
 			public $basicClassName() {}
 	
 		#else
 			## type1 is primitive, type2 is not
+			/**
+			 * Constructor which initializes the class with a comparator for type $type2.
+			 * @param secondComparator
+			 */
 			public $basicClassName($comparator2Name secondComparator) {
 				this.secondComparator = secondComparator;
 			}
@@ -36,11 +53,21 @@ public class $className implements $interfaceName {
 	#else
 		#if ($utility.isPrimitive($type2))
 			## type1 is not primitive, type2 is primitive
+			/**
+			 * Constructor which initializes the class with a comparator for type $type1.
+			 * @param firstComparator
+			 */
 			public $basicClassName($comparator1Name firstComparator) {
 				this.firstComparator = firstComparator;
 			}
 		#else
 			## type1 and type2 are both non primitive
+			/**
+			 * Constructor which initializes the class with a comparator for type $type1 and
+			 * a comparator for type $type2.
+			 * @param firstComparator
+			 * @param secondComparator
+			 */
 			public $basicClassName($comparator1Name firstComparator, $comparator2Name secondComparator) {
 				this.firstComparator = firstComparator;
 				this.secondComparator = secondComparator;

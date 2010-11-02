@@ -24,11 +24,16 @@ import java.util.Iterator;
 #set ($iteratorType = $utility.getMapIteratorType($mappingBasisClass, $coefficientType) + $utility.getGenericAnnotation([$mappingBasisClass, $coefficientType]))
 
 /**
- * This class computes matrix representations of module homomorphisms
- * T: F(M) -> F(N), where F(M) and F(N) are free modules on sets with 
- * underlying type M and N.
+ * <p>This class computes matrix representations of module homomorphisms
+ * T: F($objectType1) -> F($objectType2), where F($objectType1) and F($objectType2) are free modules on sets with 
+ * underlying type $objectType1 and $objectType2.</p>
  * 
- * @author Andrew Tausz
+ * <p>Let V = F($objectType1), and W = F($objectType2)</p>
+ * <p>Since Hom(V, W) ~= V^* tensor W</p>, one representation of a morphism V -> W is 
+ * a formal sum over tensors (v^* tensor w). In practise, we represent these
+ * by elements of type $mappingBasisClass.</p>
+ * 
+ * @author autogen
  *
  * @param <$coefficientType> the type of the underlying commutative ring
  * @param <$objectType1> the type of the generating set of the domain
@@ -39,7 +44,7 @@ public class $className {
 	protected final $vectorConverterClassName2 codomainRepresentation;
 	
 	/**
-	 * This constructor initializes the object with a basis for the domain and codomain.
+	 * This constructor initializes the object with bases for the domain and codomain.
 	 * 
 	 * @param domainBasis a collection consisting of basis elements for the domain
 	 * @param codomainBasis a collection consisting of basis elements for the codomain
@@ -48,21 +53,44 @@ public class $className {
 		this(new $vectorConverterClassName1(domainBasis), new $vectorConverterClassName2(codomainBasis));
 	}
 	
+	/**
+	 * This constructor initializes the object with vector converters for the domain and codomain
+	 * spaces.
+	 * 
+	 * @param domainRepresentation the domain converter
+	 * @param codomainRepresentation the codomain converter
+	 */
 	public $basicClassName($vectorConverterClassName1 domainRepresentation, $vectorConverterClassName2 codomainRepresentation) {
 		this.domainRepresentation = domainRepresentation;
 		this.codomainRepresentation = codomainRepresentation;
 	}
 	
+	/**
+	 * This function returns the domain converter
+	 * 
+	 * @return the domain converter
+	 */
 	public $vectorConverterClassName1 getDomainRepresentation() {
 		return this.domainRepresentation;
 	}
 	
+	/**
+	 * This function returns the codomain converter.
+	 * 
+	 * @return the codomain converter
+	 */
 	public $vectorConverterClassName2 getCodomainRepresentation() {
 		return this.codomainRepresentation;
 	}
 	
 	#if ($utility.isPrimitive($coefficientType))
 	
+	/**
+	 * This function converts a formal sum to a dense array.
+	 * 	
+	 * @param formalSum the formal sum to convert
+	 * @return an array equivalent of the sum
+	 */
 	public $coefficientType[][] toArray($mappingSumClass formalSum) {
 		$coefficientType[][] matrix = new $coefficientType[this.codomainRepresentation.getDimension()][this.domainRepresentation.getDimension()];		
 		
@@ -78,6 +106,12 @@ public class $className {
 		return matrix;
 	}
 	
+	/**
+	 * This function converts a sparse matrix to a dense array.
+	 * 
+	 * @param sparseMatrix the sparse matrix to convert
+	 * @return an array equivalent of the sparse matrix
+	 */
 	public $coefficientType[][] toArray($sparseMatrixName sparseMatrix) {
 		$coefficientType[][] matrix = new $coefficientType[this.codomainRepresentation.getDimension()][this.domainRepresentation.getDimension()];		
 		
@@ -93,6 +127,12 @@ public class $className {
 	
 	#if ($utility.isPrimitive($coefficientType))
 	
+	/**
+	 * This function converts a formal sum of pairs to a sparse matrix.
+	 * 
+	 * @param formalSum the formal sum to convert
+	 * @return the sparse matrix representation of the formal sum
+	 */
 	public $sparseMatrixName toSparseMatrix($mappingSumClass formalSum) {
 		$sparseMatrixName sparseMatrix = new $sparseMatrixName(this.codomainRepresentation.getDimension(), this.domainRepresentation.getDimension());
 		
@@ -110,6 +150,12 @@ public class $className {
 	
 	#else
 	
+	/**
+	 * This function converts a formal sum of pairs to a sparse matrix.
+	 * 
+	 * @param formalSum the formal sum to convert
+	 * @return the sparse matrix representation of the formal sum
+	 */
 	public $sparseMatrixName toSparseMatrix($mappingSumClass formalSum) {
 		$sparseMatrixName sparseMatrix = new $sparseMatrixName(this.codomainRepresentation.getDimension(), this.domainRepresentation.getDimension());
 		
@@ -126,6 +172,12 @@ public class $className {
 	
 	#end
 	
+	/**
+	 * This function converts a dense matrix to a sparse matrix.
+	 * 
+	 * @param matrix the dense matrix to convert
+	 * @return a sparse matrix equivalent
+	 */
 	public $sparseMatrixName toSparseMatrix($coefficientType[][] matrix) {
 		$sparseMatrixName sparseMatrix = new $sparseMatrixName(this.codomainRepresentation.getDimension(), this.domainRepresentation.getDimension());
 		
@@ -147,6 +199,12 @@ public class $className {
 		return sparseMatrix;
 	}
 	
+	/**
+	 * This function converts a sparse matrix to a formal sum of pairs.
+	 * 
+	 * @param sparseMatrix the sparse matrix to convert
+	 * @return a formal sum equivalent
+	 */
 	public $mappingSumClass toFormalSum($sparseMatrixName sparseMatrix) {
 		$mappingSumClass formalSum = new $mappingSumClass();
 		
@@ -161,6 +219,12 @@ public class $className {
 		return formalSum;
 	}
 	
+	/**
+	 * This function converts a dense matrix to a formal sum of pairs
+	 * 
+	 * @param matrix the dense matrix to convert
+	 * @return an equivalent formal sum
+	 */
 	public $mappingSumClass toFormalSum($coefficientType[][] matrix) {
 		$mappingSumClass formalSum = new $mappingSumClass();
 		

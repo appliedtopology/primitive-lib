@@ -6,13 +6,17 @@ import edu.stanford.math.plexlib.autogen.matrix.BooleanSparseMatrix;
 import edu.stanford.math.plexlib.autogen.pair.ObjectObjectPair;
 
 
-
 /**
- * This class computes matrix representations of module homomorphisms
+ * <p>This class computes matrix representations of module homomorphisms
  * T: F(M) -> F(N), where F(M) and F(N) are free modules on sets with 
- * underlying type M and N.
+ * underlying type M and N.</p>
  * 
- * @author Andrew Tausz
+ * <p>Let V = F(M), and W = F(N)</p>
+ * <p>Since Hom(V, W) ~= V^* tensor W</p>, one representation of a morphism V -> W is 
+ * a formal sum over tensors (v^* tensor w). In practise, we represent these
+ * by elements of type ObjectObjectPair<M, N>.</p>
+ * 
+ * @author autogen
  *
  * @param <boolean> the type of the underlying commutative ring
  * @param <M> the type of the generating set of the domain
@@ -23,7 +27,7 @@ public class BooleanMatrixConverter<M, N> {
 	protected final BooleanVectorConverter<N> codomainRepresentation;
 
 	/**
-	 * This constructor initializes the object with a basis for the domain and codomain.
+	 * This constructor initializes the object with bases for the domain and codomain.
 	 * 
 	 * @param domainBasis a collection consisting of basis elements for the domain
 	 * @param codomainBasis a collection consisting of basis elements for the codomain
@@ -32,20 +36,42 @@ public class BooleanMatrixConverter<M, N> {
 		this(new BooleanVectorConverter<M>(domainBasis), new BooleanVectorConverter<N>(codomainBasis));
 	}
 
+	/**
+	 * This constructor initializes the object with vector converters for the domain and codomain
+	 * spaces.
+	 * 
+	 * @param domainRepresentation the domain converter
+	 * @param codomainRepresentation the codomain converter
+	 */
 	public BooleanMatrixConverter(BooleanVectorConverter<M> domainRepresentation, BooleanVectorConverter<N> codomainRepresentation) {
 		this.domainRepresentation = domainRepresentation;
 		this.codomainRepresentation = codomainRepresentation;
 	}
-
+	
+	/**
+	 * This function returns the domain converter
+	 * 
+	 * @return the domain converter
+	 */
 	public BooleanVectorConverter<M> getDomainRepresentation() {
 		return this.domainRepresentation;
 	}
 
+	/**
+	 * This function returns the codomain converter.
+	 * 
+	 * @return the codomain converter
+	 */
 	public BooleanVectorConverter<N> getCodomainRepresentation() {
 		return this.codomainRepresentation;
 	}
 
-
+	/**
+	 * This function converts a formal sum to a dense array.
+	 * 	
+	 * @param formalSum the formal sum to convert
+	 * @return an array equivalent of the sum
+	 */
 	public boolean[][] toArray(BooleanSparseFormalSum<ObjectObjectPair<M, N>> formalSum) {
 		boolean[][] matrix = new boolean[this.codomainRepresentation.getDimension()][this.domainRepresentation.getDimension()];		
 
@@ -60,6 +86,12 @@ public class BooleanMatrixConverter<M, N> {
 		return matrix;
 	}
 
+	/**
+	 * This function converts a sparse matrix to a dense array.
+	 * 
+	 * @param sparseMatrix the sparse matrix to convert
+	 * @return an array equivalent of the sparse matrix
+	 */
 	public boolean[][] toArray(BooleanSparseMatrix sparseMatrix) {
 		boolean[][] matrix = new boolean[this.codomainRepresentation.getDimension()][this.domainRepresentation.getDimension()];		
 
@@ -72,7 +104,12 @@ public class BooleanMatrixConverter<M, N> {
 	}
 
 
-
+	/**
+	 * This function converts a formal sum of pairs to a sparse matrix.
+	 * 
+	 * @param formalSum the formal sum to convert
+	 * @return the sparse matrix representation of the formal sum
+	 */
 	public BooleanSparseMatrix toSparseMatrix(BooleanSparseFormalSum<ObjectObjectPair<M, N>> formalSum) {
 		BooleanSparseMatrix sparseMatrix = new BooleanSparseMatrix(this.codomainRepresentation.getDimension(), this.domainRepresentation.getDimension());
 
@@ -87,7 +124,12 @@ public class BooleanMatrixConverter<M, N> {
 		return sparseMatrix;
 	}
 
-
+	/**
+	 * This function converts a dense matrix to a sparse matrix.
+	 * 
+	 * @param matrix the dense matrix to convert
+	 * @return a sparse matrix equivalent
+	 */
 	public BooleanSparseMatrix toSparseMatrix(boolean[][] matrix) {
 		BooleanSparseMatrix sparseMatrix = new BooleanSparseMatrix(this.codomainRepresentation.getDimension(), this.domainRepresentation.getDimension());
 
@@ -102,6 +144,12 @@ public class BooleanMatrixConverter<M, N> {
 		return sparseMatrix;
 	}
 
+	/**
+	 * This function converts a sparse matrix to a formal sum of pairs.
+	 * 
+	 * @param sparseMatrix the sparse matrix to convert
+	 * @return a formal sum equivalent
+	 */
 	public BooleanSparseFormalSum<ObjectObjectPair<M, N>> toFormalSum(BooleanSparseMatrix sparseMatrix) {
 		BooleanSparseFormalSum<ObjectObjectPair<M, N>> formalSum = new BooleanSparseFormalSum<ObjectObjectPair<M, N>>();
 
@@ -116,6 +164,12 @@ public class BooleanMatrixConverter<M, N> {
 		return formalSum;
 	}
 
+	/**
+	 * This function converts a dense matrix to a formal sum of pairs
+	 * 
+	 * @param matrix the dense matrix to convert
+	 * @return an equivalent formal sum
+	 */
 	public BooleanSparseFormalSum<ObjectObjectPair<M, N>> toFormalSum(boolean[][] matrix) {
 		BooleanSparseFormalSum<ObjectObjectPair<M, N>> formalSum = new BooleanSparseFormalSum<ObjectObjectPair<M, N>>();
 

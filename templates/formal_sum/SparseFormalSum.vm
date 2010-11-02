@@ -19,16 +19,12 @@ import java.util.Iterator;
 #set ($iteratorType = $utility.getMapIteratorType($objectType, $coefficientType) + $utility.getGenericAnnotation([$objectType, $coefficientType]))
 
 /**
- * This class is a data structure for holding a formal sum.
- * Such an element can be thought of as being in the form
- * r_1 m_1 + ... + r_k m_k. 
- *
- * Note that the class GenericFormalSum is "unaware" of the 
- * arithmetic of the coefficient type. The arithmetic operations
- * of the free R-module whose elements are formal sums is 
- * implemented in GenericFreeModule<R, M>.
+ * This class is a data structure for holding a formal sum. Such an element 
+ * can be thought of as being in the form r_1 m_1 + ... + r_k m_k. Only terms 
+ * with non-zero coefficients are stored. Note that this class is "unaware" of 
+ * the arithmetic of the coefficient type. 
  * 
- * @author Andrew Tausz
+ * @author autogen
  *
  * @param <$coefficientType> the coefficient type
  * @param <$objectType> the object type 
@@ -149,13 +145,22 @@ public class $className implements $superName {
 	#end
 	
 	#if ($utility.isPrimitive($coefficientType) || $utility.isPrimitive($objectType))
-	
+	/**
+	 * This function returns an iterator for traversing the sum. Note that for primitive
+	 * coefficient types, this will not be an implementor of the Iterable<> interface.
+	 * 
+	 * @return an iterator for the sum
+	 */
 	public $iteratorType iterator() {
 		return this.map.iterator();
 	}
 	
 	#else
-	
+	/**
+	 * This function returns an iterator for traversing the sum. 
+	 * 
+	 * @return an iterator for the sum
+	 */
 	public Iterator<Map.Entry<$objectType, $coefficientType>> iterator() {
 		return this.map.entrySet().iterator();
 	}
