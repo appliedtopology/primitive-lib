@@ -317,7 +317,9 @@ public class JavaGeneratorUtility {
 	}
 	
 	public Vector<String> getCommonTypes() {
-		Vector<String> types = new Vector<String>(this.numericTypes);
+		Vector<String> types = new Vector<String>();
+		types.add("int");
+		types.add("double");
 		types.add("boolean");
 		return types;
 	}

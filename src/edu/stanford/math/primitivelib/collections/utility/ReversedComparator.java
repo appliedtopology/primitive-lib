@@ -1,4 +1,4 @@
-package edu.stanford.math.primitivelib.utility;
+package edu.stanford.math.primitivelib.collections.utility;
 
 import java.util.Comparator;
 
