@@ -6,7 +6,11 @@ import java.util.Vector;
 public class GeneratorDriver {
 	private static List<ClassSpecifier> classSpecifiers = new Vector<ClassSpecifier>();
 	private static JavaGeneratorUtility utility = JavaGeneratorUtility.getInstance();
-
+	
+	private static String basePackageName = "edu.stanford.math.primitivelib.autogen";
+	private static String baseSourceDirectory = "src";
+	private static String templateDirectory = "templates/";
+	
 	/**
 	 * @param args
 	 */
@@ -165,7 +169,7 @@ public class GeneratorDriver {
 	}
 	
 	private static void generateClasses() {
-		JavaCodeGenerator generator = new JavaCodeGenerator();
+		JavaCodeGenerator generator = new JavaCodeGenerator(basePackageName, templateDirectory, baseSourceDirectory);
 		generator.generateClasses(classSpecifiers);
 	}
 
