@@ -16,8 +16,15 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 
 public class JavaCodeGenerator {
 	private static JavaGeneratorUtility utility = JavaGeneratorUtility.getInstance();
-	private static String basePackageName = "edu.stanford.math.primitivelib.autogen";
-	private static String baseSourceDirectory = "src";
+	private final String basePackageName;
+	private final String baseSourceDirectory;
+	private final String templateDirectory;
+	
+	public JavaCodeGenerator(String basePackageName, String templateDirectory, String baseSourceDirectory) {
+		this.basePackageName = basePackageName;
+		this.templateDirectory = templateDirectory;
+		this.baseSourceDirectory = baseSourceDirectory;
+	}
 	
 	public void generateClasses(Iterable<ClassSpecifier> specifiers) {
 		for (ClassSpecifier specifier: specifiers) {
@@ -56,7 +63,7 @@ public class JavaCodeGenerator {
 			String className = utility.getClassName(classTag, templateTypes);
 			String filePath = directoryPath + className + ".java";
 			
-			Template template = ve.getTemplate("templates/" + packageIdentifier + "/" + classTag + ".vm");
+			Template template = ve.getTemplate(templateDirectory + convertToPath(packageIdentifier) + "/" + classTag + ".vm");
 			VelocityContext context = new VelocityContext();
 			context.put("utility", utility);
 			context.put("packageName", packageName);

@@ -26,8 +26,8 @@ import java.util.Vector;
  *
  */
 public class JavaGeneratorUtility {
-	private static JavaGeneratorUtility instance = new JavaGeneratorUtility();
 	private static String objectLabel = "Object";
+	private static JavaGeneratorUtility instance = new JavaGeneratorUtility();
 	
 	private final Vector<String> primitiveTypes = new Vector<String>();
 	private final Vector<String> numericTypes = new Vector<String>();
