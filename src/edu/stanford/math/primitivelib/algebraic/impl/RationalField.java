@@ -1,6 +1,6 @@
 package edu.stanford.math.primitivelib.algebraic.impl;
 
-import org.apache.commons.lang.math.Fraction;
+import org.apache.commons.math.fraction.Fraction;
 
 import edu.stanford.math.primitivelib.autogen.algebraic.ObjectAbstractField;
 
@@ -30,7 +30,7 @@ public class RationalField extends ObjectAbstractField<Fraction> {
 
 	@Override
 	public Fraction multiply(Fraction a, Fraction b) {
-		return a.multiplyBy(b);
+		return a.multiply(b);
 	}
 
 	@Override
@@ -45,17 +45,17 @@ public class RationalField extends ObjectAbstractField<Fraction> {
 
 	@Override
 	public Fraction valueOf(int n) {
-		return Fraction.getFraction(n, 1);
+		return Fraction.getReducedFraction(n, 1);
 	}
 
 	@Override
 	public Fraction divide(Fraction a, Fraction b) {
-		return a.divideBy(b);
+		return a.divide(b);
 	}
 
 	@Override
 	public Fraction invert(Fraction a) {
-		return a.invert();
+		return a.reciprocal();
 	}
 
 	@Override
