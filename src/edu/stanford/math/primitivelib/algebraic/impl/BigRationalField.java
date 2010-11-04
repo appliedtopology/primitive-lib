@@ -9,7 +9,7 @@ public class BigRationalField extends ObjectAbstractField<BigFraction> {
 
 	private static final BigRationalField instance = new BigRationalField();
 
-	public BigRationalField getInstance() {
+	public static BigRationalField getInstance() {
 		return instance;
 	}
 
