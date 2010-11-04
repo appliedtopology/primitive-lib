@@ -17,7 +17,7 @@ import edu.stanford.math.primitivelib.autogen.algebraic.BooleanAbstractModule;
  * @param <boolean> the coefficient type
  * @param <M> the object type
  */
-public abstract class BooleanPrimitiveFreeModule<M> implements BooleanAbstractModule<BooleanSparseFormalSum<M>> {
+public class BooleanPrimitiveFreeModule<M> implements BooleanAbstractModule<BooleanSparseFormalSum<M>> {
 
 	public BooleanPrimitiveFreeModule() {}
 
