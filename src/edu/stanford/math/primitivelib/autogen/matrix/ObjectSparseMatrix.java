@@ -1,9 +1,9 @@
 package edu.stanford.math.primitivelib.autogen.matrix;
 
+import java.util.Iterator;
+
 import gnu.trove.TIntObjectHashMap;
 import gnu.trove.TIntObjectIterator;
-
-import java.util.Iterator;
 
 
 
