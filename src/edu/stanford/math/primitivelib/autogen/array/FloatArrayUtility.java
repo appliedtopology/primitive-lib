@@ -1,8 +1,9 @@
 package edu.stanford.math.primitivelib.autogen.array;
 
+
+import java.util.ArrayList;
 import java.util.Collection;
-
-
+import java.util.List;
 
 public class FloatArrayUtility {
 	public static float[] createArray(int length) {
@@ -74,9 +75,17 @@ public class FloatArrayUtility {
         int index = 0;
         
         for (float[] array: collection) {
-                result[index++] = array;
+        	result[index++] = array;
         }
         
         return result;
     }
+    
+    public static List<Float> toList(float[] array) {
+		List<Float> list = new ArrayList<Float>();
+		for (int i = 0; i < array.length; i++) {
+			list.add(array[i]);
+		}
+		return list;
+	}
 }

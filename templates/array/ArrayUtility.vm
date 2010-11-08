@@ -3,6 +3,9 @@ package $packageName;
 #set ($type = $templateTypes.get(0))
 #set ($className = $utility.getAnnotatedClassName("ArrayUtility", $templateTypes, $genericTypes))
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class $className {
 	public static $type[] createArray(int length) {
@@ -74,9 +77,17 @@ public class $className {
         int index = 0;
         
         for ($type[] array: collection) {
-                result[index++] = array;
+        	result[index++] = array;
         }
         
         return result;
     }
+    
+    public static List<$utility.getBoxedName($type)> toList($type[] array) {
+		List<$utility.getBoxedName($type)> list = new ArrayList<$utility.getBoxedName($type)>();
+		for (int i = 0; i < array.length; i++) {
+			list.add(array[i]);
+		}
+		return list;
+	}
 }

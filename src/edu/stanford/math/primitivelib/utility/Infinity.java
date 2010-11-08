@@ -60,8 +60,7 @@ public class Infinity {
 	public static class Int {
 		/* Most algorithms do not expect infinite values so this constant holds
 		 * a very large value that for all practical purposes can be considered
-		 * as equivalent to infinity. Note: there is plenty of room to multiply
-		 * this number without overflowing the double. */
+		 * as equivalent to infinity. */
 		protected static final int POSITIVE_INFINITY = java.lang.Integer.MAX_VALUE;
 
 		/**
