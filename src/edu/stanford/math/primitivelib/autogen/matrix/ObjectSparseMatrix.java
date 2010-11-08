@@ -130,6 +130,31 @@ public class ObjectSparseMatrix<R> implements ObjectAbstractMatrix<R> {
 		return builder.toString();
 	}
 	
+	public int[] getRows() {
+		int numNonZeroEntries = this.getNumNonzeroElements();
+		int[] rows = new int[numNonZeroEntries];
+		
+		int index = 0;
+		for (ObjectMatrixEntry<R> entry: this) {
+			rows[index++] = entry.getRow();
+		}
+		
+		return rows;
+	}
+	
+	public int[] getColumns() {
+		int numNonZeroEntries = this.getNumNonzeroElements();
+		int[] cols = new int[numNonZeroEntries];
+		
+		int index = 0;
+		for (ObjectMatrixEntry<R> entry: this) {
+			cols[index++] = entry.getCol();
+		}
+		
+		return cols;
+	}
+	
+		
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -143,6 +143,42 @@ public class DoubleSparseMatrix implements DoubleAbstractMatrix {
 		return builder.toString();
 	}
 	
+	public int[] getRows() {
+		int numNonZeroEntries = this.getNumNonzeroElements();
+		int[] rows = new int[numNonZeroEntries];
+		
+		int index = 0;
+		for (DoubleMatrixEntry entry: this) {
+			rows[index++] = entry.getRow();
+		}
+		
+		return rows;
+	}
+	
+	public int[] getColumns() {
+		int numNonZeroEntries = this.getNumNonzeroElements();
+		int[] cols = new int[numNonZeroEntries];
+		
+		int index = 0;
+		for (DoubleMatrixEntry entry: this) {
+			cols[index++] = entry.getCol();
+		}
+		
+		return cols;
+	}
+	
+		public double[] getValues() {
+		int numNonZeroEntries = this.getNumNonzeroElements();
+		double[] values = new double[numNonZeroEntries];
+		
+		int index = 0;
+		for (DoubleMatrixEntry entry: this) {
+			values[index++] = entry.getValue();
+		}
+		
+		return values;
+	}
+		
 	@Override
 	public int hashCode() {
 		final int prime = 31;

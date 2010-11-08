@@ -204,6 +204,29 @@ public class DoubleSparseVector implements DoubleAbstractVector {
 	}
 	
 		
+	public int[] getIndices() {
+		int numNonZeroEntries = this.getNumNonzeroElements();
+		int[] indices = new int[numNonZeroEntries];
+		
+		int index = 0;
+		for (DoubleVectorEntry pair: this) {
+			indices[index++] = pair.getIndex();
+		}
+		
+		return indices;
+	}
+		public double[] getValues() {
+		int numNonZeroEntries = this.getNumNonzeroElements();
+		double[] values = new double[numNonZeroEntries];
+		
+		int index = 0;
+		for (DoubleVectorEntry pair: this) {
+			values[index++] = pair.getValue();
+		}
+		
+		return values;
+	}
+		
 	@Override
 	public int hashCode() {
 		final int prime = 31;

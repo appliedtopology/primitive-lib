@@ -204,6 +204,29 @@ public class IntSparseVector implements IntAbstractVector {
 	}
 	
 		
+	public int[] getIndices() {
+		int numNonZeroEntries = this.getNumNonzeroElements();
+		int[] indices = new int[numNonZeroEntries];
+		
+		int index = 0;
+		for (IntVectorEntry pair: this) {
+			indices[index++] = pair.getIndex();
+		}
+		
+		return indices;
+	}
+		public int[] getValues() {
+		int numNonZeroEntries = this.getNumNonzeroElements();
+		int[] values = new int[numNonZeroEntries];
+		
+		int index = 0;
+		for (IntVectorEntry pair: this) {
+			values[index++] = pair.getValue();
+		}
+		
+		return values;
+	}
+		
 	@Override
 	public int hashCode() {
 		final int prime = 31;
