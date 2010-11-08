@@ -222,6 +222,31 @@ public class $className implements $superName {
 	
 	#end
 	
+	public int[] getIndices() {
+		int numNonZeroEntries = this.getNumNonzeroElements();
+		int[] indices = new int[numNonZeroEntries];
+		
+		int index = 0;
+		for ($pairClassName pair: this) {
+			indices[index++] = pair.getIndex();
+		}
+		
+		return indices;
+	}
+	#if ($utility.isPrimitive($type))
+	public $type[] getValues() {
+		int numNonZeroEntries = this.getNumNonzeroElements();
+		$type[] values = new $type[numNonZeroEntries];
+		
+		int index = 0;
+		for ($pairClassName pair: this) {
+			values[index++] = pair.getValue();
+		}
+		
+		return values;
+	}
+	#end
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

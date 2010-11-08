@@ -159,6 +159,44 @@ public class $className implements $superName {
 		return builder.toString();
 	}
 	
+	public int[] getRows() {
+		int numNonZeroEntries = this.getNumNonzeroElements();
+		int[] rows = new int[numNonZeroEntries];
+		
+		int index = 0;
+		for ($entryClassName entry: this) {
+			rows[index++] = entry.getRow();
+		}
+		
+		return rows;
+	}
+	
+	public int[] getColumns() {
+		int numNonZeroEntries = this.getNumNonzeroElements();
+		int[] cols = new int[numNonZeroEntries];
+		
+		int index = 0;
+		for ($entryClassName entry: this) {
+			cols[index++] = entry.getCol();
+		}
+		
+		return cols;
+	}
+	
+	#if ($utility.isPrimitive($type))
+	public $type[] getValues() {
+		int numNonZeroEntries = this.getNumNonzeroElements();
+		$type[] values = new $type[numNonZeroEntries];
+		
+		int index = 0;
+		for ($entryClassName entry: this) {
+			values[index++] = entry.getValue();
+		}
+		
+		return values;
+	}
+	#end
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

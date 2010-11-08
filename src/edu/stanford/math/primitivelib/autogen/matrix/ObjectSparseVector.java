@@ -138,6 +138,18 @@ public class ObjectSparseVector<R> implements ObjectAbstractVector<R> {
 	}
 	
 		
+	public int[] getIndices() {
+		int numNonZeroEntries = this.getNumNonzeroElements();
+		int[] indices = new int[numNonZeroEntries];
+		
+		int index = 0;
+		for (ObjectVectorEntry<R> pair: this) {
+			indices[index++] = pair.getIndex();
+		}
+		
+		return indices;
+	}
+		
 	@Override
 	public int hashCode() {
 		final int prime = 31;

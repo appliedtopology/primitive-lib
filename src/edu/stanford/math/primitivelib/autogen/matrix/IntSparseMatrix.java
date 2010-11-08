@@ -143,6 +143,42 @@ public class IntSparseMatrix implements IntAbstractMatrix {
 		return builder.toString();
 	}
 	
+	public int[] getRows() {
+		int numNonZeroEntries = this.getNumNonzeroElements();
+		int[] rows = new int[numNonZeroEntries];
+		
+		int index = 0;
+		for (IntMatrixEntry entry: this) {
+			rows[index++] = entry.getRow();
+		}
+		
+		return rows;
+	}
+	
+	public int[] getColumns() {
+		int numNonZeroEntries = this.getNumNonzeroElements();
+		int[] cols = new int[numNonZeroEntries];
+		
+		int index = 0;
+		for (IntMatrixEntry entry: this) {
+			cols[index++] = entry.getCol();
+		}
+		
+		return cols;
+	}
+	
+		public int[] getValues() {
+		int numNonZeroEntries = this.getNumNonzeroElements();
+		int[] values = new int[numNonZeroEntries];
+		
+		int index = 0;
+		for (IntMatrixEntry entry: this) {
+			values[index++] = entry.getValue();
+		}
+		
+		return values;
+	}
+		
 	@Override
 	public int hashCode() {
 		final int prime = 31;
