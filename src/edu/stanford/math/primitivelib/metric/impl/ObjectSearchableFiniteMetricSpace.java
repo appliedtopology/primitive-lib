@@ -3,9 +3,26 @@ package edu.stanford.math.primitivelib.metric.impl;
 import edu.stanford.math.primitivelib.metric.interfaces.AbstractSearchableMetricSpace;
 import gnu.trove.TIntHashSet;
 
+/**
+ * This class implements the AbstractSearchableMetricSpace interface over type T. It stores the
+ * elements of the metric space as an array.  
+ * 
+ * @author Andrew Tausz
+ *
+ * @param <T>
+ */
 public abstract class ObjectSearchableFiniteMetricSpace<T> implements AbstractSearchableMetricSpace<T> {
+	
+	/**
+	 * This array stores the elements in the metric space
+	 */
 	protected final T[] elements;
 	
+	/**
+	 * This constructor initializes the class with an array of elements.
+	 * 
+	 * @param array the array of elements that will be the points in the metric space
+	 */
 	ObjectSearchableFiniteMetricSpace(T[] array) {
 		this.elements = array;
 	}

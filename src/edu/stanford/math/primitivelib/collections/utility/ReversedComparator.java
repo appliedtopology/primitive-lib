@@ -2,10 +2,26 @@ package edu.stanford.math.primitivelib.collections.utility;
 
 import java.util.Comparator;
 
+/**
+ * This Comparator simply produces the reverse comparison as the reference
+ * comparator.
+ * 
+ * @author Andrew Tausz
+ *
+ * @param <T>
+ */
 public class ReversedComparator<T> implements Comparator<T> {
+	/**
+	 * This is the original comparator.
+	 */
 	private final Comparator<T> forwardComparator;
 	
-	public ReversedComparator(Comparator<T> forwardComparator) {
+	/**
+	 * This constructor initializes the class with the forward comparator.
+	 * 
+	 * @param forwardComparator the forward comparator
+	 */
+	public ReversedComparator(final Comparator<T> forwardComparator) {
 		this.forwardComparator = forwardComparator;
 	}
 	

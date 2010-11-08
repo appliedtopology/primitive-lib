@@ -1,8 +1,9 @@
 package edu.stanford.math.primitivelib.autogen.array;
 
+
+import java.util.ArrayList;
 import java.util.Collection;
-
-
+import java.util.List;
 
 public class LongArrayUtility {
 	public static long[] createArray(int length) {
@@ -74,9 +75,17 @@ public class LongArrayUtility {
         int index = 0;
         
         for (long[] array: collection) {
-                result[index++] = array;
+        	result[index++] = array;
         }
         
         return result;
     }
+    
+    public static List<Long> toList(long[] array) {
+		List<Long> list = new ArrayList<Long>();
+		for (int i = 0; i < array.length; i++) {
+			list.add(array[i]);
+		}
+		return list;
+	}
 }

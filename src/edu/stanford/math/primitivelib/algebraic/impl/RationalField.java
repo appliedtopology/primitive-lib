@@ -4,11 +4,29 @@ import org.apache.commons.math.fraction.Fraction;
 
 import edu.stanford.math.primitivelib.autogen.algebraic.ObjectAbstractField;
 
+/**
+ * This class implements the algebraic operations of a field over the
+ * type Fraction.
+ * 
+ * @author Andrew Tausz
+ *
+ */
 public class RationalField extends ObjectAbstractField<Fraction> {
+	/**
+	 * Private constructor to prevent instantiation.
+	 */
 	private RationalField() {}
 
+	/**
+	 * The single instance.
+	 */
 	private static final RationalField instance = new RationalField();
 
+	/**
+	 * This function returns the single instance of the class.
+	 * 
+	 * @return the instance of the class
+	 */
 	public static RationalField getInstance() {
 		return instance;
 	}

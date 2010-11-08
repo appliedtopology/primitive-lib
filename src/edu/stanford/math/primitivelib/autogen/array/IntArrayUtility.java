@@ -1,8 +1,9 @@
 package edu.stanford.math.primitivelib.autogen.array;
 
+
+import java.util.ArrayList;
 import java.util.Collection;
-
-
+import java.util.List;
 
 public class IntArrayUtility {
 	public static int[] createArray(int length) {
@@ -74,9 +75,17 @@ public class IntArrayUtility {
         int index = 0;
         
         for (int[] array: collection) {
-                result[index++] = array;
+        	result[index++] = array;
         }
         
         return result;
     }
+    
+    public static List<Integer> toList(int[] array) {
+		List<Integer> list = new ArrayList<Integer>();
+		for (int i = 0; i < array.length; i++) {
+			list.add(array[i]);
+		}
+		return list;
+	}
 }

@@ -6,11 +6,34 @@ import java.util.Map;
 import edu.stanford.math.primitivelib.autogen.algebraic.IntAbstractField;
 import edu.stanford.math.primitivelib.utility.MathUtility;
 
+/**
+ * This class implements the algebraic operations of the field Z/pZ for p prime.
+ * The underlying type of the field is int.
+ * 
+ * @author Andrew Tausz
+ *
+ */
 public class ModularIntField extends IntAbstractField {
 	private final int p;
+	
+	/**
+	 * This array stores the inverses of the elements {0, ..., p - 1}. Note that the 0-th 
+	 * index is simply set to zero for convenience. We pre-compute the inverses so that the
+	 * field operations can be executed efficiently.
+	 */
 	private final int[] inverses;
+	
+	/**
+	 * This map contains the instances the class for each prime p.
+	 */
 	private static Map<Integer, ModularIntField> map = new HashMap<Integer, ModularIntField>();
 	
+	/**
+	 * This static function returns the single instance of the class for the specified prime p.
+	 * 
+	 * @param p the prime
+	 * @return the single instance of the class for the specified prime 
+	 */
 	public static ModularIntField getInstance(int p) {
 		if (map.containsKey(p)) {
 			return map.get(p);
@@ -21,8 +44,11 @@ public class ModularIntField extends IntAbstractField {
 		}
 	}
 	
-	
-	
+	/**
+	 * Private constructor which prevents instantiation.
+	 * 
+	 * @param p the prime to initialize with
+	 */
 	private ModularIntField(int p) {
 		this.p = p;
 		this.inverses = MathUtility.modularInverses(p);

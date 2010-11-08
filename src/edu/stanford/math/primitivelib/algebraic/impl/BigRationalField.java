@@ -4,11 +4,29 @@ import org.apache.commons.math.fraction.BigFraction;
 
 import edu.stanford.math.primitivelib.autogen.algebraic.ObjectAbstractField;
 
+/**
+ * This class implements the algebraic operations of a field over the
+ * type BigFraction.
+ * 
+ * @author Andrew Tausz
+ *
+ */
 public class BigRationalField extends ObjectAbstractField<BigFraction> {
+	/**
+	 * Private constructor to prevent instantiation.
+	 */
 	private BigRationalField() {}
 
+	/**
+	 * The single instance.
+	 */
 	private static final BigRationalField instance = new BigRationalField();
 
+	/**
+	 * This function returns the single instance of the class.
+	 * 
+	 * @return the instance of the class
+	 */
 	public static BigRationalField getInstance() {
 		return instance;
 	}
