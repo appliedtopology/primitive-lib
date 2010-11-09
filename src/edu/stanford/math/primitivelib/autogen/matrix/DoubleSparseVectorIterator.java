@@ -1,8 +1,8 @@
 package edu.stanford.math.primitivelib.autogen.matrix;
 
-import java.util.Iterator;
-
 import gnu.trove.TIntDoubleIterator;
+
+import java.util.Iterator;
 
 
 

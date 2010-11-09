@@ -1,11 +1,11 @@
 package edu.stanford.math.primitivelib.autogen.matrix;
 
+import gnu.trove.TIntDoubleHashMap;
+import gnu.trove.TIntDoubleIterator;
+
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Iterator;
-
-import gnu.trove.TIntDoubleHashMap;
-import gnu.trove.TIntDoubleIterator;
 
 
 
