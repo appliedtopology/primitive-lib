@@ -69,6 +69,16 @@ public class ObjectSparseVector<R> implements ObjectAbstractVector<R> {
 	}
 	
 	/**
+	 * This function returns true if the sum is empty (zero), and
+	 * false otherwise.
+	 * 
+	 * @return true if the sum is empty
+	 */
+	public boolean isEmpty() {
+		return this.map.isEmpty();
+	}
+	
+	/**
 	 * This function returns the density (number of non-zero entries / size) of the vector.
 	 * 
 	 * @return the density of the vector
