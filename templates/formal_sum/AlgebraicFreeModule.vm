@@ -40,6 +40,10 @@ public class $className implements $superName {
 		this.ring = ring;
 	}
 	
+	public $ringClassName getRing() {
+		return this.ring;
+	}
+	
 	public $sumClassName add($sumClassName a, $sumClassName b) {
 		$sumClassName result = null;
 		

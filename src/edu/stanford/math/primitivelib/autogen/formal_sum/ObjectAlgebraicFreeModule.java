@@ -35,6 +35,10 @@ public class ObjectAlgebraicFreeModule<R, M> implements ObjectAbstractModule<R, 
 		this.ring = ring;
 	}
 	
+	public ObjectAbstractRing<R> getRing() {
+		return this.ring;
+	}
+	
 	public ObjectSparseFormalSum<R, M> add(ObjectSparseFormalSum<R, M> a, ObjectSparseFormalSum<R, M> b) {
 		ObjectSparseFormalSum<R, M> result = null;
 		

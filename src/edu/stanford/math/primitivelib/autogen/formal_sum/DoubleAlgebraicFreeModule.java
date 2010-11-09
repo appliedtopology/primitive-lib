@@ -33,6 +33,10 @@ public class DoubleAlgebraicFreeModule<M> implements DoubleAbstractModule<Double
 		this.ring = ring;
 	}
 	
+	public DoubleAbstractRing getRing() {
+		return this.ring;
+	}
+	
 	public DoubleSparseFormalSum<M> add(DoubleSparseFormalSum<M> a, DoubleSparseFormalSum<M> b) {
 		DoubleSparseFormalSum<M> result = null;
 		
