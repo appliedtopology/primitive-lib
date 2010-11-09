@@ -97,8 +97,8 @@ public class $className {
 		for ($iteratorType iterator = formalSum.map.iterator(); iterator.hasNext(); ) {
 			iterator.advance();
 			$mappingBasisClass basisMappingPair = iterator.key();
-			int row = this.domainRepresentation.getIndex(basisMappingPair.getFirst());
-			int column = this.codomainRepresentation.getIndex(basisMappingPair.getSecond());
+			int column = this.domainRepresentation.getIndex(basisMappingPair.getFirst());
+			int row = this.codomainRepresentation.getIndex(basisMappingPair.getSecond());
 			
 			matrix[row][column] = iterator.value();
 		}
@@ -139,8 +139,8 @@ public class $className {
 		for ($iteratorType iterator = formalSum.map.iterator(); iterator.hasNext(); ) {
 			iterator.advance();
 			$mappingBasisClass basisMappingPair = iterator.key();
-			int row = this.domainRepresentation.getIndex(basisMappingPair.getFirst());
-			int column = this.codomainRepresentation.getIndex(basisMappingPair.getSecond());
+			int column = this.domainRepresentation.getIndex(basisMappingPair.getFirst());
+			int row = this.codomainRepresentation.getIndex(basisMappingPair.getSecond());
 			
 			sparseMatrix.set(row, column, iterator.value());
 		}
@@ -161,8 +161,8 @@ public class $className {
 		
 		for (Map.Entry<$mappingBasisClass, $coefficientType> entry : formalSum.map.entrySet()) {
 			$mappingBasisClass basisMappingPair = entry.getKey();
-			int row = this.domainRepresentation.getIndex(basisMappingPair.getFirst());
-			int column = this.codomainRepresentation.getIndex(basisMappingPair.getSecond());
+			int column = this.domainRepresentation.getIndex(basisMappingPair.getFirst());
+			int row = this.codomainRepresentation.getIndex(basisMappingPair.getSecond());
 			
 			sparseMatrix.set(row, column, entry.getValue());
 		}
@@ -210,8 +210,8 @@ public class $className {
 		
 		for (Iterator<$entryClassName> iterator = sparseMatrix.iterator(); iterator.hasNext(); ) {
 			$entryClassName entry = iterator.next();
-			$objectType1 domainBasisElement = this.domainRepresentation.getBasisElement(entry.getRow());
-			$objectType2 codomainBasisElement = this.codomainRepresentation.getBasisElement(entry.getCol());
+			$objectType1 domainBasisElement = this.domainRepresentation.getBasisElement(entry.getCol());
+			$objectType2 codomainBasisElement = this.codomainRepresentation.getBasisElement(entry.getRow());
 			$mappingBasisClass basisPair = new $mappingBasisClass(domainBasisElement, codomainBasisElement);
 			formalSum.put(entry.getValue(), basisPair);
 		}
@@ -239,8 +239,8 @@ public class $className {
 					continue;
 				}
 				#end
-				$objectType1 domainBasisElement = this.domainRepresentation.getBasisElement(i);
-				$objectType2 codomainBasisElement = this.codomainRepresentation.getBasisElement(j);
+				$objectType1 domainBasisElement = this.domainRepresentation.getBasisElement(j);
+				$objectType2 codomainBasisElement = this.codomainRepresentation.getBasisElement(i);
 				$mappingBasisClass basisPair = new $mappingBasisClass(domainBasisElement, codomainBasisElement);
 				formalSum.put(matrix[i][j], basisPair);
 			}

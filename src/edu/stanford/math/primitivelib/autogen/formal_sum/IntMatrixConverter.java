@@ -83,8 +83,8 @@ public class IntMatrixConverter<M, N> {
 		for (TObjectIntIterator<ObjectObjectPair<M, N>> iterator = formalSum.map.iterator(); iterator.hasNext(); ) {
 			iterator.advance();
 			ObjectObjectPair<M, N> basisMappingPair = iterator.key();
-			int row = this.domainRepresentation.getIndex(basisMappingPair.getFirst());
-			int column = this.codomainRepresentation.getIndex(basisMappingPair.getSecond());
+			int column = this.domainRepresentation.getIndex(basisMappingPair.getFirst());
+			int row = this.codomainRepresentation.getIndex(basisMappingPair.getSecond());
 			
 			matrix[row][column] = iterator.value();
 		}
@@ -123,8 +123,8 @@ public class IntMatrixConverter<M, N> {
 		for (TObjectIntIterator<ObjectObjectPair<M, N>> iterator = formalSum.map.iterator(); iterator.hasNext(); ) {
 			iterator.advance();
 			ObjectObjectPair<M, N> basisMappingPair = iterator.key();
-			int row = this.domainRepresentation.getIndex(basisMappingPair.getFirst());
-			int column = this.codomainRepresentation.getIndex(basisMappingPair.getSecond());
+			int column = this.domainRepresentation.getIndex(basisMappingPair.getFirst());
+			int row = this.codomainRepresentation.getIndex(basisMappingPair.getSecond());
 			
 			sparseMatrix.set(row, column, iterator.value());
 		}
@@ -165,8 +165,8 @@ public class IntMatrixConverter<M, N> {
 		
 		for (Iterator<IntMatrixEntry> iterator = sparseMatrix.iterator(); iterator.hasNext(); ) {
 			IntMatrixEntry entry = iterator.next();
-			M domainBasisElement = this.domainRepresentation.getBasisElement(entry.getRow());
-			N codomainBasisElement = this.codomainRepresentation.getBasisElement(entry.getCol());
+			M domainBasisElement = this.domainRepresentation.getBasisElement(entry.getCol());
+			N codomainBasisElement = this.codomainRepresentation.getBasisElement(entry.getRow());
 			ObjectObjectPair<M, N> basisPair = new ObjectObjectPair<M, N>(domainBasisElement, codomainBasisElement);
 			formalSum.put(entry.getValue(), basisPair);
 		}
@@ -188,8 +188,8 @@ public class IntMatrixConverter<M, N> {
 								if (matrix[i][j] == 0) {
 					continue;
 				}
-								M domainBasisElement = this.domainRepresentation.getBasisElement(i);
-				N codomainBasisElement = this.codomainRepresentation.getBasisElement(j);
+								M domainBasisElement = this.domainRepresentation.getBasisElement(j);
+				N codomainBasisElement = this.codomainRepresentation.getBasisElement(i);
 				ObjectObjectPair<M, N> basisPair = new ObjectObjectPair<M, N>(domainBasisElement, codomainBasisElement);
 				formalSum.put(matrix[i][j], basisPair);
 			}

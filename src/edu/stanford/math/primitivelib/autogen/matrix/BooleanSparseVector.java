@@ -1,11 +1,11 @@
 package edu.stanford.math.primitivelib.autogen.matrix;
 
+import gnu.trove.TIntHashSet;
+import gnu.trove.TIntIterator;
+
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Iterator;
-
-import gnu.trove.TIntHashSet;
-import gnu.trove.TIntIterator;
 
 /**
  * This class provides a sparse vector implementation of the interface BooleanAbstractVector.

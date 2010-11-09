@@ -83,8 +83,8 @@ public class ObjectMatrixConverter<R, M, N> {
 		
 		for (Map.Entry<ObjectObjectPair<M, N>, R> entry : formalSum.map.entrySet()) {
 			ObjectObjectPair<M, N> basisMappingPair = entry.getKey();
-			int row = this.domainRepresentation.getIndex(basisMappingPair.getFirst());
-			int column = this.codomainRepresentation.getIndex(basisMappingPair.getSecond());
+			int column = this.domainRepresentation.getIndex(basisMappingPair.getFirst());
+			int row = this.codomainRepresentation.getIndex(basisMappingPair.getSecond());
 			
 			sparseMatrix.set(row, column, entry.getValue());
 		}
@@ -125,8 +125,8 @@ public class ObjectMatrixConverter<R, M, N> {
 		
 		for (Iterator<ObjectMatrixEntry<R>> iterator = sparseMatrix.iterator(); iterator.hasNext(); ) {
 			ObjectMatrixEntry<R> entry = iterator.next();
-			M domainBasisElement = this.domainRepresentation.getBasisElement(entry.getRow());
-			N codomainBasisElement = this.codomainRepresentation.getBasisElement(entry.getCol());
+			M domainBasisElement = this.domainRepresentation.getBasisElement(entry.getCol());
+			N codomainBasisElement = this.codomainRepresentation.getBasisElement(entry.getRow());
 			ObjectObjectPair<M, N> basisPair = new ObjectObjectPair<M, N>(domainBasisElement, codomainBasisElement);
 			formalSum.put(entry.getValue(), basisPair);
 		}
@@ -148,8 +148,8 @@ public class ObjectMatrixConverter<R, M, N> {
 								if (matrix[i][j] == null) {
 					continue;
 				}
-								M domainBasisElement = this.domainRepresentation.getBasisElement(i);
-				N codomainBasisElement = this.codomainRepresentation.getBasisElement(j);
+								M domainBasisElement = this.domainRepresentation.getBasisElement(j);
+				N codomainBasisElement = this.codomainRepresentation.getBasisElement(i);
 				ObjectObjectPair<M, N> basisPair = new ObjectObjectPair<M, N>(domainBasisElement, codomainBasisElement);
 				formalSum.put(matrix[i][j], basisPair);
 			}
