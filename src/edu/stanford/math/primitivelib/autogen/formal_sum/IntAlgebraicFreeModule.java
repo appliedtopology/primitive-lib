@@ -33,6 +33,10 @@ public class IntAlgebraicFreeModule<M> implements IntAbstractModule<IntSparseFor
 		this.ring = ring;
 	}
 	
+	public IntAbstractRing getRing() {
+		return this.ring;
+	}
+	
 	public IntSparseFormalSum<M> add(IntSparseFormalSum<M> a, IntSparseFormalSum<M> b) {
 		IntSparseFormalSum<M> result = null;
 		
