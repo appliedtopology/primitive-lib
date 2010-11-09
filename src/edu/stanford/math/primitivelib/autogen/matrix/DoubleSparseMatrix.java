@@ -84,8 +84,8 @@ public class DoubleSparseMatrix implements DoubleAbstractMatrix {
 		return num;
 	}
 
-		public DoubleAbstractVector multiply(DoubleAbstractVector vector) {
-		DoubleAbstractVector result = new DoubleSparseVector(this.rows);
+		public DoubleSparseVector multiply(DoubleAbstractVector vector) {
+		DoubleSparseVector result = new DoubleSparseVector(this.rows);
 		double innerProductValue = 0;
 		for (TIntObjectIterator<DoubleSparseVector> iterator = this.map.iterator(); iterator.hasNext(); ) {
 			iterator.advance();

@@ -70,6 +70,16 @@ public class DoubleSparseVector implements DoubleAbstractVector {
 	}
 	
 	/**
+	 * This function returns true if the sum is empty (zero), and
+	 * false otherwise.
+	 * 
+	 * @return true if the sum is empty
+	 */
+	public boolean isEmpty() {
+		return this.map.isEmpty();
+	}
+	
+	/**
 	 * This function returns the density (number of non-zero entries / size) of the vector.
 	 * 
 	 * @return the density of the vector
@@ -95,6 +105,51 @@ public class DoubleSparseVector implements DoubleAbstractVector {
 	}
 	
 		
+	public DoubleSparseVector add(DoubleSparseVector other) {
+		DoubleSparseVector result = new DoubleSparseVector(this.size);
+		
+		for (TIntDoubleIterator iterator = this.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			result.set(iterator.key(), iterator.value());
+		}
+		
+		for (TIntDoubleIterator iterator = other.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			double new_coefficient = result.get(iterator.key()) + iterator.value();
+			result.set(iterator.key(), new_coefficient);
+		}
+		
+		return result;
+	}
+	
+	public DoubleSparseVector subtract(DoubleSparseVector other) {
+		DoubleSparseVector result = new DoubleSparseVector(this.size);
+		
+		for (TIntDoubleIterator iterator = this.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			result.set(iterator.key(), iterator.value());
+		}
+		
+		for (TIntDoubleIterator iterator = other.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			double new_coefficient = result.get(iterator.key()) - iterator.value();
+			result.set(iterator.key(), new_coefficient);
+		}
+		
+		return result;
+	}
+	
+	public DoubleSparseVector scalarMultiply(double scalar) {
+		DoubleSparseVector result = new DoubleSparseVector(this.size);
+		
+		for (TIntDoubleIterator iterator = this.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			result.set(iterator.key(), iterator.value() * scalar);
+		}
+		
+		return result;
+	}
+	
 	/**
 	 * This function compute the inner product of the current vector with the given
 	 * sparse vector. The reason for the existence of this function is that it can be 

@@ -84,8 +84,8 @@ public class IntSparseMatrix implements IntAbstractMatrix {
 		return num;
 	}
 
-		public IntAbstractVector multiply(IntAbstractVector vector) {
-		IntAbstractVector result = new IntSparseVector(this.rows);
+		public IntSparseVector multiply(IntAbstractVector vector) {
+		IntSparseVector result = new IntSparseVector(this.rows);
 		int innerProductValue = 0;
 		for (TIntObjectIterator<IntSparseVector> iterator = this.map.iterator(); iterator.hasNext(); ) {
 			iterator.advance();

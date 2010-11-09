@@ -70,6 +70,16 @@ public class IntSparseVector implements IntAbstractVector {
 	}
 	
 	/**
+	 * This function returns true if the sum is empty (zero), and
+	 * false otherwise.
+	 * 
+	 * @return true if the sum is empty
+	 */
+	public boolean isEmpty() {
+		return this.map.isEmpty();
+	}
+	
+	/**
 	 * This function returns the density (number of non-zero entries / size) of the vector.
 	 * 
 	 * @return the density of the vector
@@ -95,6 +105,51 @@ public class IntSparseVector implements IntAbstractVector {
 	}
 	
 		
+	public IntSparseVector add(IntSparseVector other) {
+		IntSparseVector result = new IntSparseVector(this.size);
+		
+		for (TIntIntIterator iterator = this.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			result.set(iterator.key(), iterator.value());
+		}
+		
+		for (TIntIntIterator iterator = other.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			int new_coefficient = result.get(iterator.key()) + iterator.value();
+			result.set(iterator.key(), new_coefficient);
+		}
+		
+		return result;
+	}
+	
+	public IntSparseVector subtract(IntSparseVector other) {
+		IntSparseVector result = new IntSparseVector(this.size);
+		
+		for (TIntIntIterator iterator = this.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			result.set(iterator.key(), iterator.value());
+		}
+		
+		for (TIntIntIterator iterator = other.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			int new_coefficient = result.get(iterator.key()) - iterator.value();
+			result.set(iterator.key(), new_coefficient);
+		}
+		
+		return result;
+	}
+	
+	public IntSparseVector scalarMultiply(int scalar) {
+		IntSparseVector result = new IntSparseVector(this.size);
+		
+		for (TIntIntIterator iterator = this.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			result.set(iterator.key(), iterator.value() * scalar);
+		}
+		
+		return result;
+	}
+	
 	/**
 	 * This function compute the inner product of the current vector with the given
 	 * sparse vector. The reason for the existence of this function is that it can be 

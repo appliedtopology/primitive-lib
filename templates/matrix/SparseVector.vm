@@ -80,6 +80,16 @@ public class $className implements $superName {
 	}
 	
 	/**
+	 * This function returns true if the sum is empty (zero), and
+	 * false otherwise.
+	 * 
+	 * @return true if the sum is empty
+	 */
+	public boolean isEmpty() {
+		return this.map.isEmpty();
+	}
+	
+	/**
 	 * This function returns the density (number of non-zero entries / size) of the vector.
 	 * 
 	 * @return the density of the vector
@@ -105,6 +115,51 @@ public class $className implements $superName {
 	}
 	
 	#if ($utility.isPrimitive($type))
+	
+	public $className add($className other) {
+		$className result = new $className(this.size);
+		
+		for ($iteratorType iterator = this.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			result.set(iterator.key(), iterator.value());
+		}
+		
+		for ($iteratorType iterator = other.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			$type new_coefficient = result.get(iterator.key()) + iterator.value();
+			result.set(iterator.key(), new_coefficient);
+		}
+		
+		return result;
+	}
+	
+	public $className subtract($className other) {
+		$className result = new $className(this.size);
+		
+		for ($iteratorType iterator = this.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			result.set(iterator.key(), iterator.value());
+		}
+		
+		for ($iteratorType iterator = other.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			$type new_coefficient = result.get(iterator.key()) - iterator.value();
+			result.set(iterator.key(), new_coefficient);
+		}
+		
+		return result;
+	}
+	
+	public $className scalarMultiply($type scalar) {
+		$className result = new $className(this.size);
+		
+		for ($iteratorType iterator = this.map.iterator(); iterator.hasNext(); ) {
+			iterator.advance();
+			result.set(iterator.key(), iterator.value() * scalar);
+		}
+		
+		return result;
+	}
 	
 	/**
 	 * This function compute the inner product of the current vector with the given
