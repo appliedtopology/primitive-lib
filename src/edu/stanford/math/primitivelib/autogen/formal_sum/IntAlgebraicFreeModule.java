@@ -61,7 +61,7 @@ public class IntAlgebraicFreeModule<M> implements IntAbstractModule<IntSparseFor
 	}
 	
 	public IntSparseFormalSum<M> subtract(IntSparseFormalSum<M> a, IntSparseFormalSum<M> b) {
-		IntSparseFormalSum<M> result = this.createNewSum();
+		IntSparseFormalSum<M> result = this.createNewSum(a);
 		
 				
 		TObjectIntIterator<M> iterator = b.map.iterator();

@@ -1,10 +1,10 @@
 package edu.stanford.math.primitivelib.autogen.formal_sum;
 
 
-import gnu.trove.THashMap;
-
 import java.util.Iterator;
 import java.util.Map;
+
+import gnu.trove.THashMap;
 
 
 

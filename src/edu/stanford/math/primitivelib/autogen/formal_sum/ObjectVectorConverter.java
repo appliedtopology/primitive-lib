@@ -1,12 +1,12 @@
 package edu.stanford.math.primitivelib.autogen.formal_sum;
 
 
+import java.util.Map;
+
 import edu.stanford.math.primitivelib.autogen.matrix.ObjectSparseVector;
 import edu.stanford.math.primitivelib.autogen.matrix.ObjectVectorEntry;
 import gnu.trove.TIntObjectHashMap;
 import gnu.trove.TObjectIntHashMap;
-
-import java.util.Map;
 
 
 /**

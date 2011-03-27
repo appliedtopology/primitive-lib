@@ -63,7 +63,7 @@ public class ObjectAlgebraicFreeModule<R, M> implements ObjectAbstractModule<R, 
 	}
 	
 	public ObjectSparseFormalSum<R, M> subtract(ObjectSparseFormalSum<R, M> a, ObjectSparseFormalSum<R, M> b) {
-		ObjectSparseFormalSum<R, M> result = this.createNewSum();
+		ObjectSparseFormalSum<R, M> result = this.createNewSum(a);
 		
 				
 		Iterator<Map.Entry<M, R>> iterator = b.map.entrySet().iterator();

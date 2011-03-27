@@ -1,12 +1,12 @@
 package edu.stanford.math.primitivelib.autogen.formal_sum;
 
 
+import java.util.Iterator;
+
 import edu.stanford.math.primitivelib.autogen.matrix.DoubleMatrixEntry;
 import edu.stanford.math.primitivelib.autogen.matrix.DoubleSparseMatrix;
 import edu.stanford.math.primitivelib.autogen.pair.ObjectObjectPair;
 import gnu.trove.TObjectDoubleIterator;
-
-import java.util.Iterator;
 
 
 

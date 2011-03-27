@@ -61,7 +61,7 @@ public class DoubleAlgebraicFreeModule<M> implements DoubleAbstractModule<Double
 	}
 	
 	public DoubleSparseFormalSum<M> subtract(DoubleSparseFormalSum<M> a, DoubleSparseFormalSum<M> b) {
-		DoubleSparseFormalSum<M> result = this.createNewSum();
+		DoubleSparseFormalSum<M> result = this.createNewSum(a);
 		
 				
 		TObjectDoubleIterator<M> iterator = b.map.iterator();
