@@ -87,7 +87,7 @@ public class $className implements $superName {
 	}
 	
 	public $sumClassName subtract($sumClassName a, $sumClassName b) {
-		$sumClassName result = this.createNewSum();
+		$sumClassName result = this.createNewSum(a);
 		
 		#if ($utility.isPrimitive($coefficientType) || $utility.isPrimitive($objectType))
 		

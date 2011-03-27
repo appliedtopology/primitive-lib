@@ -2,9 +2,9 @@ package edu.stanford.math.primitivelib.autogen.formal_sum;
 
 
 
-import gnu.trove.THashSet;
-
 import java.util.Iterator;
+
+import gnu.trove.THashSet;
 
 
 

@@ -1,8 +1,8 @@
 package edu.stanford.math.primitivelib.autogen.matrix;
 
-import gnu.trove.TIntObjectIterator;
-
 import java.util.Iterator;
+
+import gnu.trove.TIntObjectIterator;
 
 /**
  * This class implements the Iterator interface and allows for the traversal of a
