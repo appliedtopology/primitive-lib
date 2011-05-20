@@ -10,7 +10,7 @@ public class IntArrayGeneration {
      * @return
      */
     public static int[] range(int start, int end) {
-        int length = (int) (end - start);
+        int length = (end - start);
         int[] values = new int[length];
         for (int i = 0; i < length; i++) {
                 values[i] = start + i;
@@ -19,7 +19,7 @@ public class IntArrayGeneration {
     }
     
     public static int[] range(int start, int end, int step) {
-        int length = (int) ((end - start) / step);
+        int length = ((end - start) / step);
         int[] values = new int[length];
         for (int i = 0; i < length; i ++) {
                 values[i] = start + i * step;

@@ -322,7 +322,7 @@ public class DoubleArrayMath {
 		double[] result = new double[n];
 		for (int i = 0; i < n; i++) {
 			if (vector[i] != 0) {
-				result[i] = 1.0 / (double) vector[i];
+				result[i] = 1.0 / vector[i];
 			}
 		}
 		return result;
