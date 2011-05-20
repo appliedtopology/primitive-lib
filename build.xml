@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="primitive-lib" default="default" basedir=".">
+	<property name="version.num" value="4.01" />
+	<property name="build.dir" value="build" />
+	<property name="bin.dir" value="${build.dir}/bin" />
+	<property name="temp.dir" value="temp" />
+	<property name="src_test.dir" value="src_test" />
+	<property name="src.dir" value="src" />
+	<property name="lib.dir" value="lib" />
+	<property name="doc.dir" value="doc" />
+	<property name="dist.dir" value="dist" />
+	<property name="examples.dir" value="examples" />
+	<property name="doc.overview" value="doc_includes/overview.htm" />
+	<property name="project.name" value="primitive-lib" />
+	<property name="package.name" value="edu.stanford.math.primitive-lib" />
+	<property name="runnable.jar" value="${dist.dir}/${project.name}-runnable.jar" />
+	<property name="basic.jar" value="${dist.dir}/${project.name}.jar" />
+
+	<property name="source.tarball" value="${dist.dir}/${project.name}-src-${version.num}.tar.gz" />
+	<property name="doc.tarball" value="${dist.dir}/${project.name}-doc-${version.num}.tar.gz" />
+	<property name="examples.tarball" value="${dist.dir}/${project.name}-examples-${version.num}.tar.gz" />
+	<property name="ant.build.javac.source" value="1.5" />
+	<property name="ant.build.javac.target" value="1.5" />
+
+	<path id="classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<property name="debug.flag" value="off" />
+
+	<!--Default target-->
+	<target name="default" depends="clean,dist" />
+
+	<!--All targets-->
+	<target name="all" depends="clean,dist" />
+
+	<!--Clean targets-->
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<delete dir="${temp.dir}" />
+		<delete>
+			<fileset dir="." includes="TEST*.txt" />
+		</delete>
+	</target>
+
+	<target name="clean_dist" depends="clean">
+		<delete dir="${dist.dir}" />
+	</target>
+
+	<target name="clean_all" depends="clean,clean_dist" />
+
+	<!--Initialization targets-->
+	<target name="init">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${bin.dir}" />
+		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${temp.dir}" />
+	</target>
+
+	<!--Documentation targets-->
+	<target name="doc" depends="javadoc" />
+
+	<target name="javadoc">
+		<javadoc destdir="${doc.dir}" classpathref="classpath" Overview="${doc.overview}" sourcepath="${src.dir}">
+			<package name="${package.name}" />
+			<fileset dir="${src.dir}" />
+		</javadoc>
+	</target>
+
+	<!--Bin targets-->
+	<target name="classes" depends="init">
+		<javac destdir="${bin.dir}" classpathref="classpath" debug="${debug.flag}" includeAntRuntime="false" source="1.5" target="1.5">
+			<compilerarg value="-Xlint" />
+			<src>
+				<pathelement path="${src.dir}" />
+			</src>
+		</javac>
+	</target>
+
+	<!--Distribution targets-->
+	<target name="dist" depends="clean_dist,runnable_jar,doc_tar,source_dist,basic_jar" />
+
+	<target name="doc_tar" depends="javadoc">
+		<tar destfile="${doc.tarball}" compression="gzip">
+			<tarfileset dir="doc" prefix="javadoc">
+				<include name="*.html" />
+				<include name="**/*.html" />
+			</tarfileset>
+		</tar>
+	</target>
+
+	<target name="source_dist">
+		<tar destfile="${source.tarball}" compression="gzip">
+			<tarfileset dir="${src.dir}" prefix="src">
+				<include name="**" />
+				<exclude name="**.svn/**" />
+			</tarfileset>
+		</tar>
+	</target>
+
+	<!--Runnable jar file-->
+	<target name="runnable_jar" depends="classes">
+		<jar destfile="${runnable.jar}" filesetmanifest="mergewithoutmain">
+			<manifest>
+                <attribute name="Main-Class" value="edu.stanford.math.primitivelib.main.Main"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+			
+			<fileset dir="${bin.dir}" />
+            <zipfileset excludes="META-INF/*.SF" src="${lib.dir}/trove-2.1.0.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib.dir}/velocity-1.6.4-dep.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${lib.dir}/commons-math-2.1.jar"/>
+		</jar>
+	</target>
+	
+	<!--Basic Jar file-->
+	<target name="basic_jar" depends="classes">
+		<jar destfile="${basic.jar}" basedir="${bin.dir}">
+		</jar>
+	</target>
+
+</project>
